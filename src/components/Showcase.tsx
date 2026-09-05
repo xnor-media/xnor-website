@@ -1,6 +1,5 @@
 "use client";
 
-import { ArrowUpRight } from "lucide-react";
 import AccordionGallery from "./AccordionGallery";
 
 const workItems = [
@@ -18,7 +17,7 @@ export default function Work() {
       className="
         relative
         w-full
-        scroll-mt-[110px]
+        scroll-mt-10
         overflow-hidden
         bg-[#110c11]
         pt-[72px]
@@ -163,149 +162,6 @@ export default function Work() {
           boxShadow: "0 0 20px rgba(144,10,156,0.15)",
         }}
       />
-
-
-      {/* =====================================================
-          BOTTOM CTA STRIP
-      ====================================================== */}
-
-      <div
-        className="
-          relative
-          flex
-          w-full
-          flex-col
-          items-start
-          justify-between
-          gap-[22px]
-          overflow-hidden
-          px-5
-          py-[34px]
-          sm:flex-row
-          sm:items-center
-          sm:px-8
-          lg:px-10
-          xl:px-[50px]
-        "
-      >
-
-        {/* Decorative diagonal purple streaks */}
-        <div
-          className="
-            pointer-events-none
-            absolute
-            bottom-0
-            left-0
-            h-full
-            w-[220px]
-            opacity-60
-          "
-          style={{
-            background:
-              "repeating-linear-gradient(115deg, rgba(144,10,156,0.35) 0px, rgba(144,10,156,0.35) 2px, transparent 2px, transparent 10px)",
-            WebkitMaskImage:
-              "radial-gradient(ellipse 220px 160px at 0% 100%, black 0%, transparent 75%)",
-            maskImage:
-              "radial-gradient(ellipse 220px 160px at 0% 100%, black 0%, transparent 75%)",
-          }}
-        />
-
-        <h3
-          className="
-            relative
-            z-10
-            text-[20px]
-            font-semibold
-            leading-[1.3]
-            tracking-[-0.02em]
-            text-white
-            sm:text-[24px]
-            lg:text-[26px]
-          "
-        >
-          Let&apos;s Create Something
-          <br />
-          Extraordinary{" "}
-          <span className="relative inline-block text-[#c34fd1]">
-            Together.
-            <svg
-              viewBox="0 0 130 10"
-              className="
-                absolute
-                -bottom-[6px]
-                left-0
-                h-[8px]
-                w-full
-              "
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M2 6 C 30 1, 60 9, 92 4 S 120 2, 128 6"
-                fill="none"
-                stroke="#c34fd1"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          </span>
-        </h3>
-
-        <a
-          href="#contact"
-          className="
-            group
-            relative
-            z-10
-            flex
-            h-[48px]
-            w-[168px]
-            flex-shrink-0
-            items-center
-            justify-between
-            rounded-full
-            border
-            border-white/25
-            px-[6px]
-            pl-[22px]
-            text-[13px]
-            font-medium
-            tracking-[-0.01em]
-            text-white
-            transition-all
-            duration-300
-            hover:border-[#900a9c]/70
-            hover:shadow-[0_0_25px_rgba(144,10,156,0.30)]
-          "
-        >
-          Let&apos;s Talk
-          <span
-            className="
-              flex
-              h-[36px]
-              w-[36px]
-              items-center
-              justify-center
-              rounded-full
-              bg-white/10
-              transition-all
-              duration-300
-              group-hover:bg-[#900a9c]/40
-            "
-          >
-            <ArrowUpRight
-              size={16}
-              strokeWidth={1.8}
-              className="
-                transition-transform
-                duration-300
-                group-hover:translate-x-[1px]
-                group-hover:-translate-y-[1px]
-              "
-            />
-          </span>
-        </a>
-      </div>
-
     </section>
   );
 }
