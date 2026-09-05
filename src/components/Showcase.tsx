@@ -17,7 +17,7 @@ export default function Work() {
       className="
         relative
         w-full
-        scroll-mt-10
+        scroll-mt-140px
         overflow-hidden
         bg-[#110c11]
         pt-[72px]
