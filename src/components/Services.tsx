@@ -87,12 +87,12 @@ export default function Services() {
         scroll-mt-10
         overflow-hidden
         bg-[#110c11]
-        px-5
-        py-[72px]
+        px-6
+        py-[90px]
         text-white
-        sm:px-8
-        lg:px-10
-        xl:px-[50px]
+        sm:px-10
+        lg:px-[50px]
+        xl:px-[63px]
       "
     >
 
@@ -139,15 +139,16 @@ export default function Services() {
 
       {/* =====================================================
           TOP SUBTITLE
+          NOTE: text and spacing scaled up ~1.25x
       ====================================================== */}
 
       <div
         className="
           relative
           z-10
-          mb-[5px]
+          mb-[6px]
           text-center
-          text-[10px]
+          text-[12px]
           font-medium
           uppercase
           tracking-[0.18em]
@@ -160,21 +161,22 @@ export default function Services() {
 
       {/* =====================================================
           MAIN TITLE
+          NOTE: text sizes and margin scaled up ~1.25x
       ====================================================== */}
 
       <h2
         className="
           relative
           z-10
-          mb-[24px]
+          mb-[30px]
           text-center
           font-serif
-          text-[34px]
+          text-[42px]
           leading-none
           tracking-[-0.035em]
           text-white
-          sm:text-[38px]
-          lg:text-[40px]
+          sm:text-[48px]
+          lg:text-[50px]
         "
       >
         Creative{" "}
@@ -195,6 +197,8 @@ export default function Services() {
 
       {/* =====================================================
           SERVICES GRID
+          NOTE: max-width widened to match Hero/Navbar scale,
+          gap increased proportionally
       ====================================================== */}
 
       <div
@@ -204,9 +208,9 @@ export default function Services() {
           mx-auto
           grid
           w-full
-          max-w-[1410px]
+          max-w-[1650px]
           grid-cols-1
-          gap-[14px]
+          gap-[18px]
           sm:grid-cols-2
           lg:grid-cols-3
           xl:grid-cols-5
@@ -222,15 +226,15 @@ export default function Services() {
               className="
                 group
                 relative
-                min-h-[245px]
+                min-h-[306px]
                 overflow-hidden
-                rounded-[22px]
+                rounded-[28px]
                 border
                 border-white/20
                 bg-white/[0.035]
-                px-[19px]
-                pb-[17px]
-                pt-[18px]
+                px-[24px]
+                pb-[21px]
+                pt-[23px]
                 backdrop-blur-[18px]
                 transition-all
                 duration-500
@@ -294,14 +298,15 @@ export default function Services() {
 
               {/* ===========================================
                   ICON
+                  NOTE: circle and icon size scaled up ~1.25x
               ============================================ */}
 
               <div
                 className="
                   relative
                   flex
-                  h-[51px]
-                  w-[51px]
+                  h-[64px]
+                  w-[64px]
                   items-center
                   justify-center
                   rounded-full
@@ -323,7 +328,7 @@ export default function Services() {
                   className="
                     pointer-events-none
                     absolute
-                    inset-[5px]
+                    inset-[6px]
                     rounded-full
                     opacity-50
                     blur-[5px]
@@ -335,7 +340,7 @@ export default function Services() {
                 />
 
                 <Icon
-                  size={21}
+                  size={26}
                   strokeWidth={1.8}
                   className="
                     relative
@@ -352,13 +357,14 @@ export default function Services() {
 
               {/* ===========================================
                   SERVICE TITLE
+                  NOTE: margin and text size scaled up ~1.25x
               ============================================ */}
 
               <h3
                 className="
                   relative
-                  mt-[19px]
-                  text-[16px]
+                  mt-[24px]
+                  text-[20px]
                   font-normal
                   leading-[1.1]
                   tracking-[-0.02em]
@@ -375,13 +381,14 @@ export default function Services() {
 
               {/* ===========================================
                   DESCRIPTION
+                  NOTE: margin and text size scaled up ~1.25x
               ============================================ */}
 
               <p
                 className="
                   relative
-                  mt-[12px]
-                  text-[12px]
+                  mt-[15px]
+                  text-[15px]
                   font-normal
                   leading-[1.55]
                   tracking-[0.005em]
@@ -394,17 +401,18 @@ export default function Services() {
 
               {/* ===========================================
                   ARROW BUTTON
+                  NOTE: position, size, icon scaled up ~1.25x
               ============================================ */}
 
               <button
                 aria-label={`View ${service.title}`}
                 className="
                   absolute
-                  bottom-[15px]
-                  right-[17px]
+                  bottom-[19px]
+                  right-[21px]
                   flex
-                  h-[30px]
-                  w-[43px]
+                  h-[38px]
+                  w-[54px]
                   items-center
                   justify-center
                   rounded-full
@@ -422,7 +430,7 @@ export default function Services() {
                 "
               >
                 <ArrowUpRight
-                  size={15}
+                  size={19}
                   strokeWidth={1.7}
                   className="
                     transition-transform
@@ -466,18 +474,20 @@ export default function Services() {
           
           This is the purple transition that leads into the
           "WE DON'T FOLLOW TRENDS..." section in your reference.
+          NOTE: top margin scaled up ~1.25x; side insets match
+          the new section padding above.
       ====================================================== */}
 
       <div
         className="
           relative
           z-10
-          mx-[-20px]
-          mt-[64px]
+          mx-[-24px]
+          mt-[80px]
           h-[1px]
-          sm:mx-[-32px]
-          lg:mx-[-40px]
-          xl:mx-[-50px]
+          sm:mx-[-40px]
+          lg:mx-[-50px]
+          xl:mx-[-63px]
         "
         style={{
           background:

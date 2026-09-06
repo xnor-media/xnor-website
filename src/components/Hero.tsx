@@ -28,8 +28,8 @@ export default function Hero() {
           right-[3%]
           top-[8%]
           z-0
-          h-[700px]
-          w-[700px]
+          h-700px
+          w-700px
           rounded-full
           opacity-40
           blur-[150px]
@@ -42,6 +42,9 @@ export default function Hero() {
 
       {/* =====================================================
           HERO MAIN CONTAINER
+          NOTE: max-w increased from 1440 -> 1680 and side
+          padding reduced slightly so content sits further
+          toward the edges (matches target reference).
       ====================================================== */}
 
       <div
@@ -52,12 +55,12 @@ export default function Hero() {
           flex
           min-h-screen
           w-full
-          max-w-[1440px]
+          max-w-[1680px]
           items-stretch
           px-6
           pt-[84px]
-          sm:px-10
-          lg:px-[74px]
+          sm:px-8
+          lg:px-[56px]
         "
       >
 
@@ -83,16 +86,19 @@ export default function Hero() {
               MAIN HERO CONTENT
           ================================================== */}
 
-          <div className="pt-[16px]">
+          <div className="pt-[70px]">
 
             {/* -----------------------------------------------
                 MAIN HEADING
+                NOTE: clamp ceiling raised 76px -> 94px so the
+                headline reaches the larger target size on big
+                screens (it was hitting its old cap already).
             ------------------------------------------------ */}
 
             <h1
               className="
-                max-w-[430px]
-                text-[clamp(48px,5.4vw,76px)]
+                max-w-[540px]
+                text-[clamp(48px,6.2vw,94px)]
                 font-black
                 uppercase
                 leading-[0.84]
@@ -138,13 +144,13 @@ export default function Hero() {
 
             <div
               className="
-                mt-[22px]
+                mt-[27px]
                 flex
                 flex-wrap
                 items-center
-                gap-x-[9px]
-                gap-y-[5px]
-                text-[12px]
+                gap-x-[11px]
+                gap-y-[6px]
+                text-[15px]
                 font-medium
                 uppercase
                 tracking-[0.055em]
@@ -195,9 +201,9 @@ export default function Hero() {
 
             <p
               className="
-                mt-[27px]
-                max-w-[350px]
-                text-[12px]
+                mt-[34px]
+                max-w-[460px]
+                text-[15px]
                 font-normal
                 leading-[1.7]
                 text-white/55
@@ -215,10 +221,10 @@ export default function Hero() {
 
             <div
               className="
-                mt-[25px]
+                mt-[31px]
                 flex
                 items-center
-                gap-[27px]
+                gap-[34px]
               "
             >
 
@@ -232,14 +238,14 @@ export default function Hero() {
                   group
                   relative
                   flex
-                  h-[34px]
+                  h-[42px]
                   items-center
                   justify-center
-                  gap-[22px]
+                  gap-[26px]
                   border
                   border-[#900a9c]
-                  px-[14px]
-                  text-[10px]
+                  px-[18px]
+                  text-[12px]
                   font-medium
                   uppercase
                   tracking-[0.06em]
@@ -256,7 +262,7 @@ export default function Hero() {
                 </span>
 
                 <ArrowUpRight
-                  size={12}
+                  size={15}
                   strokeWidth={1.7}
                   className="
                     transition-transform
@@ -278,8 +284,8 @@ export default function Hero() {
                   group
                   flex
                   items-center
-                  gap-[10px]
-                  text-[10px]
+                  gap-[12px]
+                  text-[12px]
                   font-medium
                   uppercase
                   tracking-[0.06em]
@@ -296,8 +302,8 @@ export default function Hero() {
                 <span
                   className="
                     flex
-                    h-[27px]
-                    w-[27px]
+                    h-[34px]
+                    w-[34px]
                     items-center
                     justify-center
                     rounded-full
@@ -311,7 +317,7 @@ export default function Hero() {
                 >
 
                   <Play
-                    size={9}
+                    size={11}
                     fill="currentColor"
                     strokeWidth={0}
                     className="ml-[1px]"
@@ -334,7 +340,7 @@ export default function Hero() {
             className="
               absolute
               bottom-[0px]
-              left-[-48px]
+              left-[-60px]
               hidden
               flex-col
               items-center
@@ -344,8 +350,8 @@ export default function Hero() {
 
             <span
               className="
-                mb-[8px]
-                text-[9px]
+                mb-[10px]
+                text-[11px]
                 font-medium
                 uppercase
                 tracking-[0.18em]
@@ -362,7 +368,7 @@ export default function Hero() {
             <div
               className="
                 relative
-                h-[47px]
+                h-[59px]
                 w-[1px]
                 bg-white/25
               "
@@ -373,8 +379,8 @@ export default function Hero() {
                   absolute
                   left-1/2
                   top-0
-                  h-[5px]
-                  w-[5px]
+                  h-[6px]
+                  w-[6px]
                   -translate-x-1/2
                   rounded-full
                   bg-[#900a9c]

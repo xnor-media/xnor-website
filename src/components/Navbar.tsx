@@ -21,17 +21,18 @@ export default function Navbar() {
       className="
         fixed
         left-1/2
-        top-[20px]
+        top-[25px]
         z-[9999]
         w-[calc(100%-48px)]
-        max-w-[1280px]
+        max-w-[1570px]
         -translate-x-1/2
       "
     >
-      <nav className="flex items-center justify-between gap-5">
+      <nav className="flex items-center justify-between gap-6">
 
         {/* =====================================================
             LOGO
+            NOTE: scaled up ~1.25x to match target sizing
         ====================================================== */}
 
         <Link
@@ -40,8 +41,8 @@ export default function Navbar() {
           className="
             group
             flex
-            h-[42px]
-            w-[105px]
+            h-[52px]
+            w-[131px]
             shrink-0
             items-center
           "
@@ -51,7 +52,7 @@ export default function Navbar() {
             alt="XNOR"
             className="
               block
-              w-[82px]
+              w-[102px]
               object-contain
               transition-all
               duration-300
@@ -70,13 +71,14 @@ export default function Navbar() {
 
         {/* =====================================================
             MAIN LIQUID GLASS NAVIGATION
+            NOTE: pill height, link height/padding/text scaled up
         ====================================================== */}
 
         <div
           className="
             relative
             flex
-            h-[43px]
+            h-[54px]
             items-center
             rounded-full
             p-[1px]
@@ -163,7 +165,7 @@ export default function Navbar() {
               items-center
               overflow-hidden
               rounded-full
-              px-[4px]
+              px-[5px]
             "
             style={{
               background: `
@@ -233,6 +235,7 @@ export default function Navbar() {
 
             {/* =================================================
                 NAVIGATION LINKS
+                NOTE: height, padding, text size scaled up
             ================================================== */}
 
             {navItems.map((item) => {
@@ -250,12 +253,12 @@ export default function Navbar() {
                     relative
                     z-10
                     flex
-                    h-[34px]
+                    h-[42px]
                     items-center
                     justify-center
                     rounded-full
-                    px-[17px]
-                    text-[10px]
+                    px-[21px]
+                    text-[12px]
                     font-medium
                     tracking-[-0.015em]
                     whitespace-nowrap
@@ -340,6 +343,7 @@ export default function Navbar() {
 
         {/* =====================================================
             LET'S TALK CTA
+            NOTE: button size, gap, text, arrow circle scaled up
         ====================================================== */}
 
         <Link
@@ -350,15 +354,15 @@ export default function Navbar() {
             group
             relative
             flex
-            h-[43px]
-            w-[108px]
+            h-[54px]
+            w-[135px]
             shrink-0
             items-center
             justify-center
-            gap-[9px]
+            gap-[11px]
             overflow-hidden
             rounded-full
-            text-[10px]
+            text-[12px]
             font-medium
             tracking-[-0.015em]
             text-white
@@ -455,8 +459,8 @@ export default function Navbar() {
               relative
               z-10
               flex
-              h-[18px]
-              w-[18px]
+              h-[22px]
+              w-[22px]
               items-center
               justify-center
               rounded-full
@@ -479,7 +483,7 @@ export default function Navbar() {
             }}
           >
             <ArrowUpRight
-              size={11}
+              size={14}
               strokeWidth={1.8}
               className="
                 transition-transform
