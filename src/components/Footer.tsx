@@ -38,7 +38,7 @@ const quickLinks = [
   { name: "Services", href: "#services" },
   { name: "Work", href: "#work" },
   { name: "About Us", href: "#about" },
-  { name: "Contact", href: "#contact" },
+  { name: "Contact", href: "#cta" },
 ];
 
 const serviceLinks = [
@@ -52,9 +52,7 @@ const serviceLinks = [
 const socials = [
   { name: "Instagram", href: "#", icon: InstagramIcon },
   { name: "LinkedIn", href: "#", icon: LinkedinIcon },
-  { name: "YouTube", href: "#", icon: YoutubeIcon },
 ];
-
 export default function Footer() {
   return (
     <footer

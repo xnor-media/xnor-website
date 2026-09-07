@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import AccordionGallery from "./AccordionGallery";
 
 const workItems = [
@@ -11,6 +12,25 @@ const workItems = [
 ];
 
 export default function Work() {
+  // -------------------------------------------------------
+  // MOBILE DETECTION
+  // AccordionGallery's default configuration (hover-trigger,
+  // horizontal orientation, 525px height) doesn't translate to
+  // touch devices — there's no hover, and five side-by-side
+  // expanding panels don't fit a narrow screen. Below the lg
+  // breakpoint we swap it to a tap-to-expand, vertically
+  // stacked layout with a shorter overall height instead.
+  // -------------------------------------------------------
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 1023px)");
+    const update = () => setIsMobile(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+
   return (
     <section
       id="work"
@@ -20,26 +40,33 @@ export default function Work() {
         scroll-mt-140px
         overflow-hidden
         bg-[#110c11]
-        pt-[90px]
+        pt-[64px]
         text-white
+        lg:pt-[90px]
       "
     >
 
       {/* =====================================================
           BACKGROUND PURPLE ATMOSPHERE
+          NOTE: sized down on mobile so the glows don't blow out
+          past the edges of a narrow viewport as strongly.
       ====================================================== */}
 
       <div
         className="
           pointer-events-none
           absolute
-          right-[-160px]
+          right-[-120px]
           top-[10px]
-          h-[340px]
-          w-[340px]
+          h-[240px]
+          w-[240px]
           rounded-full
           opacity-25
-          blur-[120px]
+          blur-[90px]
+          lg:right-[-160px]
+          lg:h-[340px]
+          lg:w-[340px]
+          lg:blur-[120px]
         "
         style={{
           background:
@@ -51,13 +78,18 @@ export default function Work() {
         className="
           pointer-events-none
           absolute
-          left-[-180px]
-          top-[160px]
-          h-[380px]
-          w-[380px]
+          left-[-130px]
+          top-[120px]
+          h-[260px]
+          w-[260px]
           rounded-full
           opacity-20
-          blur-[130px]
+          blur-[100px]
+          lg:left-[-180px]
+          lg:top-[160px]
+          lg:h-[380px]
+          lg:w-[380px]
+          lg:blur-[130px]
         "
         style={{
           background:
@@ -68,20 +100,22 @@ export default function Work() {
 
       {/* =====================================================
           TOP SUBTITLE
-          NOTE: text and spacing scaled up ~1.25x
       ====================================================== */}
 
       <div
         className="
           relative
           z-10
-          mb-[6px]
+          mb-[5px]
           text-center
-          text-[12px]
+          text-[10px]
           font-medium
           uppercase
-          tracking-[0.18em]
+          tracking-[0.16em]
           text-white/55
+          sm:mb-[6px]
+          sm:text-[12px]
+          sm:tracking-[0.18em]
         "
       >
         Our Work
@@ -90,22 +124,24 @@ export default function Work() {
 
       {/* =====================================================
           MAIN TITLE
-          NOTE: text sizes and margin scaled up ~1.25x
       ====================================================== */}
 
       <h2
         className="
           relative
           z-10
-          mb-[45px]
+          mb-[30px]
           text-center
           font-serif
-          text-[42px]
+          text-[32px]
           italic
           leading-none
-          tracking-[-0.035em]
+          tracking-[-0.03em]
           text-[#900a9c]
-          sm:text-[48px]
+          sm:mb-[45px]
+          sm:text-[42px]
+          sm:tracking-[-0.035em]
+          md:text-[48px]
           lg:text-[50px]
         "
         style={{
@@ -118,18 +154,18 @@ export default function Work() {
 
       {/* =====================================================
           WORK ACCORDION GALLERY
-          NOTE: container padding, max-width, and gallery
-          dimensions (height/gap/radius) scaled up ~1.25x to
-          match the Services section
+          NOTE: on mobile, switches to a shorter, vertically
+          stacked, tap-to-expand layout instead of the desktop
+          hover-driven horizontal strip.
       ====================================================== */}
 
-      <div className="relative z-10 px-6 sm:px-10 lg:px-[50px] xl:px-[63px]">
+      <div className="relative z-10 px-5 sm:px-8 lg:px-[50px] xl:px-[63px]">
         <div className="mx-auto w-full max-w-[1650px]">
           <AccordionGallery
             items={workItems}
             defaultIndex={0}
-            expandRatio={0.5}
-            trigger="hover"
+            expandRatio={isMobile ? 0.65 : 0.5}
+            trigger={isMobile ? "click" : "hover"}
             accentColor="#c34fd1"
             overlayColor="#110c11"
             textColor="#ffffff"
@@ -137,13 +173,13 @@ export default function Work() {
             showLabels
             duration={0.6}
             ease="power3.out"
-            parallax={0.5}
-            tilt={8}
+            parallax={isMobile ? 0 : 0.5}
+            tilt={isMobile ? 0 : 8}
             stagger={0.06}
-            height={525}
-            gap={18}
-            radius={28}
-            orientation="horizontal"
+            height={isMobile ? 380 : 525}
+            gap={isMobile ? 10 : 18}
+            radius={isMobile ? 18 : 28}
+            orientation={isMobile ? "vertical" : "horizontal"}
           />
         </div>
       </div>
@@ -151,16 +187,16 @@ export default function Work() {
 
       {/* =====================================================
           DIVIDER
-          NOTE: top margin scaled up ~1.25x
       ====================================================== */}
 
       <div
         className="
           relative
           z-10
-          mt-[70px]
+          mt-[48px]
           h-[1px]
           w-full
+          sm:mt-[70px]
         "
         style={{
           background:

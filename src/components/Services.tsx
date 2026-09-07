@@ -88,7 +88,7 @@ export default function Services() {
         overflow-hidden
         bg-[#110c11]
         px-6
-        py-[90px]
+        lg:py-[110px]
         text-white
         sm:px-10
         lg:px-[50px]

@@ -1,63 +1,121 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 
 const navItems = [
   { name: "Home", href: "#home" },
   { name: "Services", href: "#services" },
   { name: "Work", href: "#work" },
   { name: "About Us", href: "#about" },
-  { name: "Contact", href: "#contact" },
+  { name: "Contact", href: "#cta" },
 ];
 
 export default function Navbar() {
   const [active, setActive] = useState("Home");
   const [hovered, setHovered] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Tracks scroll position so we can fade in a solid glass backdrop
+  // behind the whole header once content starts passing underneath
+  // the logo — otherwise the logo (which has no background of its
+  // own) visually overlaps whatever scrolls beneath it.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Auto-close the mobile menu if the viewport is resized up
+  // past the desktop breakpoint while it's open.
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth >= 1024) setMobileOpen(false);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   return (
     <header
-      className="
+      className={`
         fixed
         left-1/2
-        top-[25px]
         z-[9999]
         w-[calc(100%-48px)]
         max-w-[1570px]
         -translate-x-1/2
-      "
+        rounded-[26px]
+        transition-all
+        duration-500
+        ease-out
+        ${scrolled ? "top-[12px] px-[14px] py-[10px]" : "top-[25px] px-0 py-0"}
+      `}
+      style={{
+        background: scrolled
+          ? `
+            linear-gradient(
+              135deg,
+              rgba(255,255,255,0.06) 0%,
+              rgba(144,10,156,0.10) 40%,
+              rgba(17,12,17,0.62) 100%
+            )
+          `
+          : "transparent",
+        border: scrolled
+          ? "1px solid rgba(255,255,255,0.10)"
+          : "1px solid transparent",
+        backdropFilter: scrolled ? "blur(22px) saturate(160%)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(22px) saturate(160%)" : "none",
+        boxShadow: scrolled
+          ? "0 8px 28px rgba(0,0,0,0.32), 0 0 20px rgba(144,10,156,0.10)"
+          : "none",
+      }}
     >
       <nav className="flex items-center justify-between gap-6">
 
         {/* =====================================================
             LOGO
-            NOTE: scaled up ~1.25x to match target sizing
+            NOTE: onClick now syncs `active` back to "Home" so the
+            nav pill highlight is correct after navigating home via
+            the logo instead of the "Home" link itself. Also scales
+            down slightly once scrolled, in step with the header's
+            backdrop transition, so it settles into the smaller bar.
         ====================================================== */}
 
         <Link
           href="/"
           aria-label="XNOR Home"
-          className="
+          onClick={() => {
+            setActive("Home");
+            setMobileOpen(false);
+          }}
+          className={`
             group
             flex
-            h-[52px]
-            w-[131px]
             shrink-0
             items-center
-          "
+            transition-all
+            duration-500
+            ease-out
+            ${scrolled ? "h-[42px] w-[105px]" : "h-[52px] w-[131px]"}
+          `}
         >
           <img
             src="/xnor-logo.png"
             alt="XNOR"
-            className="
+            className={`
               block
-              w-[102px]
               object-contain
               transition-all
-              duration-300
+              duration-500
+              ease-out
               group-hover:scale-[1.02]
-            "
+              ${scrolled ? "w-[82px]" : "w-[102px]"}
+            `}
             style={{
               filter: `
                 brightness(1.15)
@@ -70,18 +128,18 @@ export default function Navbar() {
 
 
         {/* =====================================================
-            MAIN LIQUID GLASS NAVIGATION
-            NOTE: pill height, link height/padding/text scaled up
+            MAIN LIQUID GLASS NAVIGATION (desktop only)
         ====================================================== */}
 
         <div
           className="
             relative
-            flex
+            hidden
             h-[54px]
             items-center
             rounded-full
             p-[1px]
+            lg:flex
           "
           style={{
             /*
@@ -235,7 +293,6 @@ export default function Navbar() {
 
             {/* =================================================
                 NAVIGATION LINKS
-                NOTE: height, padding, text size scaled up
             ================================================== */}
 
             {navItems.map((item) => {
@@ -258,7 +315,7 @@ export default function Navbar() {
                     justify-center
                     rounded-full
                     px-[21px]
-                    text-[12px]
+                    text-[14px]
                     font-medium
                     tracking-[-0.015em]
                     whitespace-nowrap
@@ -342,18 +399,18 @@ export default function Navbar() {
 
 
         {/* =====================================================
-            LET'S TALK CTA
-            NOTE: button size, gap, text, arrow circle scaled up
+            LET'S TALK CTA (desktop only)
         ====================================================== */}
 
         <Link
-          href="#contact"
+          href="#cta"
+          onClick={() => setActive("Contact")}
           onMouseEnter={() => setHovered("cta")}
           onMouseLeave={() => setHovered(null)}
           className="
             group
             relative
-            flex
+            hidden
             h-[54px]
             w-[135px]
             shrink-0
@@ -362,12 +419,13 @@ export default function Navbar() {
             gap-[11px]
             overflow-hidden
             rounded-full
-            text-[12px]
+            text-[14px]
             font-medium
             tracking-[-0.015em]
             text-white
             transition-all
             duration-300
+            lg:flex
           "
           style={{
             background: `
@@ -495,7 +553,165 @@ export default function Navbar() {
           </span>
         </Link>
 
+
+        {/* =====================================================
+            HAMBURGER TOGGLE (mobile only)
+        ====================================================== */}
+
+        <button
+          type="button"
+          aria-label="Toggle menu"
+          aria-expanded={mobileOpen}
+          onClick={() => setMobileOpen((v) => !v)}
+          className="
+            flex
+            h-[46px]
+            w-[46px]
+            shrink-0
+            items-center
+            justify-center
+            rounded-full
+            border
+            border-white/15
+            bg-white/[0.05]
+            text-white
+            backdrop-blur-[18px]
+            transition-all
+            duration-300
+            hover:border-[#900a9c]/60
+            hover:bg-[#4c035d]/30
+            lg:hidden
+          "
+        >
+          {mobileOpen ? (
+            <X size={20} strokeWidth={1.8} />
+          ) : (
+            <Menu size={20} strokeWidth={1.8} />
+          )}
+        </button>
+
       </nav>
+
+
+      {/* =====================================================
+          MOBILE MENU PANEL
+          
+          Slides/fades open below the header row on small screens.
+          Same glass language as the desktop pill. Every link and
+          the logo already close it via onClick.
+      ====================================================== */}
+
+      <div
+        className={`
+          overflow-hidden
+          transition-all
+          duration-400
+          ease-out
+          lg:hidden
+          ${mobileOpen ? "mt-[12px] max-h-[420px] opacity-100" : "max-h-0 opacity-0"}
+        `}
+      >
+        <div
+          className="
+            flex
+            flex-col
+            gap-[6px]
+            rounded-[22px]
+            border
+            border-white/15
+            p-[14px]
+          "
+          style={{
+            background: `
+              linear-gradient(
+                160deg,
+                rgba(31,20,33,0.94) 0%,
+                rgba(17,12,17,0.97) 60%
+              )
+            `,
+            backdropFilter: "blur(26px) saturate(175%)",
+            WebkitBackdropFilter: "blur(26px) saturate(175%)",
+            boxShadow:
+              "inset 0 1px 0 rgba(255,255,255,0.10), 0 12px 40px rgba(0,0,0,0.45)",
+          }}
+        >
+          {navItems.map((item) => {
+            const isActive = active === item.name;
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={() => {
+                  setActive(item.name);
+                  setMobileOpen(false);
+                }}
+                className="
+                  flex
+                  h-[46px]
+                  items-center
+                  rounded-[16px]
+                  px-[16px]
+                  text-[15px]
+                  font-medium
+                  tracking-[-0.01em]
+                  transition-all
+                  duration-300
+                "
+                style={{
+                  color: isActive
+                    ? "rgba(255,255,255,0.98)"
+                    : "rgba(255,255,255,0.75)",
+                  background: isActive
+                    ? `
+                      linear-gradient(
+                        180deg,
+                        rgba(144,10,156,0.55) 0%,
+                        rgba(76,3,93,0.45) 100%
+                      )
+                    `
+                    : "transparent",
+                }}
+              >
+                {item.name}
+              </Link>
+            );
+          })}
+
+          <Link
+            href="#cta"
+            onClick={() => {
+              setActive("Contact");
+              setMobileOpen(false);
+            }}
+            className="
+              mt-[6px]
+              flex
+              h-[48px]
+              items-center
+              justify-center
+              gap-[9px]
+              rounded-[16px]
+              text-[15px]
+              font-medium
+              text-white
+            "
+            style={{
+              background: `
+                linear-gradient(
+                  135deg,
+                  rgba(144,10,156,0.55) 0%,
+                  rgba(76,3,93,0.42) 100%
+                )
+              `,
+              border: "1px solid rgba(255,255,255,0.17)",
+            }}
+          >
+            Let's Talk
+            <ArrowUpRight size={16} strokeWidth={1.8} />
+          </Link>
+        </div>
+      </div>
+
     </header>
   );
 }

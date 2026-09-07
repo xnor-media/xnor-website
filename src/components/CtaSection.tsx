@@ -70,6 +70,7 @@ export default function CtaSection() {
 
   return (
     <section
+      id="cta"
       className="
         relative
         w-full
@@ -218,7 +219,7 @@ export default function CtaSection() {
           className="
             group
             relative
-            z-10
+            z-20
             flex
             h-[60px]
             w-[210px]
@@ -227,13 +228,16 @@ export default function CtaSection() {
             justify-between
             rounded-full
             border
-            border-white/25
+            border-[#c34fd1]/45
+            bg-[#110c11]/95
             px-[8px]
             pl-[28px]
             text-[16px]
             font-medium
             tracking-[-0.01em]
             text-white
+            shadow-[0_0_20px_rgba(195,79,209,0.12)]
+            backdrop-blur-md
             transition-all
             duration-300
             hover:border-[#900a9c]/70
@@ -241,6 +245,7 @@ export default function CtaSection() {
           "
         >
           Let&apos;s Talk
+
           <span
             className="
               flex
@@ -249,7 +254,9 @@ export default function CtaSection() {
               items-center
               justify-center
               rounded-full
-              bg-white/10
+              bg-[#900a9c]/25
+              border
+              border-[#c34fd1]/20
               transition-all
               duration-300
               group-hover:bg-[#900a9c]/40

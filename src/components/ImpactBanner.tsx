@@ -9,16 +9,25 @@ export default function ImpactBanner() {
         bg-[#110c11]
       "
     >
-      <img
-        src="/banner-impact.png"
-        alt="We don't follow trends. We create impact."
-        className="
-          block
-          h-auto
-          w-full
-          object-contain
-        "
-      />
+      <picture>
+        {/* Mobile image */}
+        <source
+          media="(max-width: 768px)"
+          srcSet="/banner-impact-mobile.avif"
+        />
+
+        {/* Desktop image */}
+        <img
+          src="/banner-impact.png"
+          alt="We don't follow trends. We create impact."
+          className="
+            block
+            h-auto
+            w-full
+            object-contain
+          "
+        />
+      </picture>
     </section>
   );
 }

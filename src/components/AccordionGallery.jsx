@@ -197,7 +197,26 @@ const AccordionGallery = ({
             href={item.link || undefined}
             onClick={(e) => handleClick(i, e)}
             onMouseEnter={() => handleEnter(i)}
-            onFocus={() => setActive(i)}
+            onFocus={() => {
+              // Only auto-activate on focus when hover is the
+              // intended trigger (desktop) — this exactly mirrors
+              // handleEnter's existing gating above, so desktop
+              // behavior is unchanged.
+              //
+              // On touch devices, tapping a link fires a `focus`
+              // event immediately before the `click` event. With
+              // trigger="click" (mobile), if this unconditionally
+              // called setActive(i), the panel would already be
+              // "active" by the time handleClick runs, so its
+              // `i !== active` check would be false and it would
+              // skip preventDefault — letting the very first tap
+              // navigate away instead of expanding the panel.
+              // Gating this on trigger === "hover" means click mode
+              // requires an explicit click to activate, giving the
+              // intended first-tap-expands / second-tap-navigates
+              // behavior on mobile.
+              if (trigger === "hover") setActive(i);
+            }}
             onKeyDown={(e) => handleKeyDown(i, e)}
             role="listitem"
             tabIndex={0}

@@ -9,11 +9,11 @@ export default function Hero() {
       id="home"
       className="
         relative
-        min-h-screen
         w-full
         overflow-hidden
         bg-[#110c11]
         text-white
+        lg:min-h-screen
       "
     >
       {/* =====================================================
@@ -42,9 +42,11 @@ export default function Hero() {
 
       {/* =====================================================
           HERO MAIN CONTAINER
-          NOTE: max-w increased from 1440 -> 1680 and side
-          padding reduced slightly so content sits further
-          toward the edges (matches target reference).
+          NOTE: stacks as a column on mobile (text, then image,
+          in normal document flow) and switches to the original
+          absolute-positioned row layout at lg. Mobile no longer
+          forces min-h-screen — it grows to fit its content
+          instead of risking overlap inside a fixed viewport.
       ====================================================== */}
 
       <div
@@ -53,13 +55,18 @@ export default function Hero() {
           z-10
           mx-auto
           flex
-          min-h-screen
           w-full
           max-w-[1680px]
-          items-stretch
+          flex-col
           px-6
-          pt-[84px]
+          pb-[48px]
+          pt-[92px]
           sm:px-8
+          lg:min-h-screen
+          lg:flex-row
+          lg:items-stretch
+          lg:pb-0
+          lg:pt-[84px]
           lg:px-[56px]
         "
       >
@@ -75,9 +82,9 @@ export default function Hero() {
             flex
             w-full
             flex-col
-            justify-between
-            py-[20px]
-            lg:w-[42%]
+            justify-start
+            lg:justify-between
+            lg:w-[47%]
             lg:py-[18px]
           "
         >
@@ -86,23 +93,22 @@ export default function Hero() {
               MAIN HERO CONTENT
           ================================================== */}
 
-          <div className="pt-[70px]">
+          <div className="pt-[10px] lg:pt-[60px]">
 
             {/* -----------------------------------------------
                 MAIN HEADING
-                NOTE: clamp ceiling raised 76px -> 94px so the
-                headline reaches the larger target size on big
-                screens (it was hitting its old cap already).
             ------------------------------------------------ */}
 
             <h1
               className="
                 max-w-[540px]
-                text-[clamp(48px,6.2vw,94px)]
+                text-[clamp(54px,11vw,94px)]
                 font-black
                 uppercase
-                leading-[0.84]
-                tracking-[-0.055em]
+                leading-[0.86]
+                tracking-[-0.045em]
+                sm:leading-[0.84]
+                sm:tracking-[-0.055em]
               "
               style={{
                 fontFamily:
@@ -140,20 +146,26 @@ export default function Hero() {
 
             {/* =================================================
                 SERVICES
+                NOTE: smaller text on mobile so the five items
+                wrap cleanly without crowding narrow screens
             ================================================== */}
 
             <div
               className="
-                mt-[27px]
+                mt-[20px]
                 flex
                 flex-wrap
                 items-center
-                gap-x-[11px]
+                gap-x-[9px]
                 gap-y-[6px]
-                text-[15px]
+                text-[12px]
                 font-medium
                 uppercase
-                tracking-[0.055em]
+                tracking-[0.05em]
+                sm:mt-[27px]
+                sm:gap-x-[11px]
+                sm:text-[15px]
+                sm:tracking-[0.055em]
               "
             >
 
@@ -201,12 +213,15 @@ export default function Hero() {
 
             <p
               className="
-                mt-[34px]
+                mt-[22px]
                 max-w-[460px]
-                text-[15px]
+                text-[14px]
                 font-normal
-                leading-[1.7]
+                leading-[1.65]
                 text-white/55
+                sm:mt-[34px]
+                sm:text-[15px]
+                sm:leading-[1.7]
               "
             >
               XNOR is a multidisciplinary creative studio
@@ -217,14 +232,21 @@ export default function Hero() {
 
             {/* =================================================
                 BUTTONS
+                NOTE: stacks vertically on very small screens so
+                the two CTAs never fight for width; becomes a row
+                from sm upward, matching the original layout.
             ================================================== */}
 
             <div
               className="
-                mt-[31px]
+                mt-[26px]
                 flex
-                items-center
-                gap-[34px]
+                items-start
+                gap-[38px]
+                sm:mt-[31px]
+                sm:flex-row
+                sm:items-center
+                sm:gap-[34px]
               "
             >
 
@@ -238,14 +260,14 @@ export default function Hero() {
                   group
                   relative
                   flex
-                  h-[42px]
+                  h-[40px]
                   items-center
                   justify-center
-                  gap-[26px]
+                  gap-[18px]
                   border
                   border-[#900a9c]
-                  px-[18px]
-                  text-[12px]
+                  px-[16px]
+                  text-[11px]
                   font-medium
                   uppercase
                   tracking-[0.06em]
@@ -254,6 +276,10 @@ export default function Hero() {
                   duration-300
                   hover:bg-[#900a9c]/15
                   hover:shadow-[0_0_20px_rgba(144,10,156,0.22)]
+                  sm:h-[42px]
+                  sm:gap-[26px]
+                  sm:px-[18px]
+                  sm:text-[12px]
                 "
               >
 
@@ -285,13 +311,14 @@ export default function Hero() {
                   flex
                   items-center
                   gap-[12px]
-                  text-[12px]
+                  text-[11px]
                   font-medium
                   uppercase
                   tracking-[0.06em]
                   text-white/75
                   transition
                   hover:text-white
+                  sm:text-[12px]
                 "
               >
 
@@ -333,7 +360,7 @@ export default function Hero() {
 
 
           {/* =================================================
-              SCROLL INDICATOR
+              SCROLL INDICATOR (desktop only)
           ================================================== */}
 
           <div
@@ -396,7 +423,10 @@ export default function Hero() {
 
 
         {/* ===================================================
-            RIGHT HERO IMAGE
+            RIGHT HERO IMAGE (desktop only)
+            NOTE: now explicitly hidden below lg — previously it
+            had no responsive hide, so on mobile it rendered on
+            top of the separate mobile image below, overlapping.
         ==================================================== */}
 
         <div
@@ -404,10 +434,12 @@ export default function Hero() {
             absolute
             bottom-0
             right-0
-            top-[45px]
+            top-[25px]
             z-10
+            hidden
             w-[61%]
             overflow-hidden
+            lg:block
           "
         >
 
@@ -546,18 +578,23 @@ export default function Hero() {
 
         {/* ===================================================
             MOBILE HERO IMAGE
+            NOTE: now flows in normal document flow (relative,
+            not absolute) right after the text content, instead
+            of being pinned to the bottom of a min-h-screen
+            section — so it can never overlap the text above it,
+            regardless of how tall the heading gets on a given
+            phone.
         ==================================================== */}
 
         <div
           className="
-            absolute
-            bottom-0
-            right-0
+            relative
             z-0
-            block
-            h-[52vh]
+            mt-[6px]
+            h-[44vh]
             w-full
             overflow-hidden
+            rounded-[18px]
             lg:hidden
           "
         >
@@ -589,10 +626,9 @@ export default function Hero() {
                 linear-gradient(
                   to bottom,
                   #110c11 0%,
-                  rgba(17,12,17,0.92) 10%,
-                  rgba(17,12,17,0.45) 35%,
-                  rgba(17,12,17,0.15) 65%,
-                  #110c11 100%
+                  rgba(17,12,17,0.55) 12%,
+                  rgba(17,12,17,0.10) 35%,
+                  transparent 60%
                 )
               `,
             }}
@@ -604,10 +640,11 @@ export default function Hero() {
 
 
       {/* =====================================================
-          GLOBAL BOTTOM FADE
+          GLOBAL BOTTOM FADE (desktop only)
           
-          Kept subtle because the image already has its own
-          bottom-edge feather.
+          The mobile image now sits in normal flow with its own
+          rounded corners, so this global fade — tuned for the
+          absolute-positioned desktop image — is scoped to lg.
       ====================================================== */}
 
       <div
@@ -618,7 +655,9 @@ export default function Hero() {
           left-0
           right-0
           z-30
+          hidden
           h-[55px]
+          lg:block
         "
         style={{
           background:
