@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import { ContactModalProvider } from "@/contexts/ContactModalContext";
+import ContactModal from "@/components/ContactModal";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -15,13 +17,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
-      <body className={`${spaceGrotesk.variable}`}>
-        {children}
+    <html lang="en" className={spaceGrotesk.variable}>
+      <body>
+        <ContactModalProvider>
+          {children}
+          <ContactModal />
+        </ContactModalProvider>
       </body>
     </html>
   );

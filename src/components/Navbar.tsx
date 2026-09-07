@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Menu, X } from "lucide-react";
+import { useContactModal } from "@/contexts/ContactModalContext";
 
 const navItems = [
   { name: "Home", href: "#home" },
@@ -13,6 +14,9 @@ const navItems = [
 ];
 
 export default function Navbar() {
+  const { open } = useContactModal();
+    const buttonRef = useRef<HTMLButtonElement>(null);
+  
   const [active, setActive] = useState("Home");
   const [hovered, setHovered] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
@@ -402,11 +406,13 @@ export default function Navbar() {
             LET'S TALK CTA (desktop only)
         ====================================================== */}
 
-        <Link
-          href="#cta"
-          onClick={() => setActive("Contact")}
+        <button
+          ref={buttonRef}
+          onClick={open}
           onMouseEnter={() => setHovered("cta")}
           onMouseLeave={() => setHovered(null)}
+          type="button"
+          aria-label="Open contact form"
           className="
             group
             relative
@@ -416,6 +422,7 @@ export default function Navbar() {
             shrink-0
             items-center
             justify-center
+            cursor-pointer
             gap-[11px]
             overflow-hidden
             rounded-full
@@ -551,7 +558,7 @@ export default function Navbar() {
               "
             />
           </span>
-        </Link>
+        </button>
 
 
         {/* =====================================================
@@ -677,12 +684,9 @@ export default function Navbar() {
             );
           })}
 
-          <Link
-            href="#cta"
-            onClick={() => {
-              setActive("Contact");
-              setMobileOpen(false);
-            }}
+          <button
+            ref={buttonRef}
+            onClick={open}
             className="
               mt-[6px]
               flex
@@ -708,7 +712,7 @@ export default function Navbar() {
           >
             Let's Talk
             <ArrowUpRight size={16} strokeWidth={1.8} />
-          </Link>
+          </button>
         </div>
       </div>
 

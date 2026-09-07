@@ -2,11 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
+import { useContactModal } from "@/contexts/ContactModalContext";
 
 export default function CtaSection() {
+  const { open } = useContactModal();
+
   const containerRef = useRef<HTMLDivElement>(null);
   const togetherRef = useRef<HTMLSpanElement>(null);
-  const buttonRef = useRef<HTMLAnchorElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   const [arrow, setArrow] = useState<{ path: string; head: string } | null>(null);
 
@@ -111,7 +114,6 @@ export default function CtaSection() {
 
         {/* =================================================
             DECORATIVE PINK STREAK (project asset)
-            NOTE: width scaled up ~1.25x
         ================================================== */}
 
         <img
@@ -130,7 +132,6 @@ export default function CtaSection() {
             opacity-70
           "
         />
-
 
         {/* =================================================
             HAND-DRAWN ARROW: "Together." -> "Let's Talk"
@@ -213,31 +214,28 @@ export default function CtaSection() {
           </span>
         </h3>
 
-        <a
+        <button
           ref={buttonRef}
-          href="#contact"
+          onClick={open}
           className="
             group
             relative
-            z-20
+            z-10
             flex
-            h-[60px]
-            w-[210px]
+            h-[48px]
+            w-[168px]
             flex-shrink-0
             items-center
             justify-between
             rounded-full
             border
-            border-[#c34fd1]/45
-            bg-[#110c11]/95
-            px-[8px]
-            pl-[28px]
-            text-[16px]
+            border-white/25
+            px-[6px]
+            pl-[22px]
+            text-[13px]
             font-medium
             tracking-[-0.01em]
             text-white
-            shadow-[0_0_20px_rgba(195,79,209,0.12)]
-            backdrop-blur-md
             transition-all
             duration-300
             hover:border-[#900a9c]/70
@@ -273,7 +271,7 @@ export default function CtaSection() {
               "
             />
           </span>
-        </a>
+        </button>
       </div>
     </section>
   );
