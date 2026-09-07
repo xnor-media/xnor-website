@@ -74,7 +74,7 @@ export default function CtaSection() {
         relative
         w-full
         bg-[#110c11]
-        py-[26px]
+        py-[33px]
       "
     >
       <div
@@ -84,23 +84,23 @@ export default function CtaSection() {
           mx-auto
           flex
           w-[calc(100%-40px)]
-          max-w-[1410px]
+          max-w-[1650px]
           flex-col
           items-start
           justify-between
-          gap-[22px]
+          gap-[28px]
           overflow-hidden
-          rounded-[20px]
+          rounded-[25px]
           border
           border-white/10
           bg-white/[0.025]
-          px-5
-          py-[30px]
+          px-6
+          py-[38px]
           backdrop-blur-[6px]
           sm:flex-row
           sm:items-center
-          sm:px-8
-          lg:px-10
+          sm:px-10
+          lg:px-[50px]
         "
         style={{
           boxShadow:
@@ -110,6 +110,7 @@ export default function CtaSection() {
 
         {/* =================================================
             DECORATIVE PINK STREAK (project asset)
+            NOTE: width scaled up ~1.25x
         ================================================== */}
 
         <img
@@ -122,7 +123,7 @@ export default function CtaSection() {
             bottom-0
             left-0
             h-full
-            w-[220px]
+            w-[275px]
             object-cover
             object-left-bottom
             opacity-70
@@ -172,13 +173,13 @@ export default function CtaSection() {
           className="
             relative
             z-10
-            text-[20px]
+            text-[25px]
             font-semibold
             leading-[1.3]
             tracking-[-0.02em]
             text-white
-            sm:text-[24px]
-            lg:text-[26px]
+            sm:text-[30px]
+            lg:text-[33px]
           "
         >
           Let&apos;s Create Something
@@ -193,9 +194,9 @@ export default function CtaSection() {
               viewBox="0 0 130 10"
               className="
                 absolute
-                -bottom-[6px]
+                -bottom-[8px]
                 left-0
-                h-[8px]
+                h-[10px]
                 w-full
               "
               preserveAspectRatio="none"
@@ -219,17 +220,17 @@ export default function CtaSection() {
             relative
             z-10
             flex
-            h-[48px]
-            w-[168px]
+            h-[60px]
+            w-[210px]
             flex-shrink-0
             items-center
             justify-between
             rounded-full
             border
             border-white/25
-            px-[6px]
-            pl-[22px]
-            text-[13px]
+            px-[8px]
+            pl-[28px]
+            text-[16px]
             font-medium
             tracking-[-0.01em]
             text-white
@@ -243,8 +244,8 @@ export default function CtaSection() {
           <span
             className="
               flex
-              h-[36px]
-              w-[36px]
+              h-[45px]
+              w-[45px]
               items-center
               justify-center
               rounded-full
@@ -255,7 +256,7 @@ export default function CtaSection() {
             "
           >
             <ArrowUpRight
-              size={16}
+              size={20}
               strokeWidth={1.8}
               className="
                 transition-transform

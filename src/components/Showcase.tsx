@@ -20,7 +20,7 @@ export default function Work() {
         scroll-mt-140px
         overflow-hidden
         bg-[#110c11]
-        pt-[72px]
+        pt-[90px]
         text-white
       "
     >
@@ -68,15 +68,16 @@ export default function Work() {
 
       {/* =====================================================
           TOP SUBTITLE
+          NOTE: text and spacing scaled up ~1.25x
       ====================================================== */}
 
       <div
         className="
           relative
           z-10
-          mb-[5px]
+          mb-[6px]
           text-center
-          text-[10px]
+          text-[12px]
           font-medium
           uppercase
           tracking-[0.18em]
@@ -89,22 +90,23 @@ export default function Work() {
 
       {/* =====================================================
           MAIN TITLE
+          NOTE: text sizes and margin scaled up ~1.25x
       ====================================================== */}
 
       <h2
         className="
           relative
           z-10
-          mb-[36px]
+          mb-[45px]
           text-center
           font-serif
-          text-[34px]
+          text-[42px]
           italic
           leading-none
           tracking-[-0.035em]
           text-[#900a9c]
-          sm:text-[38px]
-          lg:text-[40px]
+          sm:text-[48px]
+          lg:text-[50px]
         "
         style={{
           textShadow: "0 0 22px rgba(144,10,156,0.35)",
@@ -116,10 +118,13 @@ export default function Work() {
 
       {/* =====================================================
           WORK ACCORDION GALLERY
+          NOTE: container padding, max-width, and gallery
+          dimensions (height/gap/radius) scaled up ~1.25x to
+          match the Services section
       ====================================================== */}
 
-      <div className="relative z-10 px-5 sm:px-8 lg:px-10 xl:px-[50px]">
-        <div className="mx-auto w-full max-w-[1410px]">
+      <div className="relative z-10 px-6 sm:px-10 lg:px-[50px] xl:px-[63px]">
+        <div className="mx-auto w-full max-w-[1650px]">
           <AccordionGallery
             items={workItems}
             defaultIndex={0}
@@ -135,9 +140,9 @@ export default function Work() {
             parallax={0.5}
             tilt={8}
             stagger={0.06}
-            height={420}
-            gap={14}
-            radius={22}
+            height={525}
+            gap={18}
+            radius={28}
             orientation="horizontal"
           />
         </div>
@@ -146,13 +151,14 @@ export default function Work() {
 
       {/* =====================================================
           DIVIDER
+          NOTE: top margin scaled up ~1.25x
       ====================================================== */}
 
       <div
         className="
           relative
           z-10
-          mt-[56px]
+          mt-[70px]
           h-[1px]
           w-full
         "

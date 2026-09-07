@@ -63,12 +63,12 @@ export default function Footer() {
         w-full
         overflow-hidden
         bg-[#110c11]
-        px-5
-        pt-[64px]
+        px-6
+        pt-[80px]
         text-white
-        sm:px-8
-        lg:px-10
-        xl:px-[50px]
+        sm:px-10
+        lg:px-[50px]
+        xl:px-[63px]
       "
     >
 
@@ -115,6 +115,8 @@ export default function Footer() {
 
       {/* =====================================================
           TOP GRID
+          NOTE: max-width, gaps, and bottom padding scaled
+          up ~1.25x to match the rest of the page
       ====================================================== */}
 
       <div
@@ -124,19 +126,20 @@ export default function Footer() {
           mx-auto
           grid
           w-full
-          max-w-[1410px]
+          max-w-[1650px]
           grid-cols-2
-          gap-x-[24px]
-          gap-y-[40px]
-          pb-[44px]
+          gap-x-[30px]
+          gap-y-[50px]
+          pb-[55px]
           sm:grid-cols-2
           lg:grid-cols-4
-          lg:gap-x-[32px]
+          lg:gap-x-[40px]
         "
       >
 
         {/* ===========================================
             BRAND / ABOUT
+            NOTE: logo and paragraph scaled up ~1.25x
         ============================================ */}
 
         <div className="col-span-2 lg:col-span-1">
@@ -145,23 +148,23 @@ export default function Footer() {
             aria-label="XNOR Home"
             className="
               inline-flex
-              h-[34px]
-              w-[92px]
+              h-[42px]
+              w-[115px]
               items-center
             "
           >
             <img
               src="/xnor-logo.png"
               alt="XNOR"
-              className="block w-[78px] object-contain"
+              className="block w-[98px] object-contain"
             />
           </Link>
 
           <p
             className="
-              mt-[16px]
-              max-w-[260px]
-              text-[13px]
+              mt-[20px]
+              max-w-[325px]
+              text-[16px]
               font-normal
               leading-[1.65]
               tracking-[0.005em]
@@ -176,13 +179,14 @@ export default function Footer() {
 
         {/* ===========================================
             QUICK LINKS
+            NOTE: heading and link text scaled up ~1.25x
         ============================================ */}
 
         <nav aria-label="Quick links">
           <h4
             className="
-              mb-[18px]
-              text-[11px]
+              mb-[22px]
+              text-[14px]
               font-semibold
               uppercase
               tracking-[0.14em]
@@ -192,13 +196,13 @@ export default function Footer() {
             Quick Links
           </h4>
 
-          <ul className="flex flex-col gap-[12px]">
+          <ul className="flex flex-col gap-[15px]">
             {quickLinks.map((item) => (
               <li key={item.name}>
                 <Link
                   href={item.href}
                   className="
-                    text-[13px]
+                    text-[16px]
                     text-white/65
                     transition-colors
                     duration-300
@@ -215,13 +219,14 @@ export default function Footer() {
 
         {/* ===========================================
             SERVICES
+            NOTE: heading and link text scaled up ~1.25x
         ============================================ */}
 
         <nav aria-label="Services">
           <h4
             className="
-              mb-[18px]
-              text-[11px]
+              mb-[22px]
+              text-[14px]
               font-semibold
               uppercase
               tracking-[0.14em]
@@ -231,13 +236,13 @@ export default function Footer() {
             Services
           </h4>
 
-          <ul className="flex flex-col gap-[12px]">
+          <ul className="flex flex-col gap-[15px]">
             {serviceLinks.map((item) => (
               <li key={item.name}>
                 <Link
                   href={item.href}
                   className="
-                    text-[13px]
+                    text-[16px]
                     text-white/65
                     transition-colors
                     duration-300
@@ -254,15 +259,16 @@ export default function Footer() {
 
         {/* ===========================================
             FOLLOW US + GET IN TOUCH
+            NOTE: gaps, icon circles, and text scaled up ~1.25x
         ============================================ */}
 
-        <div className="col-span-2 flex flex-col gap-[32px] sm:col-span-1 sm:flex-row lg:col-span-1 lg:flex-col lg:gap-[36px]">
+        <div className="col-span-2 flex flex-col gap-[40px] sm:col-span-1 sm:flex-row lg:col-span-1 lg:flex-col lg:gap-[45px]">
 
           <div>
             <h4
               className="
-                mb-[18px]
-                text-[11px]
+                mb-[22px]
+                text-[14px]
                 font-semibold
                 uppercase
                 tracking-[0.14em]
@@ -272,7 +278,7 @@ export default function Footer() {
               Follow Us
             </h4>
 
-            <div className="flex flex-wrap items-center gap-[10px]">
+            <div className="flex flex-wrap items-center gap-[13px]">
               {socials.map((social) => {
                 const Icon = social.icon;
                 return (
@@ -282,8 +288,8 @@ export default function Footer() {
                     aria-label={social.name}
                     className="
                       flex
-                      h-[38px]
-                      w-[38px]
+                      h-[48px]
+                      w-[48px]
                       items-center
                       justify-center
                       rounded-full
@@ -299,7 +305,7 @@ export default function Footer() {
                       hover:shadow-[0_0_18px_rgba(144,10,156,0.30)]
                     "
                   >
-                    <Icon className="h-4 w-4" />
+                    <Icon className="h-5 w-5" />
                   </a>
                 );
               })}
@@ -310,8 +316,8 @@ export default function Footer() {
                 aria-label="Behance"
                 className="
                   flex
-                  h-[38px]
-                  w-[38px]
+                  h-[48px]
+                  w-[48px]
                   items-center
                   justify-center
                   rounded-full
@@ -328,8 +334,8 @@ export default function Footer() {
                 "
               >
                 <svg
-                  width="16"
-                  height="16"
+                  width="20"
+                  height="20"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
@@ -342,8 +348,8 @@ export default function Footer() {
           <div>
             <h4
               className="
-                mb-[18px]
-                text-[11px]
+                mb-[22px]
+                text-[14px]
                 font-semibold
                 uppercase
                 tracking-[0.14em]
@@ -353,22 +359,22 @@ export default function Footer() {
               Get In Touch
             </h4>
 
-            <ul className="flex flex-col gap-[13px]">
+            <ul className="flex flex-col gap-[16px]">
               <li>
                 <a
                   href="mailto:hello@xnor.studio"
                   className="
                     flex
                     items-center
-                    gap-[10px]
-                    text-[13px]
+                    gap-[13px]
+                    text-[16px]
                     text-white/65
                     transition-colors
                     duration-300
                     hover:text-white
                   "
                 >
-                  <Mail size={15} strokeWidth={1.8} className="text-[#c34fd1]" />
+                  <Mail size={19} strokeWidth={1.8} className="text-[#c34fd1]" />
                   xnormedialk@gmail.com
                 </a>
               </li>
@@ -378,15 +384,15 @@ export default function Footer() {
                   className="
                     flex
                     items-center
-                    gap-[10px]
-                    text-[13px]
+                    gap-[13px]
+                    text-[16px]
                     text-white/65
                     transition-colors
                     duration-300
                     hover:text-white
                   "
                 >
-                  <Phone size={15} strokeWidth={1.8} className="text-[#c34fd1]" />
+                  <Phone size={19} strokeWidth={1.8} className="text-[#c34fd1]" />
                   +94 70 566 2471
                 </a>
               </li>
@@ -394,12 +400,12 @@ export default function Footer() {
                 className="
                   flex
                   items-center
-                  gap-[10px]
-                  text-[13px]
+                  gap-[13px]
+                  text-[16px]
                   text-white/65
                 "
               >
-                <MapPin size={15} strokeWidth={1.8} className="text-[#c34fd1]" />
+                <MapPin size={19} strokeWidth={1.8} className="text-[#c34fd1]" />
                 Colombo 07, Sri Lanka
               </li>
             </ul>
@@ -421,7 +427,7 @@ export default function Footer() {
           mx-auto
           h-[1px]
           w-full
-          max-w-[1410px]
+          max-w-[1650px]
         "
         style={{
           background:
@@ -433,6 +439,7 @@ export default function Footer() {
 
       {/* =====================================================
           BOTTOM COPYRIGHT
+          NOTE: padding and text size scaled up ~1.25x
       ====================================================== */}
 
       <div
@@ -441,10 +448,10 @@ export default function Footer() {
           z-10
           mx-auto
           w-full
-          max-w-[1410px]
-          py-[22px]
+          max-w-[1650px]
+          py-[28px]
           text-center
-          text-[12px]
+          text-[15px]
           text-white/40
         "
       >
