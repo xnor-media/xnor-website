@@ -220,22 +220,25 @@ export default function CtaSection() {
           className="
             group
             relative
-            z-10
+            z-20
             flex
-            h-[48px]
+            h-[58px]
             w-[168px]
             flex-shrink-0
             items-center
             justify-between
             rounded-full
             border
-            border-white/25
+            border-[#c34fd1]/40
+            bg-[#110c11]/95
             px-[6px]
             pl-[22px]
             text-[13px]
             font-medium
             tracking-[-0.01em]
             text-white
+            shadow-[0_4px_20px_rgba(0,0,0,0.35)]
+            backdrop-blur-md
             transition-all
             duration-300
             hover:border-[#900a9c]/70
@@ -252,12 +255,12 @@ export default function CtaSection() {
               items-center
               justify-center
               rounded-full
-              bg-[#900a9c]/25
               border
-              border-[#c34fd1]/20
+              border-[#c34fd1]/30
+              bg-[#900a9c]/30
               transition-all
               duration-300
-              group-hover:bg-[#900a9c]/40
+              group-hover:bg-[#900a9c]/50
             "
           >
             <ArrowUpRight

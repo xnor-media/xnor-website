@@ -437,7 +437,7 @@ export default function Hero() {
             top-[25px]
             z-10
             hidden
-            w-[61%]
+            w-[60%]
             overflow-hidden
             lg:block
           "
@@ -448,7 +448,7 @@ export default function Hero() {
           ================================================== */}
 
           <img
-            src="/hero-main.png"
+            src="/hero-main.avif"
             alt="XNOR creative studio visual"
             className="
               absolute
@@ -600,7 +600,7 @@ export default function Hero() {
         >
 
           <img
-            src="/hero-main.png"
+            src="/hero-main.avif"
             alt="XNOR creative studio visual"
             className="
               absolute

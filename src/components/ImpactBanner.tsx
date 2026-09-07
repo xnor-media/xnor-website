@@ -18,7 +18,7 @@ export default function ImpactBanner() {
 
         {/* Desktop image */}
         <img
-          src="/banner-impact.png"
+          src="/banner-impact.avif"
           alt="We don't follow trends. We create impact."
           className="
             block

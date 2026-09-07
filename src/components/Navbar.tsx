@@ -109,7 +109,7 @@ export default function Navbar() {
           `}
         >
           <img
-            src="/xnor-logo.png"
+            src="/xnor-logo.avif"
             alt="XNOR"
             className={`
               block

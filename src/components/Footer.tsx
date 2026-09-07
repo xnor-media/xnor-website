@@ -152,7 +152,7 @@ export default function Footer() {
             "
           >
             <img
-              src="/xnor-logo.png"
+              src="/xnor-logo.avif"
               alt="XNOR"
               className="block w-[98px] object-contain"
             />
