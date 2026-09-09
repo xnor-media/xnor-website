@@ -154,6 +154,7 @@ export default function Services() {
           tracking-[0.18em]
           text-white/55
         "
+        
       >
         What We Do
       </div>
@@ -370,10 +371,7 @@ export default function Services() {
                   tracking-[-0.02em]
                   text-white
                 "
-                style={{
-                  fontFamily:
-                    'Georgia, "Times New Roman", serif',
-                }}
+               
               >
                 {service.title}
               </h3>
