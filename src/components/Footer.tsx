@@ -24,11 +24,38 @@ function LinkedinIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-function YoutubeIcon(props: React.SVGProps<SVGSVGElement>) {
+function TikTokIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
-      <rect x="2" y="5.5" width="20" height="13" rx="4" />
-      <path d="M10.5 9.5v5l4.5-2.5-4.5-2.5Z" fill="currentColor" stroke="none" />
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      {...props}
+    >
+      <path
+        d="M14.5 4v10.2a3.3 3.3 0 1 1-2.5-3.2V8.4a5.8 5.8 0 1 0 5 5.7V9.8c1.2.9 2.6 1.4 4 1.4V8.5c-2.1-.1-3.8-1.8-4-4.5h-2.5Z"
+        fill="currentColor"
+        stroke="none"
+      />
+    </svg>
+  );
+}
+
+function FacebookIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      {...props}
+    >
+      <path
+        d="M14 8h2V5.5h-2.5C11.3 5.5 10 6.8 10 9v2H8v2.5h2V19h2.5v-5.5H15L15.5 11h-3v-1.7c0-.9.4-1.3 1.5-1.3Z"
+        fill="currentColor"
+        stroke="none"
+      />
     </svg>
   );
 }
@@ -50,8 +77,10 @@ const serviceLinks = [
 ];
 
 const socials = [
-  { name: "Instagram", href: "#", icon: InstagramIcon },
-  { name: "LinkedIn", href: "#", icon: LinkedinIcon },
+  { name: "Instagram", href: "https://www.instagram.com/xnor_lk?stkn=MWlxaHA0cDNjdjJ3bA==", icon: InstagramIcon },
+  { name: "Facebook", href: "https://www.facebook.com/share/1AYMPd6YGq/", icon: FacebookIcon },
+  { name: "TikTok", href: "https://www.tiktok.com/@xnormedia?_r=1&_t=ZS-99eLoTDM5xs", icon: TikTokIcon },
+  { name: "LinkedIn", href: "https://www.linkedin.com/company/xnor-media/", icon: LinkedinIcon },
 ];
 export default function Footer() {
   return (
@@ -307,39 +336,6 @@ export default function Footer() {
                   </a>
                 );
               })}
-
-              {/* Behance — not in lucide-react, inline SVG glyph */}
-              <a
-                href="#"
-                aria-label="Behance"
-                className="
-                  flex
-                  h-[48px]
-                  w-[48px]
-                  items-center
-                  justify-center
-                  rounded-full
-                  border
-                  border-white/15
-                  bg-white/[0.04]
-                  text-white/80
-                  transition-all
-                  duration-300
-                  hover:border-[#900a9c]/70
-                  hover:bg-[#4c035d]/35
-                  hover:text-white
-                  hover:shadow-[0_0_18px_rgba(144,10,156,0.30)]
-                "
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M22 7.7h-6.4V6h6.4v1.7ZM9.8 12.2c.9-.4 1.5-1.2 1.5-2.4 0-2.1-1.6-3-3.9-3H2v14h5.7c2.5 0 4.5-1.1 4.5-3.6 0-1.6-.8-2.6-2.4-3ZM4.7 8.6h2.5c1 0 1.9.3 1.9 1.4 0 1-.7 1.5-1.9 1.5H4.7V8.6Zm2.8 8.7H4.7v-3.4h2.9c1.3 0 2.1.6 2.1 1.7 0 1.2-.9 1.7-2.2 1.7ZM18.6 9.8c-3 0-4.9 2-4.9 5.1 0 3.2 2 5 5 5 2.3 0 3.9-1 4.5-2.9h-2.3c-.3.8-1.1 1.2-2.1 1.2-1.5 0-2.4-.9-2.5-2.5h7.1v-.7c0-3.1-1.8-5.2-4.8-5.2Zm-2.3 4c.2-1.3 1-2.1 2.3-2.1 1.2 0 2 .8 2.1 2.1h-4.4Z" />
-                </svg>
-              </a>
             </div>
           </div>
 
@@ -378,7 +374,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="tel:+911234567890"
+                  href="tel:+94726553268"
                   className="
                     flex
                     items-center
@@ -391,7 +387,7 @@ export default function Footer() {
                   "
                 >
                   <Phone size={19} strokeWidth={1.8} className="text-[#c34fd1]" />
-                  +94 70 566 2471
+                  +94 72 655 3268
                 </a>
               </li>
               <li

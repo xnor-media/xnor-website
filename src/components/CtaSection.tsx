@@ -227,6 +227,7 @@ export default function CtaSection() {
             flex-shrink-0
             items-center
             justify-between
+            cursor-pointer
             rounded-full
             border
             border-[#c34fd1]/40
