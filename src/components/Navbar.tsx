@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { useContactModal } from "@/contexts/ContactModalContext";
 
@@ -15,123 +16,236 @@ const navItems = [
 
 export default function Navbar() {
   const { open } = useContactModal();
-    const buttonRef = useRef<HTMLButtonElement>(null);
-  
+  const pathname = usePathname();
+
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
   const [active, setActive] = useState("Home");
   const [hovered, setHovered] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Tracks scroll position so we can fade in a solid glass backdrop
-  // behind the whole header once content starts passing underneath
-  // the logo — otherwise the logo (which has no background of its
-  // own) visually overlaps whatever scrolls beneath it.
+  // =====================================================
+  // HEADER SCROLL STATE
+  // =====================================================
+
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24);
+    };
+
     onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+
+    window.addEventListener("scroll", onScroll, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
-  // Auto-close the mobile menu if the viewport is resized up
-  // past the desktop breakpoint while it's open.
+  // =====================================================
+  // CLOSE MOBILE MENU ON DESKTOP
+  // =====================================================
+
   useEffect(() => {
     const onResize = () => {
-      if (window.innerWidth >= 1024) setMobileOpen(false);
+      if (window.innerWidth >= 1024) {
+        setMobileOpen(false);
+      }
     };
+
     window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
+
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
+
+  // =====================================================
+  // DETERMINE ACTIVE SECTION FROM URL
+  // =====================================================
+
+  useEffect(() => {
+    const normalizedPath = pathname.replace(/\/+$/, "") || "/";
+
+    if (normalizedPath === "/") {
+      setActive("Home");
+    } else if (
+      normalizedPath === "/services" ||
+      normalizedPath === "/service"
+    ) {
+      setActive("Services");
+    } else if (normalizedPath === "/work") {
+      setActive("Work");
+    } else if (
+      normalizedPath === "/about" ||
+      normalizedPath === "/about-us"
+    ) {
+      setActive("About Us");
+    } else if (
+      normalizedPath === "/contact" ||
+      normalizedPath === "/cta"
+    ) {
+      setActive("Contact");
+    }
+  }, [pathname]);
+
+  // =====================================================
+  // SCROLL TO SECTION WHEN ENTERING A DIRECT URL
+  //
+  // Examples:
+  //
+  // /services -> scroll to #services
+  // /service  -> scroll to #services
+  // /work     -> scroll to #work
+  // /about    -> scroll to #about
+  // /contact  -> scroll to #cta
+  // =====================================================
+
+  useEffect(() => {
+    const normalizedPath = pathname.replace(/\/+$/, "") || "/";
+
+    let targetId: string | null = null;
+
+    if (
+      normalizedPath === "/services" ||
+      normalizedPath === "/service"
+    ) {
+      targetId = "services";
+    } else if (normalizedPath === "/work") {
+      targetId = "work";
+    } else if (
+      normalizedPath === "/about" ||
+      normalizedPath === "/about-us"
+    ) {
+      targetId = "about";
+    } else if (
+      normalizedPath === "/contact" ||
+      normalizedPath === "/cta"
+    ) {
+      targetId = "cta";
+    }
+
+    if (!targetId) {
+      return;
+    }
+
+    // Wait until the homepage has mounted after the rewrite.
+    const timer = window.setTimeout(() => {
+      const element = document.getElementById(targetId);
+
+      if (element) {
+        element.scrollIntoView({
+          behavior: "instant",
+          block: "start",
+        });
+      }
+    }, 100);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, [pathname]);
 
   // =====================================================
   // SCROLL SPY
   //
-  // `active` used to only change inside each Link's onClick, so it
-  // stayed stuck on whatever was last clicked even after scrolling
-  // away from that section manually. This watches each section
-  // (#home, #services, #work, #about, #cta) and updates `active`
-  // to whichever one currently sits in the "active band" near the
-  // top of the viewport — on click, on manual scroll, or on a
-  // direct page load that lands on a hash like #work.
+  // Only controls the active navigation pill.
+  // It DOES NOT modify the URL.
   // =====================================================
+
   useEffect(() => {
     const sections = navItems
       .map((item) => {
         const id = item.href.replace("#", "");
         const el = document.getElementById(id);
+
         return el ? { name: item.name, el } : null;
       })
       .filter(
-        (entry): entry is { name: string; el: HTMLElement } => entry !== null
+        (
+          entry
+        ): entry is {
+          name: string;
+          el: HTMLElement;
+        } => entry !== null
       );
 
-    if (sections.length === 0) return;
+    if (sections.length === 0) {
+      return;
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
-        // Among sections currently inside the active band, pick the
-        // one closest to the top of the viewport — this avoids
-        // flicker when two sections are briefly both intersecting.
         const visible = entries
           .filter((entry) => entry.isIntersecting)
           .sort(
             (a, b) =>
-              a.boundingClientRect.top - b.boundingClientRect.top
+              a.boundingClientRect.top -
+              b.boundingClientRect.top
           );
 
         if (visible.length > 0) {
           const topId = visible[0].target.id;
-          const match = sections.find((s) => s.el.id === topId);
+
+          const match = sections.find(
+            (section) => section.el.id === topId
+          );
+
           if (match) {
             setActive(match.name);
-
-            const newPath = topId === "home" ? "/" : `/${topId}`;
-            if (window.location.pathname !== newPath) {
-              window.history.replaceState(null, "", newPath);
-            }
           }
         }
       },
       {
-        // Treat a section as "active" once it's crossed into the
-        // upper-middle band of the viewport, and not yet left the
-        // lower-middle band — a standard scroll-spy window.
         rootMargin: "-35% 0px -55% 0px",
         threshold: 0,
       }
     );
 
-    sections.forEach(({ el }) => observer.observe(el));
+    sections.forEach(({ el }) => {
+      observer.observe(el);
+    });
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
-  // Intercepts every nav click so the browser never performs its
-  // native "jump + append #hash to the URL" behavior. Scrolls to
-  // the target section manually instead, and the address bar stays
-  // untouched — the scroll-spy above only updates `active` for the
-  // pill highlight, it no longer writes to the URL at all.
+  // =====================================================
+  // NAVIGATION CLICK
+  //
+  // IMPORTANT:
+  // We don't use history.replaceState().
+  // We simply scroll to the section.
+  // =====================================================
+
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     item: { name: string; href: string }
   ) => {
     e.preventDefault();
-    const id = item.href.replace("#", "");
-    document.getElementById(id)?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-    setActive(item.name);
 
-    // Cosmetic only: displays /work instead of /#work. This does NOT
-    // create a real route — refreshing the page or opening this URL
-    // fresh will 404 unless matching page routes exist for each
-    // section. See note below if you want that supported properly.
-    const newPath = id === "home" ? "/" : `/${id}`;
-    if (window.location.pathname !== newPath) {
-      window.history.replaceState(null, "", newPath);
+    const id = item.href.replace("#", "");
+
+    const element = document.getElementById(id);
+
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }
+
+    setActive(item.name);
+    setMobileOpen(false);
   };
+
+  // =====================================================
+  // RENDER
+  // =====================================================
 
   return (
     <header
@@ -146,7 +260,11 @@ export default function Navbar() {
         transition-all
         duration-500
         ease-out
-        ${scrolled ? "top-[12px] px-[14px] py-[10px]" : "top-[25px] px-0 py-0"}
+        ${
+          scrolled
+            ? "top-[12px] px-[14px] py-[10px]"
+            : "top-[25px] px-0 py-0"
+        }
       `}
       style={{
         background: scrolled
@@ -159,11 +277,19 @@ export default function Navbar() {
             )
           `
           : "transparent",
+
         border: scrolled
           ? "1px solid rgba(255,255,255,0.10)"
           : "1px solid transparent",
-        backdropFilter: scrolled ? "blur(22px) saturate(160%)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(22px) saturate(160%)" : "none",
+
+        backdropFilter: scrolled
+          ? "blur(22px) saturate(160%)"
+          : "none",
+
+        WebkitBackdropFilter: scrolled
+          ? "blur(22px) saturate(160%)"
+          : "none",
+
         boxShadow: scrolled
           ? "0 8px 28px rgba(0,0,0,0.32), 0 0 20px rgba(144,10,156,0.10)"
           : "none",
@@ -173,11 +299,6 @@ export default function Navbar() {
 
         {/* =====================================================
             LOGO
-            NOTE: onClick now syncs `active` back to "Home" so the
-            nav pill highlight is correct after navigating home via
-            the logo instead of the "Home" link itself. Also scales
-            down slightly once scrolled, in step with the header's
-            backdrop transition, so it settles into the smaller bar.
         ====================================================== */}
 
         <Link
@@ -186,6 +307,15 @@ export default function Navbar() {
           onClick={() => {
             setActive("Home");
             setMobileOpen(false);
+
+            window.setTimeout(() => {
+              document
+                .getElementById("home")
+                ?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+            }, 0);
           }}
           className={`
             group
@@ -195,7 +325,11 @@ export default function Navbar() {
             transition-all
             duration-500
             ease-out
-            ${scrolled ? "h-[42px] w-[105px]" : "h-[52px] w-[131px]"}
+            ${
+              scrolled
+                ? "h-[42px] w-[105px]"
+                : "h-[52px] w-[131px]"
+            }
           `}
         >
           <img
@@ -208,7 +342,11 @@ export default function Navbar() {
               duration-500
               ease-out
               group-hover:scale-[1.02]
-              ${scrolled ? "w-[82px]" : "w-[102px]"}
+              ${
+                scrolled
+                  ? "w-[82px]"
+                  : "w-[102px]"
+              }
             `}
             style={{
               filter: `
@@ -220,9 +358,9 @@ export default function Navbar() {
           />
         </Link>
 
-
         {/* =====================================================
-            MAIN LIQUID GLASS NAVIGATION (desktop only)
+            MAIN LIQUID GLASS NAVIGATION
+            DESKTOP ONLY
         ====================================================== */}
 
         <div
@@ -236,9 +374,6 @@ export default function Navbar() {
             lg:flex
           "
           style={{
-            /*
-             * Main glass body
-             */
             background: `
               linear-gradient(
                 135deg,
@@ -250,28 +385,20 @@ export default function Navbar() {
               )
             `,
 
-            /*
-             * Glass border + depth
-             */
             border: "1px solid rgba(255,255,255,0.16)",
 
-            /*
-             * Real background blur
-             */
             backdropFilter: `
               blur(26px)
               saturate(175%)
               contrast(105%)
             `,
+
             WebkitBackdropFilter: `
               blur(26px)
               saturate(175%)
               contrast(105%)
             `,
 
-            /*
-             * 3D glass depth
-             */
             boxShadow: `
               inset 0 1px 0 rgba(255,255,255,0.28),
               inset 0 -1px 0 rgba(0,0,0,0.42),
@@ -283,9 +410,7 @@ export default function Navbar() {
           }}
         >
 
-          {/* =================================================
-              OUTER GLASS HIGHLIGHT
-          ================================================== */}
+          {/* OUTER GLASS HIGHLIGHT */}
 
           <span
             className="
@@ -304,9 +429,7 @@ export default function Navbar() {
             }}
           />
 
-          {/* =================================================
-              INNER GLASS SURFACE
-          ================================================== */}
+          {/* INNER GLASS SURFACE */}
 
           <div
             className="
@@ -345,9 +468,7 @@ export default function Navbar() {
             }}
           >
 
-            {/* =================================================
-                LIQUID REFRACTION
-            ================================================== */}
+            {/* LIQUID REFRACTION */}
 
             <span
               className="
@@ -384,10 +505,7 @@ export default function Navbar() {
               }}
             />
 
-
-            {/* =================================================
-                NAVIGATION LINKS
-            ================================================== */}
+            {/* NAVIGATION LINKS */}
 
             {navItems.map((item) => {
               const isActive = active === item.name;
@@ -397,9 +515,15 @@ export default function Navbar() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  onClick={(e) => handleNavClick(e, item)}
-                  onMouseEnter={() => setHovered(item.name)}
-                  onMouseLeave={() => setHovered(null)}
+                  onClick={(e) =>
+                    handleNavClick(e, item)
+                  }
+                  onMouseEnter={() =>
+                    setHovered(item.name)
+                  }
+                  onMouseLeave={() =>
+                    setHovered(null)
+                  }
                   className="
                     relative
                     z-10
@@ -461,8 +585,8 @@ export default function Navbar() {
                       : "none",
                   }}
                 >
-
                   {/* Active pill top reflection */}
+
                   {isActive && (
                     <span
                       className="
@@ -491,9 +615,9 @@ export default function Navbar() {
           </div>
         </div>
 
-
         {/* =====================================================
-            LET'S TALK CTA (desktop only)
+            LET'S TALK CTA
+            DESKTOP ONLY
         ====================================================== */}
 
         <button
@@ -534,14 +658,16 @@ export default function Navbar() {
               )
             `,
 
-            border: hovered === "cta"
-              ? "1px solid rgba(144,10,156,0.60)"
-              : "1px solid rgba(255,255,255,0.17)",
+            border:
+              hovered === "cta"
+                ? "1px solid rgba(144,10,156,0.60)"
+                : "1px solid rgba(255,255,255,0.17)",
 
             backdropFilter: `
               blur(24px)
               saturate(175%)
             `,
+
             WebkitBackdropFilter: `
               blur(24px)
               saturate(175%)
@@ -564,7 +690,8 @@ export default function Navbar() {
           }}
         >
 
-          {/* CTA top glass reflection */}
+          {/* CTA TOP GLASS REFLECTION */}
+
           <span
             className="
               pointer-events-none
@@ -582,7 +709,8 @@ export default function Navbar() {
             }}
           />
 
-          {/* CTA internal purple refraction */}
+          {/* CTA INTERNAL PURPLE REFRACTION */}
+
           <span
             className="
               pointer-events-none
@@ -604,10 +732,7 @@ export default function Navbar() {
             Let's Talk
           </span>
 
-
-          {/* =================================================
-              ARROW CIRCLE
-          ================================================== */}
+          {/* ARROW CIRCLE */}
 
           <span
             className="
@@ -650,16 +775,18 @@ export default function Navbar() {
           </span>
         </button>
 
-
         {/* =====================================================
-            HAMBURGER TOGGLE (mobile only)
+            HAMBURGER
+            MOBILE ONLY
         ====================================================== */}
 
         <button
           type="button"
           aria-label="Toggle menu"
           aria-expanded={mobileOpen}
-          onClick={() => setMobileOpen((v) => !v)}
+          onClick={() =>
+            setMobileOpen((value) => !value)
+          }
           className="
             flex
             h-[46px]
@@ -681,21 +808,21 @@ export default function Navbar() {
           "
         >
           {mobileOpen ? (
-            <X size={20} strokeWidth={1.8} />
+            <X
+              size={20}
+              strokeWidth={1.8}
+            />
           ) : (
-            <Menu size={20} strokeWidth={1.8} />
+            <Menu
+              size={20}
+              strokeWidth={1.8}
+            />
           )}
         </button>
-
       </nav>
-
 
       {/* =====================================================
           MOBILE MENU PANEL
-          
-          Slides/fades open below the header row on small screens.
-          Same glass language as the desktop pill. Every link and
-          the logo already close it via onClick.
       ====================================================== */}
 
       <div
@@ -705,7 +832,11 @@ export default function Navbar() {
           duration-400
           ease-out
           lg:hidden
-          ${mobileOpen ? "mt-[12px] max-h-[420px] opacity-100" : "max-h-0 opacity-0"}
+          ${
+            mobileOpen
+              ? "mt-[12px] max-h-[420px] opacity-100"
+              : "max-h-0 opacity-0"
+          }
         `}
       >
         <div
@@ -726,14 +857,21 @@ export default function Navbar() {
                 rgba(17,12,17,0.97) 60%
               )
             `,
-            backdropFilter: "blur(26px) saturate(175%)",
-            WebkitBackdropFilter: "blur(26px) saturate(175%)",
+
+            backdropFilter:
+              "blur(26px) saturate(175%)",
+
+            WebkitBackdropFilter:
+              "blur(26px) saturate(175%)",
+
             boxShadow:
               "inset 0 1px 0 rgba(255,255,255,0.10), 0 12px 40px rgba(0,0,0,0.45)",
           }}
         >
           {navItems.map((item) => {
-            const isActive = active === item.name;
+            const isActive =
+              active === item.name;
+
             return (
               <Link
                 key={item.name}
@@ -758,6 +896,7 @@ export default function Navbar() {
                   color: isActive
                     ? "rgba(255,255,255,0.98)"
                     : "rgba(255,255,255,0.75)",
+
                   background: isActive
                     ? `
                       linear-gradient(
@@ -777,6 +916,7 @@ export default function Navbar() {
           <button
             ref={buttonRef}
             onClick={open}
+            type="button"
             className="
               mt-[6px]
               flex
@@ -797,15 +937,20 @@ export default function Navbar() {
                   rgba(76,3,93,0.42) 100%
                 )
               `,
-              border: "1px solid rgba(255,255,255,0.17)",
+
+              border:
+                "1px solid rgba(255,255,255,0.17)",
             }}
           >
             Let's Talk
-            <ArrowUpRight size={16} strokeWidth={1.8} />
+
+            <ArrowUpRight
+              size={16}
+              strokeWidth={1.8}
+            />
           </button>
         </div>
       </div>
-
     </header>
   );
 }
