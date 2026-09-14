@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   Camera,
   Video,
@@ -9,9 +10,18 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 
+import ServiceModal, {
+  type ServiceModalData,
+} from "./ServiceModal";
+
+// =========================================================
+// SERVICES DATA
+// =========================================================
+
 const services = [
   {
     title: "Photography",
+
     description: (
       <>
         Capturing moments
@@ -21,10 +31,64 @@ const services = [
         beautifully.
       </>
     ),
+
     icon: Camera,
+
+    modal: {
+      title: "Photography",
+      tagline: "Every shoot, tailored to the moment.",
+
+      // Forward video: start → end
+      videoSrc: "/videos/photography.mp4",
+
+      // Reverse video: end → start
+      reverseVideoSrc: "/videos/photography-reverse.mp4",
+
+      packages: [
+        {
+          name: "Photoshoot",
+          duration: "2 hour session",
+          photos: "Unlimited Photos",
+
+          includes: [
+            "Personal Portrait Shoot",
+            "Family Photoshoot",
+            "Creative Concept Shoot",
+            "Social Media Content Shoot",
+            "Corporate Headshots",
+          ],
+        },
+
+        {
+          name: "Graduation Shoot",
+          duration: "2 hours session",
+          photos: "Unlimited Photos",
+          includes: [],
+        },
+
+        {
+          name: "Event Photography",
+          photos: "Unlimited Photos",
+
+          includes: [
+            "Concerts & Musical Shows",
+            "Corporate Events",
+            "Anniversaries",
+            "Promotional Events",
+            "Festivals & Cultural Events",
+          ],
+        },
+      ],
+    } satisfies ServiceModalData,
   },
+
+  // =========================================================
+  // VIDEOGRAPHY
+  // =========================================================
+
   {
     title: "Videography",
+
     description: (
       <>
         Cinematic visuals
@@ -34,10 +98,62 @@ const services = [
         to life.
       </>
     ),
+
     icon: Video,
+
+    modal: {
+      title: "Videography",
+      tagline: "Cinematic stories, shot and cut for how you'll use them.",
+
+      // Forward
+      videoSrc: "/videos/videography.mp4",
+
+      // Reverse
+      reverseVideoSrc: "/videos/videography-reverse.mp4",
+
+      packages: [
+        {
+          name: "Promo Video",
+          duration: "Half-day shoot",
+
+          includes: [
+            "Concept & storyboard",
+            "On-site filming",
+            "Colour grading",
+          ],
+        },
+
+        {
+          name: "Event Highlight Reel",
+          duration: "Full-day coverage",
+
+          includes: [
+            "Multi-camera coverage",
+            "Edited highlight cut",
+            "Raw footage handover",
+          ],
+        },
+
+        {
+          name: "Brand Film",
+
+          includes: [
+            "Scripting support",
+            "Studio or on-location filming",
+            "Motion graphics",
+          ],
+        },
+      ],
+    } satisfies ServiceModalData,
   },
+
+  // =========================================================
+  // DIGITAL MARKETING
+  // =========================================================
+
   {
     title: "Digital Marketing",
+
     description: (
       <>
         Strategies that
@@ -47,10 +163,61 @@ const services = [
         and reach.
       </>
     ),
+
     icon: Megaphone,
+
+    modal: {
+      title: "Digital Marketing",
+      tagline: "Growth strategy built around your audience.",
+
+      // Forward
+      videoSrc: "/videos/digital-marketing.mp4",
+
+      // Reverse
+      reverseVideoSrc: "/videos/digital-marketing-reverse.mp4",
+
+      packages: [
+        {
+          name: "Social Growth",
+          duration: "Monthly retainer",
+
+          includes: [
+            "Content calendar",
+            "Community management",
+            "Monthly performance report",
+          ],
+        },
+
+        {
+          name: "Paid Campaigns",
+
+          includes: [
+            "Ad creative",
+            "Audience targeting",
+            "Ongoing optimisation",
+          ],
+        },
+
+        {
+          name: "Brand Strategy",
+
+          includes: [
+            "Positioning workshop",
+            "Competitor audit",
+            "Channel roadmap",
+          ],
+        },
+      ],
+    } satisfies ServiceModalData,
   },
+
+  // =========================================================
+  // GRAPHIC DESIGNING
+  // =========================================================
+
   {
     title: "Graphic Designing",
+
     description: (
       <>
         Designs that
@@ -60,10 +227,60 @@ const services = [
         inspire and stand out.
       </>
     ),
+
     icon: Palette,
+
+    modal: {
+      title: "Graphic Designing",
+      tagline: "Visual identity that holds up everywhere it's seen.",
+
+      // Forward
+      videoSrc: "/videos/graphic-designing.mp4",
+
+      // Reverse
+      reverseVideoSrc: "/videos/graphic-designing-reverse.mp4",
+
+      packages: [
+        {
+          name: "Brand Identity",
+
+          includes: [
+            "Logo suite",
+            "Colour & type system",
+            "Brand guidelines",
+          ],
+        },
+
+        {
+          name: "Social Media Kit",
+
+          includes: [
+            "Post templates",
+            "Story templates",
+            "Highlight covers",
+          ],
+        },
+
+        {
+          name: "Print & Packaging",
+
+          includes: [
+            "Business cards",
+            "Packaging design",
+            "Print-ready files",
+          ],
+        },
+      ],
+    } satisfies ServiceModalData,
   },
+
+  // =========================================================
+  // EVENT COVERAGE
+  // =========================================================
+
   {
     title: "Event Coverage",
+
     description: (
       <>
         Every event,
@@ -73,11 +290,67 @@ const services = [
         precision and style.
       </>
     ),
+
     icon: CalendarDays,
+
+    modal: {
+      title: "Event Coverage",
+      tagline: "Full coverage, so nothing about the day gets missed.",
+
+      // Forward
+      videoSrc: "/videos/event-coverage.mp4",
+
+      // Reverse
+      reverseVideoSrc: "/videos/event-coverage-reverse.mp4",
+
+      packages: [
+        {
+          name: "Half-Day Coverage",
+          duration: "Up to 4 hours",
+          photos: "Unlimited Photos",
+
+          includes: [
+            "Single photographer",
+            "Edited gallery",
+            "Online delivery",
+          ],
+        },
+
+        {
+          name: "Full-Day Coverage",
+          duration: "Up to 8 hours",
+          photos: "Unlimited Photos",
+
+          includes: [
+            "Two photographers",
+            "Edited gallery",
+            "Highlight selection",
+          ],
+        },
+
+        {
+          name: "Multi-Day Event",
+          photos: "Unlimited Photos",
+
+          includes: [
+            "Dedicated team",
+            "Daily turnaround previews",
+            "Full edited archive",
+          ],
+        },
+      ],
+    } satisfies ServiceModalData,
   },
 ];
 
+// =========================================================
+// SERVICES COMPONENT
+// =========================================================
+
 export default function Services() {
+  const [activeService, setActiveService] =
+    useState<ServiceModalData | null>(null);
+
   return (
     <section
       id="services"
@@ -95,7 +368,6 @@ export default function Services() {
         xl:px-[63px]
       "
     >
-
       {/* =====================================================
           BACKGROUND PURPLE ATMOSPHERE
       ====================================================== */}
@@ -136,10 +408,8 @@ export default function Services() {
         }}
       />
 
-
       {/* =====================================================
           TOP SUBTITLE
-          NOTE: text and spacing scaled up ~1.25x
       ====================================================== */}
 
       <div
@@ -154,15 +424,12 @@ export default function Services() {
           tracking-[0.18em]
           text-white/55
         "
-        
       >
         What We Do
       </div>
 
-
       {/* =====================================================
           MAIN TITLE
-          NOTE: text sizes and margin scaled up ~1.25x
       ====================================================== */}
 
       <h2
@@ -195,11 +462,8 @@ export default function Services() {
         </span>
       </h2>
 
-
       {/* =====================================================
           SERVICES GRID
-          NOTE: max-width widened to match Hero/Navbar scale,
-          gap increased proportionally
       ====================================================== */}
 
       <div
@@ -217,8 +481,7 @@ export default function Services() {
           xl:grid-cols-5
         "
       >
-
-        {services.map((service, index) => {
+        {services.map((service) => {
           const Icon = service.icon;
 
           return (
@@ -249,10 +512,9 @@ export default function Services() {
                   "inset 0 1px 0 rgba(255,255,255,0.16), inset 0 -1px 0 rgba(144,10,156,0.08), 0 8px 35px rgba(0,0,0,0.22)",
               }}
             >
-
-              {/* ===========================================
+              {/* =================================================
                   GLASS TOP REFLECTION
-              ============================================ */}
+              ================================================== */}
 
               <div
                 className="
@@ -270,10 +532,9 @@ export default function Services() {
                 }}
               />
 
-
-              {/* ===========================================
+              {/* =================================================
                   PURPLE CARD GLOW
-              ============================================ */}
+              ================================================== */}
 
               <div
                 className="
@@ -296,11 +557,9 @@ export default function Services() {
                 }}
               />
 
-
-              {/* ===========================================
+              {/* =================================================
                   ICON
-                  NOTE: circle and icon size scaled up ~1.25x
-              ============================================ */}
+              ================================================== */}
 
               <div
                 className="
@@ -322,7 +581,6 @@ export default function Services() {
                   group-hover:shadow-[0_0_28px_rgba(144,10,156,0.35),inset_0_1px_1px_rgba(255,255,255,0.22)]
                 "
               >
-
                 {/* Icon inner glow */}
 
                 <div
@@ -352,14 +610,11 @@ export default function Services() {
                     group-hover:text-white
                   "
                 />
-
               </div>
 
-
-              {/* ===========================================
+              {/* =================================================
                   SERVICE TITLE
-                  NOTE: margin and text size scaled up ~1.25x
-              ============================================ */}
+              ================================================== */}
 
               <h3
                 className="
@@ -371,16 +626,13 @@ export default function Services() {
                   tracking-[-0.02em]
                   text-white
                 "
-               
               >
                 {service.title}
               </h3>
 
-
-              {/* ===========================================
+              {/* =================================================
                   DESCRIPTION
-                  NOTE: margin and text size scaled up ~1.25x
-              ============================================ */}
+              ================================================== */}
 
               <p
                 className="
@@ -396,15 +648,16 @@ export default function Services() {
                 {service.description}
               </p>
 
-
-              {/* ===========================================
+              {/* =================================================
                   ARROW BUTTON
-                  NOTE: position, size, icon scaled up ~1.25x
-              ============================================ */}
+              ================================================== */}
 
               <button
-                aria-label={`View ${service.title}`}
+                type="button"
+                aria-label={`View ${service.title} packages`}
+                onClick={() => setActiveService(service.modal)}
                 className="
+                  cursor-pointer
                   absolute
                   bottom-[19px]
                   right-[21px]
@@ -439,10 +692,9 @@ export default function Services() {
                 />
               </button>
 
-
-              {/* ===========================================
+              {/* =================================================
                   BOTTOM GLASS REFLECTION
-              ============================================ */}
+              ================================================== */}
 
               <div
                 className="
@@ -459,21 +711,13 @@ export default function Services() {
                     "linear-gradient(90deg, transparent, rgba(144,10,156,0.7), transparent)",
                 }}
               />
-
             </article>
           );
         })}
-
       </div>
-
 
       {/* =====================================================
           BOTTOM DECORATIVE DIVIDER
-          
-          This is the purple transition that leads into the
-          "WE DON'T FOLLOW TRENDS..." section in your reference.
-          NOTE: top margin scaled up ~1.25x; side insets match
-          the new section padding above.
       ====================================================== */}
 
       <div
@@ -490,11 +734,20 @@ export default function Services() {
         style={{
           background:
             "linear-gradient(90deg, transparent 0%, rgba(144,10,156,0.18) 15%, rgba(144,10,156,0.5) 50%, rgba(144,10,156,0.18) 85%, transparent 100%)",
+
           boxShadow:
             "0 0 20px rgba(144,10,156,0.15)",
         }}
       />
 
+      {/* =====================================================
+          SERVICE MODAL
+      ====================================================== */}
+
+      <ServiceModal
+        service={activeService}
+        onClose={() => setActiveService(null)}
+      />
     </section>
   );
 }
