@@ -43,6 +43,96 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
+  // =====================================================
+  // SCROLL SPY
+  //
+  // `active` used to only change inside each Link's onClick, so it
+  // stayed stuck on whatever was last clicked even after scrolling
+  // away from that section manually. This watches each section
+  // (#home, #services, #work, #about, #cta) and updates `active`
+  // to whichever one currently sits in the "active band" near the
+  // top of the viewport — on click, on manual scroll, or on a
+  // direct page load that lands on a hash like #work.
+  // =====================================================
+  useEffect(() => {
+    const sections = navItems
+      .map((item) => {
+        const id = item.href.replace("#", "");
+        const el = document.getElementById(id);
+        return el ? { name: item.name, el } : null;
+      })
+      .filter(
+        (entry): entry is { name: string; el: HTMLElement } => entry !== null
+      );
+
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Among sections currently inside the active band, pick the
+        // one closest to the top of the viewport — this avoids
+        // flicker when two sections are briefly both intersecting.
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort(
+            (a, b) =>
+              a.boundingClientRect.top - b.boundingClientRect.top
+          );
+
+        if (visible.length > 0) {
+          const topId = visible[0].target.id;
+          const match = sections.find((s) => s.el.id === topId);
+          if (match) {
+            setActive(match.name);
+
+            const newPath = topId === "home" ? "/" : `/${topId}`;
+            if (window.location.pathname !== newPath) {
+              window.history.replaceState(null, "", newPath);
+            }
+          }
+        }
+      },
+      {
+        // Treat a section as "active" once it's crossed into the
+        // upper-middle band of the viewport, and not yet left the
+        // lower-middle band — a standard scroll-spy window.
+        rootMargin: "-35% 0px -55% 0px",
+        threshold: 0,
+      }
+    );
+
+    sections.forEach(({ el }) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Intercepts every nav click so the browser never performs its
+  // native "jump + append #hash to the URL" behavior. Scrolls to
+  // the target section manually instead, and the address bar stays
+  // untouched — the scroll-spy above only updates `active` for the
+  // pill highlight, it no longer writes to the URL at all.
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    item: { name: string; href: string }
+  ) => {
+    e.preventDefault();
+    const id = item.href.replace("#", "");
+    document.getElementById(id)?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+    setActive(item.name);
+
+    // Cosmetic only: displays /work instead of /#work. This does NOT
+    // create a real route — refreshing the page or opening this URL
+    // fresh will 404 unless matching page routes exist for each
+    // section. See note below if you want that supported properly.
+    const newPath = id === "home" ? "/" : `/${id}`;
+    if (window.location.pathname !== newPath) {
+      window.history.replaceState(null, "", newPath);
+    }
+  };
+
   return (
     <header
       className={`
@@ -307,7 +397,7 @@ export default function Navbar() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  onClick={() => setActive(item.name)}
+                  onClick={(e) => handleNavClick(e, item)}
                   onMouseEnter={() => setHovered(item.name)}
                   onMouseLeave={() => setHovered(null)}
                   className="
@@ -648,8 +738,8 @@ export default function Navbar() {
               <Link
                 key={item.name}
                 href={item.href}
-                onClick={() => {
-                  setActive(item.name);
+                onClick={(e) => {
+                  handleNavClick(e, item);
                   setMobileOpen(false);
                 }}
                 className="
