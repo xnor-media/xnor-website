@@ -3,6 +3,7 @@ import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ContactModalProvider } from "@/contexts/ContactModalContext";
 import ContactModal from "@/components/ContactModal";
+import { Analytics } from "@vercel/analytics/next";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -27,6 +28,7 @@ export default function RootLayout({
           {children}
           <ContactModal />
         </ContactModalProvider>
+        <Analytics />
       </body>
     </html>
   );
