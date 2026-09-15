@@ -663,13 +663,14 @@ export default function Services() {
                   right-[21px]
                   flex
                   h-[38px]
-                  w-[54px]
                   items-center
                   justify-center
+                  gap-2
                   rounded-full
                   border
                   border-[#900a9c]/45
                   bg-[#4c035d]/25
+                  px-4
                   text-white/85
                   shadow-[inset_0_1px_2px_rgba(255,255,255,0.16),0_0_12px_rgba(144,10,156,0.12)]
                   transition-all
@@ -680,10 +681,22 @@ export default function Services() {
                   hover:shadow-[0_0_20px_rgba(144,10,156,0.35)]
                 "
               >
+                <span
+                  className="
+                    text-[13px]
+                    font-medium
+                    tracking-[0.01em]
+                    whitespace-nowrap
+                  "
+                >
+                  View Packages
+                </span>
+
                 <ArrowUpRight
                   size={19}
                   strokeWidth={1.7}
                   className="
+                    shrink-0
                     transition-transform
                     duration-300
                     group-hover:translate-x-[1px]

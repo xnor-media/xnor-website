@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { useContactModal } from "@/contexts/ContactModalContext";
+import { scrollToSection } from "@/lib/scrollToSection";
 
 const navItems = [
   { name: "Home", href: "#home" },
@@ -25,10 +26,6 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // =====================================================
-  // HEADER SCROLL STATE
-  // =====================================================
-
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 24);
@@ -36,18 +33,12 @@ export default function Navbar() {
 
     onScroll();
 
-    window.addEventListener("scroll", onScroll, {
-      passive: true,
-    });
+    window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
       window.removeEventListener("scroll", onScroll);
     };
   }, []);
-
-  // =====================================================
-  // CLOSE MOBILE MENU ON DESKTOP
-  // =====================================================
 
   useEffect(() => {
     const onResize = () => {
@@ -63,68 +54,34 @@ export default function Navbar() {
     };
   }, []);
 
-  // =====================================================
-  // DETERMINE ACTIVE SECTION FROM URL
-  // =====================================================
-
   useEffect(() => {
     const normalizedPath = pathname.replace(/\/+$/, "") || "/";
 
     if (normalizedPath === "/") {
       setActive("Home");
-    } else if (
-      normalizedPath === "/services" ||
-      normalizedPath === "/service"
-    ) {
+    } else if (normalizedPath === "/services" || normalizedPath === "/service") {
       setActive("Services");
     } else if (normalizedPath === "/work") {
       setActive("Work");
-    } else if (
-      normalizedPath === "/about" ||
-      normalizedPath === "/about-us"
-    ) {
+    } else if (normalizedPath === "/about" || normalizedPath === "/about-us") {
       setActive("About Us");
-    } else if (
-      normalizedPath === "/contact" ||
-      normalizedPath === "/cta"
-    ) {
+    } else if (normalizedPath === "/contact" || normalizedPath === "/cta") {
       setActive("Contact");
     }
   }, [pathname]);
-
-  // =====================================================
-  // SCROLL TO SECTION WHEN ENTERING A DIRECT URL
-  //
-  // Examples:
-  //
-  // /services -> scroll to #services
-  // /service  -> scroll to #services
-  // /work     -> scroll to #work
-  // /about    -> scroll to #about
-  // /contact  -> scroll to #cta
-  // =====================================================
 
   useEffect(() => {
     const normalizedPath = pathname.replace(/\/+$/, "") || "/";
 
     let targetId: string | null = null;
 
-    if (
-      normalizedPath === "/services" ||
-      normalizedPath === "/service"
-    ) {
+    if (normalizedPath === "/services" || normalizedPath === "/service") {
       targetId = "services";
     } else if (normalizedPath === "/work") {
       targetId = "work";
-    } else if (
-      normalizedPath === "/about" ||
-      normalizedPath === "/about-us"
-    ) {
+    } else if (normalizedPath === "/about" || normalizedPath === "/about-us") {
       targetId = "about";
-    } else if (
-      normalizedPath === "/contact" ||
-      normalizedPath === "/cta"
-    ) {
+    } else if (normalizedPath === "/contact" || normalizedPath === "/cta") {
       targetId = "cta";
     }
 
@@ -132,15 +89,11 @@ export default function Navbar() {
       return;
     }
 
-    // Wait until the homepage has mounted after the rewrite.
     const timer = window.setTimeout(() => {
-      const element = document.getElementById(targetId);
+      const element = document.getElementById(targetId!);
 
       if (element) {
-        element.scrollIntoView({
-          behavior: "instant",
-          block: "start",
-        });
+        element.scrollIntoView({ behavior: "instant", block: "start" });
       }
     }, 100);
 
@@ -148,13 +101,6 @@ export default function Navbar() {
       window.clearTimeout(timer);
     };
   }, [pathname]);
-
-  // =====================================================
-  // SCROLL SPY
-  //
-  // Only controls the active navigation pill.
-  // It DOES NOT modify the URL.
-  // =====================================================
 
   useEffect(() => {
     const sections = navItems
@@ -165,12 +111,7 @@ export default function Navbar() {
         return el ? { name: item.name, el } : null;
       })
       .filter(
-        (
-          entry
-        ): entry is {
-          name: string;
-          el: HTMLElement;
-        } => entry !== null
+        (entry): entry is { name: string; el: HTMLElement } => entry !== null
       );
 
     if (sections.length === 0) {
@@ -181,28 +122,18 @@ export default function Navbar() {
       (entries) => {
         const visible = entries
           .filter((entry) => entry.isIntersecting)
-          .sort(
-            (a, b) =>
-              a.boundingClientRect.top -
-              b.boundingClientRect.top
-          );
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
 
         if (visible.length > 0) {
           const topId = visible[0].target.id;
-
-          const match = sections.find(
-            (section) => section.el.id === topId
-          );
+          const match = sections.find((section) => section.el.id === topId);
 
           if (match) {
             setActive(match.name);
           }
         }
       },
-      {
-        rootMargin: "-35% 0px -55% 0px",
-        threshold: 0,
-      }
+      { rootMargin: "-35% 0px -55% 0px", threshold: 0 }
     );
 
     sections.forEach(({ el }) => {
@@ -214,14 +145,6 @@ export default function Navbar() {
     };
   }, []);
 
-  // =====================================================
-  // NAVIGATION CLICK
-  //
-  // IMPORTANT:
-  // We don't use history.replaceState().
-  // We simply scroll to the section.
-  // =====================================================
-
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     item: { name: string; href: string }
@@ -229,23 +152,11 @@ export default function Navbar() {
     e.preventDefault();
 
     const id = item.href.replace("#", "");
-
-    const element = document.getElementById(id);
-
-    if (element) {
-      element.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
+    scrollToSection(id);
 
     setActive(item.name);
     setMobileOpen(false);
   };
-
-  // =====================================================
-  // RENDER
-  // =====================================================
 
   return (
     <header
@@ -260,62 +171,31 @@ export default function Navbar() {
         transition-all
         duration-500
         ease-out
-        ${
-          scrolled
-            ? "top-[12px] px-[14px] py-[10px]"
-            : "top-[25px] px-0 py-0"
-        }
+        ${scrolled ? "top-[12px] px-[14px] py-[10px]" : "top-[25px] px-0 py-0"}
       `}
       style={{
         background: scrolled
-          ? `
-            linear-gradient(
-              135deg,
-              rgba(255,255,255,0.06) 0%,
-              rgba(144,10,156,0.10) 40%,
-              rgba(17,12,17,0.62) 100%
-            )
-          `
+          ? `linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(144,10,156,0.10) 40%, rgba(17,12,17,0.62) 100%)`
           : "transparent",
-
         border: scrolled
           ? "1px solid rgba(255,255,255,0.10)"
           : "1px solid transparent",
-
-        backdropFilter: scrolled
-          ? "blur(22px) saturate(160%)"
-          : "none",
-
-        WebkitBackdropFilter: scrolled
-          ? "blur(22px) saturate(160%)"
-          : "none",
-
+        backdropFilter: scrolled ? "blur(22px) saturate(160%)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(22px) saturate(160%)" : "none",
         boxShadow: scrolled
           ? "0 8px 28px rgba(0,0,0,0.32), 0 0 20px rgba(144,10,156,0.10)"
           : "none",
       }}
     >
       <nav className="flex items-center justify-between gap-6">
-
-        {/* =====================================================
-            LOGO
-        ====================================================== */}
-
         <Link
           href="/"
           aria-label="XNOR Home"
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
             setActive("Home");
             setMobileOpen(false);
-
-            window.setTimeout(() => {
-              document
-                .getElementById("home")
-                ?.scrollIntoView({
-                  behavior: "smooth",
-                  block: "start",
-                });
-            }, 0);
+            scrollToSection("home");
           }}
           className={`
             group
@@ -325,11 +205,7 @@ export default function Navbar() {
             transition-all
             duration-500
             ease-out
-            ${
-              scrolled
-                ? "h-[42px] w-[105px]"
-                : "h-[52px] w-[131px]"
-            }
+            ${scrolled ? "h-[42px] w-[105px]" : "h-[52px] w-[131px]"}
           `}
         >
           <img
@@ -342,63 +218,21 @@ export default function Navbar() {
               duration-500
               ease-out
               group-hover:scale-[1.02]
-              ${
-                scrolled
-                  ? "w-[82px]"
-                  : "w-[102px]"
-              }
+              ${scrolled ? "w-[82px]" : "w-[102px]"}
             `}
             style={{
-              filter: `
-                brightness(1.15)
-                contrast(1.05)
-                drop-shadow(0 0 5px rgba(255,255,255,0.08))
-              `,
+              filter: `brightness(1.15) contrast(1.05) drop-shadow(0 0 5px rgba(255,255,255,0.08))`,
             }}
           />
         </Link>
 
-        {/* =====================================================
-            MAIN LIQUID GLASS NAVIGATION
-            DESKTOP ONLY
-        ====================================================== */}
-
         <div
-          className="
-            relative
-            hidden
-            h-[54px]
-            items-center
-            rounded-full
-            p-[1px]
-            lg:flex
-          "
+          className="relative hidden h-[54px] items-center rounded-full p-[1px] lg:flex"
           style={{
-            background: `
-              linear-gradient(
-                135deg,
-                rgba(255,255,255,0.19) 0%,
-                rgba(255,255,255,0.07) 12%,
-                rgba(144,10,156,0.18) 38%,
-                rgba(76,3,93,0.14) 68%,
-                rgba(17,12,17,0.48) 100%
-              )
-            `,
-
+            background: `linear-gradient(135deg, rgba(255,255,255,0.19) 0%, rgba(255,255,255,0.07) 12%, rgba(144,10,156,0.18) 38%, rgba(76,3,93,0.14) 68%, rgba(17,12,17,0.48) 100%)`,
             border: "1px solid rgba(255,255,255,0.16)",
-
-            backdropFilter: `
-              blur(26px)
-              saturate(175%)
-              contrast(105%)
-            `,
-
-            WebkitBackdropFilter: `
-              blur(26px)
-              saturate(175%)
-              contrast(105%)
-            `,
-
+            backdropFilter: `blur(26px) saturate(175%) contrast(105%)`,
+            WebkitBackdropFilter: `blur(26px) saturate(175%) contrast(105%)`,
             boxShadow: `
               inset 0 1px 0 rgba(255,255,255,0.28),
               inset 0 -1px 0 rgba(0,0,0,0.42),
@@ -409,19 +243,8 @@ export default function Navbar() {
             `,
           }}
         >
-
-          {/* OUTER GLASS HIGHLIGHT */}
-
           <span
-            className="
-              pointer-events-none
-              absolute
-              left-[8%]
-              right-[8%]
-              top-[1px]
-              h-[1px]
-              rounded-full
-            "
+            className="pointer-events-none absolute left-[8%] right-[8%] top-[1px] h-[1px] rounded-full"
             style={{
               background:
                 "linear-gradient(90deg, transparent, rgba(255,255,255,0.38), transparent)",
@@ -429,57 +252,22 @@ export default function Navbar() {
             }}
           />
 
-          {/* INNER GLASS SURFACE */}
-
           <div
-            className="
-              relative
-              flex
-              h-full
-              w-full
-              items-center
-              overflow-hidden
-              rounded-full
-              px-[5px]
-            "
+            className="relative flex h-full w-full items-center overflow-hidden rounded-full px-[5px]"
             style={{
               background: `
-                radial-gradient(
-                  ellipse 80% 100% at 20% 0%,
-                  rgba(255,255,255,0.075),
-                  transparent 45%
-                ),
-                radial-gradient(
-                  ellipse 70% 100% at 80% 100%,
-                  rgba(144,10,156,0.095),
-                  transparent 48%
-                ),
-                linear-gradient(
-                  180deg,
-                  rgba(255,255,255,0.045),
-                  rgba(17,12,17,0.20)
-                )
+                radial-gradient(ellipse 80% 100% at 20% 0%, rgba(255,255,255,0.075), transparent 45%),
+                radial-gradient(ellipse 70% 100% at 80% 100%, rgba(144,10,156,0.095), transparent 48%),
+                linear-gradient(180deg, rgba(255,255,255,0.045), rgba(17,12,17,0.20))
               `,
-
               boxShadow: `
                 inset 0 1px 0 rgba(255,255,255,0.10),
                 inset 0 -1px 0 rgba(0,0,0,0.24)
               `,
             }}
           >
-
-            {/* LIQUID REFRACTION */}
-
             <span
-              className="
-                pointer-events-none
-                absolute
-                -left-[15%]
-                top-[-65%]
-                h-[120%]
-                w-[55%]
-                rounded-full
-              "
+              className="pointer-events-none absolute -left-[15%] top-[-65%] h-[120%] w-[55%] rounded-full"
               style={{
                 background:
                   "radial-gradient(ellipse, rgba(255,255,255,0.10), transparent 65%)",
@@ -489,23 +277,13 @@ export default function Navbar() {
             />
 
             <span
-              className="
-                pointer-events-none
-                absolute
-                -right-[10%]
-                bottom-[-65%]
-                h-[120%]
-                w-[48%]
-                rounded-full
-              "
+              className="pointer-events-none absolute -right-[10%] bottom-[-65%] h-[120%] w-[48%] rounded-full"
               style={{
                 background:
                   "radial-gradient(ellipse, rgba(144,10,156,0.16), transparent 68%)",
                 filter: "blur(18px)",
               }}
             />
-
-            {/* NAVIGATION LINKS */}
 
             {navItems.map((item) => {
               const isActive = active === item.name;
@@ -515,15 +293,9 @@ export default function Navbar() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  onClick={(e) =>
-                    handleNavClick(e, item)
-                  }
-                  onMouseEnter={() =>
-                    setHovered(item.name)
-                  }
-                  onMouseLeave={() =>
-                    setHovered(null)
-                  }
+                  onClick={(e) => handleNavClick(e, item)}
+                  onMouseEnter={() => setHovered(item.name)}
+                  onMouseLeave={() => setHovered(null)}
                   className="
                     relative
                     z-10
@@ -546,36 +318,19 @@ export default function Navbar() {
                       : isHovered
                         ? "rgba(255,255,255,0.95)"
                         : "rgba(255,255,255,0.70)",
-
                     textShadow: isActive
                       ? "0 0 10px rgba(255,255,255,0.16)"
                       : "none",
-
                     background: isActive
-                      ? `
-                        linear-gradient(
-                          180deg,
-                          rgba(144,10,156,0.68) 0%,
-                          rgba(76,3,93,0.58) 48%,
-                          rgba(17,12,17,0.42) 100%
-                        )
-                      `
+                      ? `linear-gradient(180deg, rgba(144,10,156,0.68) 0%, rgba(76,3,93,0.58) 48%, rgba(17,12,17,0.42) 100%)`
                       : isHovered
-                        ? `
-                          linear-gradient(
-                            180deg,
-                            rgba(255,255,255,0.075),
-                            rgba(144,10,156,0.10)
-                          )
-                        `
+                        ? `linear-gradient(180deg, rgba(255,255,255,0.075), rgba(144,10,156,0.10))`
                         : "transparent",
-
                     border: isActive
                       ? "1px solid rgba(255,255,255,0.14)"
                       : isHovered
                         ? "1px solid rgba(255,255,255,0.055)"
                         : "1px solid transparent",
-
                     boxShadow: isActive
                       ? `
                         inset 0 1px 1px rgba(255,255,255,0.24),
@@ -585,19 +340,9 @@ export default function Navbar() {
                       : "none",
                   }}
                 >
-                  {/* Active pill top reflection */}
-
                   {isActive && (
                     <span
-                      className="
-                        pointer-events-none
-                        absolute
-                        left-[18%]
-                        right-[18%]
-                        top-[2px]
-                        h-[1px]
-                        rounded-full
-                      "
+                      className="pointer-events-none absolute left-[18%] right-[18%] top-[2px] h-[1px] rounded-full"
                       style={{
                         background:
                           "linear-gradient(90deg, transparent, rgba(255,255,255,0.34), transparent)",
@@ -606,19 +351,12 @@ export default function Navbar() {
                     />
                   )}
 
-                  <span className="relative z-10">
-                    {item.name}
-                  </span>
+                  <span className="relative z-10">{item.name}</span>
                 </Link>
               );
             })}
           </div>
         </div>
-
-        {/* =====================================================
-            LET'S TALK CTA
-            DESKTOP ONLY
-        ====================================================== */}
 
         <button
           ref={buttonRef}
@@ -649,30 +387,13 @@ export default function Navbar() {
             lg:flex
           "
           style={{
-            background: `
-              linear-gradient(
-                135deg,
-                rgba(144,10,156,0.34) 0%,
-                rgba(76,3,93,0.26) 42%,
-                rgba(17,12,17,0.55) 100%
-              )
-            `,
-
+            background: `linear-gradient(135deg, rgba(144,10,156,0.34) 0%, rgba(76,3,93,0.26) 42%, rgba(17,12,17,0.55) 100%)`,
             border:
               hovered === "cta"
                 ? "1px solid rgba(144,10,156,0.60)"
                 : "1px solid rgba(255,255,255,0.17)",
-
-            backdropFilter: `
-              blur(24px)
-              saturate(175%)
-            `,
-
-            WebkitBackdropFilter: `
-              blur(24px)
-              saturate(175%)
-            `,
-
+            backdropFilter: `blur(24px) saturate(175%)`,
+            WebkitBackdropFilter: `blur(24px) saturate(175%)`,
             boxShadow:
               hovered === "cta"
                 ? `
@@ -689,19 +410,8 @@ export default function Navbar() {
                 `,
           }}
         >
-
-          {/* CTA TOP GLASS REFLECTION */}
-
           <span
-            className="
-              pointer-events-none
-              absolute
-              left-[17%]
-              right-[17%]
-              top-[2px]
-              h-[1px]
-              rounded-full
-            "
+            className="pointer-events-none absolute left-[17%] right-[17%] top-[2px] h-[1px] rounded-full"
             style={{
               background:
                 "linear-gradient(90deg, transparent, rgba(255,255,255,0.38), transparent)",
@@ -709,18 +419,8 @@ export default function Navbar() {
             }}
           />
 
-          {/* CTA INTERNAL PURPLE REFRACTION */}
-
           <span
-            className="
-              pointer-events-none
-              absolute
-              -right-[15%]
-              -top-[65%]
-              h-[150%]
-              w-[65%]
-              rounded-full
-            "
+            className="pointer-events-none absolute -right-[15%] -top-[65%] h-[150%] w-[65%] rounded-full"
             style={{
               background:
                 "radial-gradient(ellipse, rgba(144,10,156,0.22), transparent 68%)",
@@ -728,65 +428,35 @@ export default function Navbar() {
             }}
           />
 
-          <span className="relative z-10">
-            Let's Talk
-          </span>
-
-          {/* ARROW CIRCLE */}
+          <span className="relative z-10">Let's Talk</span>
 
           <span
-            className="
-              relative
-              z-10
-              flex
-              h-[22px]
-              w-[22px]
-              items-center
-              justify-center
-              rounded-full
-              transition-all
-              duration-300
-            "
+            className="relative z-10 flex h-[22px] w-[22px] items-center justify-center rounded-full transition-all duration-300"
             style={{
               background:
                 hovered === "cta"
                   ? "rgba(144,10,156,0.35)"
                   : "rgba(255,255,255,0.075)",
-
               border:
                 hovered === "cta"
                   ? "1px solid rgba(144,10,156,0.40)"
                   : "1px solid rgba(255,255,255,0.10)",
-
-              boxShadow:
-                "inset 0 1px 0 rgba(255,255,255,0.14)",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.14)",
             }}
           >
             <ArrowUpRight
               size={14}
               strokeWidth={1.8}
-              className="
-                transition-transform
-                duration-300
-                group-hover:translate-x-[1px]
-                group-hover:-translate-y-[1px]
-              "
+              className="transition-transform duration-300 group-hover:translate-x-[1px] group-hover:-translate-y-[1px]"
             />
           </span>
         </button>
-
-        {/* =====================================================
-            HAMBURGER
-            MOBILE ONLY
-        ====================================================== */}
 
         <button
           type="button"
           aria-label="Toggle menu"
           aria-expanded={mobileOpen}
-          onClick={() =>
-            setMobileOpen((value) => !value)
-          }
+          onClick={() => setMobileOpen((value) => !value)}
           className="
             flex
             h-[46px]
@@ -808,22 +478,12 @@ export default function Navbar() {
           "
         >
           {mobileOpen ? (
-            <X
-              size={20}
-              strokeWidth={1.8}
-            />
+            <X size={20} strokeWidth={1.8} />
           ) : (
-            <Menu
-              size={20}
-              strokeWidth={1.8}
-            />
+            <Menu size={20} strokeWidth={1.8} />
           )}
         </button>
       </nav>
-
-      {/* =====================================================
-          MOBILE MENU PANEL
-      ====================================================== */}
 
       <div
         className={`
@@ -832,45 +492,21 @@ export default function Navbar() {
           duration-400
           ease-out
           lg:hidden
-          ${
-            mobileOpen
-              ? "mt-[12px] max-h-[420px] opacity-100"
-              : "max-h-0 opacity-0"
-          }
+          ${mobileOpen ? "mt-[12px] max-h-[420px] opacity-100" : "max-h-0 opacity-0"}
         `}
       >
         <div
-          className="
-            flex
-            flex-col
-            gap-[6px]
-            rounded-[22px]
-            border
-            border-white/15
-            p-[14px]
-          "
+          className="flex flex-col gap-[6px] rounded-[22px] border border-white/15 p-[14px]"
           style={{
-            background: `
-              linear-gradient(
-                160deg,
-                rgba(31,20,33,0.94) 0%,
-                rgba(17,12,17,0.97) 60%
-              )
-            `,
-
-            backdropFilter:
-              "blur(26px) saturate(175%)",
-
-            WebkitBackdropFilter:
-              "blur(26px) saturate(175%)",
-
+            background: `linear-gradient(160deg, rgba(31,20,33,0.94) 0%, rgba(17,12,17,0.97) 60%)`,
+            backdropFilter: "blur(26px) saturate(175%)",
+            WebkitBackdropFilter: "blur(26px) saturate(175%)",
             boxShadow:
               "inset 0 1px 0 rgba(255,255,255,0.10), 0 12px 40px rgba(0,0,0,0.45)",
           }}
         >
           {navItems.map((item) => {
-            const isActive =
-              active === item.name;
+            const isActive = active === item.name;
 
             return (
               <Link
@@ -896,15 +532,8 @@ export default function Navbar() {
                   color: isActive
                     ? "rgba(255,255,255,0.98)"
                     : "rgba(255,255,255,0.75)",
-
                   background: isActive
-                    ? `
-                      linear-gradient(
-                        180deg,
-                        rgba(144,10,156,0.55) 0%,
-                        rgba(76,3,93,0.45) 100%
-                      )
-                    `
+                    ? `linear-gradient(180deg, rgba(144,10,156,0.55) 0%, rgba(76,3,93,0.45) 100%)`
                     : "transparent",
                 }}
               >
@@ -930,24 +559,12 @@ export default function Navbar() {
               text-white
             "
             style={{
-              background: `
-                linear-gradient(
-                  135deg,
-                  rgba(144,10,156,0.55) 0%,
-                  rgba(76,3,93,0.42) 100%
-                )
-              `,
-
-              border:
-                "1px solid rgba(255,255,255,0.17)",
+              background: `linear-gradient(135deg, rgba(144,10,156,0.55) 0%, rgba(76,3,93,0.42) 100%)`,
+              border: "1px solid rgba(255,255,255,0.17)",
             }}
           >
             Let's Talk
-
-            <ArrowUpRight
-              size={16}
-              strokeWidth={1.8}
-            />
+            <ArrowUpRight size={16} strokeWidth={1.8} />
           </button>
         </div>
       </div>

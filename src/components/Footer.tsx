@@ -2,6 +2,15 @@
 
 import Link from "next/link";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { scrollToSection } from "@/lib/scrollToSection";
+
+function handleFooterLinkClick(
+  e: React.MouseEvent<HTMLAnchorElement>,
+  href: string
+) {
+  e.preventDefault();
+  scrollToSection(href.replace("#", ""));
+}
 
 // Brand/logo icons (Instagram, LinkedIn, YouTube, Behance) are inlined as
 // plain SVGs — lucide-react's v1 release removed all trademarked brand
@@ -82,6 +91,7 @@ const socials = [
   { name: "TikTok", href: "https://www.tiktok.com/@xnormedia?_r=1&_t=ZS-99eLoTDM5xs", icon: TikTokIcon },
   { name: "LinkedIn", href: "https://www.linkedin.com/company/xnor-media/", icon: LinkedinIcon },
 ];
+
 export default function Footer() {
   return (
     <footer
@@ -142,8 +152,6 @@ export default function Footer() {
 
       {/* =====================================================
           TOP GRID
-          NOTE: max-width, gaps, and bottom padding scaled
-          up ~1.25x to match the rest of the page
       ====================================================== */}
 
       <div
@@ -166,13 +174,16 @@ export default function Footer() {
 
         {/* ===========================================
             BRAND / ABOUT
-            NOTE: logo and paragraph scaled up ~1.25x
         ============================================ */}
 
         <div className="col-span-2 lg:col-span-1">
           <Link
             href="/"
             aria-label="XNOR Home"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("home");
+            }}
             className="
               inline-flex
               h-[42px]
@@ -206,7 +217,6 @@ export default function Footer() {
 
         {/* ===========================================
             QUICK LINKS
-            NOTE: heading and link text scaled up ~1.25x
         ============================================ */}
 
         <nav aria-label="Quick links">
@@ -228,6 +238,7 @@ export default function Footer() {
               <li key={item.name}>
                 <Link
                   href={item.href}
+                  onClick={(e) => handleFooterLinkClick(e, item.href)}
                   className="
                     text-[16px]
                     text-white/65
@@ -246,7 +257,6 @@ export default function Footer() {
 
         {/* ===========================================
             SERVICES
-            NOTE: heading and link text scaled up ~1.25x
         ============================================ */}
 
         <nav aria-label="Services">
@@ -268,6 +278,7 @@ export default function Footer() {
               <li key={item.name}>
                 <Link
                   href={item.href}
+                  onClick={(e) => handleFooterLinkClick(e, item.href)}
                   className="
                     text-[16px]
                     text-white/65
@@ -286,7 +297,6 @@ export default function Footer() {
 
         {/* ===========================================
             FOLLOW US + GET IN TOUCH
-            NOTE: gaps, icon circles, and text scaled up ~1.25x
         ============================================ */}
 
         <div className="col-span-2 flex flex-col gap-[40px] sm:col-span-1 sm:flex-row lg:col-span-1 lg:flex-col lg:gap-[45px]">
@@ -313,6 +323,8 @@ export default function Footer() {
                     key={social.name}
                     href={social.href}
                     aria-label={social.name}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="
                       flex
                       h-[48px]
@@ -433,7 +445,6 @@ export default function Footer() {
 
       {/* =====================================================
           BOTTOM COPYRIGHT
-          NOTE: padding and text size scaled up ~1.25x
       ====================================================== */}
 
       <div

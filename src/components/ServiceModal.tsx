@@ -164,8 +164,8 @@ export default function ServiceModal({
 
           MOBILE:
           - Vertical layout
-          - Video is true 9:16
-          - Packages underneath
+          - Video is hidden
+          - Packages take the full modal
 
           DESKTOP:
           - Horizontal layout
@@ -254,25 +254,22 @@ export default function ServiceModal({
             VIDEO SECTION
 
             MOBILE:
-            100% width
-            aspect-ratio: 9 / 16
+            Hidden entirely - no animation shown.
 
             DESKTOP:
-            Existing 42% left column
+            Unchanged 42% left column.
         ====================================================== */}
 
         <div
           className="
             relative
-            w-full
+            hidden
             shrink-0
             overflow-hidden
             bg-[#0a070a]
 
-            aspect-[9/16]
-
+            md:block
             md:h-auto
-            md:aspect-auto
             md:w-[42%]
           "
         >
@@ -363,7 +360,7 @@ export default function ServiceModal({
             PACKAGE DETAILS
 
             MOBILE:
-            Appears directly underneath the 9:16 video.
+            Fills the whole modal since the video is hidden.
 
             DESKTOP:
             Right-side package column.
@@ -373,7 +370,7 @@ export default function ServiceModal({
           className="
             min-h-0
             flex-1
-            overflow-y-auto
+            overflow-auto
             px-5
             py-7
 
