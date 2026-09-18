@@ -181,6 +181,7 @@ export default function ServiceModal({
           w-full
           max-w-[980px]
           max-h-[92vh]
+          mt-20
           flex-col
           overflow-hidden
           rounded-[24px]

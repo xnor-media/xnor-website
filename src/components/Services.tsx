@@ -40,11 +40,8 @@ const services = [
       title: "Photography",
       tagline: "Every shoot, tailored to the moment.",
 
-      // Forward video: start → end
-      videoSrc: "/videos/photography.mp4",
-
-      // Reverse video: end → start
-      reverseVideoSrc: "/videos/photography-reverse.mp4",
+      videoSrc: "/videos/photography.webm",
+      reverseVideoSrc: "/videos/photography-reverse.webm",
 
       packages: [
         {
@@ -64,6 +61,7 @@ const services = [
 
         {
           name: "Graduation Shoot",
+          subtitle: "LKR 10,000 upwards",
           duration: "2 hours session",
           photos: "Unlimited Photos",
           includes: [],
@@ -71,6 +69,7 @@ const services = [
 
         {
           name: "Event Photography",
+          subtitle: "LKR 24,500 upwards",
           photos: "Unlimited Photos",
 
           includes: [
@@ -108,10 +107,7 @@ const services = [
       title: "Videography",
       tagline: "Cinematic stories, shot and cut for how you'll use them.",
 
-      // Forward
       videoSrc: "/videos/videography.mp4",
-
-      // Reverse
       reverseVideoSrc: "/videos/videography-reverse.mp4",
 
       packages: [
@@ -188,10 +184,7 @@ const services = [
       title: "Digital Marketing",
       tagline: "Growth strategy built around your audience.",
 
-      // Forward
       videoSrc: "/videos/digital-marketing.mp4",
-
-      // Reverse
       reverseVideoSrc: "/videos/digital-marketing-reverse.mp4",
 
       packages: [
@@ -290,10 +283,7 @@ const services = [
       title: "Graphic Designing",
       tagline: "Visual identity that holds up everywhere it's seen.",
 
-      // Forward
       videoSrc: "/videos/graphic-designing.mp4",
-
-      // Reverse
       reverseVideoSrc: "/videos/graphic-designing-reverse.mp4",
 
       packages: [
@@ -353,10 +343,7 @@ const services = [
       title: "Event Coverage",
       tagline: "Full coverage, so nothing about the day gets missed.",
 
-      // Forward
       videoSrc: "/videos/event-coverage.mp4",
-
-      // Reverse
       reverseVideoSrc: "/videos/event-coverage-reverse.mp4",
 
       packages: [
@@ -421,10 +408,7 @@ const services = [
       title: "Web & Software Development",
       tagline: "From landing pages to full custom systems.",
 
-      // Forward
       videoSrc: "/videos/web-development.mp4",
-
-      // Reverse
       reverseVideoSrc: "/videos/web-development-reverse.mp4",
 
       packages: [
@@ -522,10 +506,7 @@ const services = [
       title: "Live Streaming",
       tagline: "Multi-camera streams, switched and delivered live.",
 
-      // Forward
       videoSrc: "/videos/live-streaming.mp4",
-
-      // Reverse
       reverseVideoSrc: "/videos/live-streaming-reverse.mp4",
 
       packages: [
@@ -708,6 +689,11 @@ export default function Services() {
 
       {/* =====================================================
           SERVICES GRID
+
+          NOTE: cards no longer force a min-height and align
+          to the start of the row (not stretched), so each
+          card sizes to its own content instead of leaving a
+          big empty gap above the button.
       ====================================================== */}
 
       <div
@@ -719,6 +705,7 @@ export default function Services() {
           w-full
           max-w-[1650px]
           grid-cols-1
+          items-start
           gap-[18px]
           sm:grid-cols-2
           lg:grid-cols-3
@@ -734,7 +721,8 @@ export default function Services() {
               className="
                 group
                 relative
-                min-h-[306px]
+                flex
+                flex-col
                 overflow-hidden
                 rounded-[28px]
                 border
@@ -863,7 +851,7 @@ export default function Services() {
               <h3
                 className="
                   relative
-                  mt-[24px]
+                  mt-[20px]
                   text-[20px]
                   font-normal
                   leading-[1.1]
@@ -881,7 +869,7 @@ export default function Services() {
               <p
                 className="
                   relative
-                  mt-[15px]
+                  mt-[12px]
                   text-[15px]
                   font-normal
                   leading-[1.55]
@@ -894,60 +882,65 @@ export default function Services() {
 
               {/* =================================================
                   ARROW BUTTON
+
+                  NOTE: no longer absolutely positioned — it now
+                  sits in normal flow, pushed to the bottom of
+                  whatever space the row leaves via mt-auto, with
+                  a divider so it never looks disconnected from
+                  the text above it.
               ================================================== */}
 
-              <button
-                type="button"
-                aria-label={`View ${service.title} packages`}
-                onClick={() => setActiveService(service.modal)}
-                className="
-                  cursor-pointer
-                  absolute
-                  bottom-[19px]
-                  right-[21px]
-                  flex
-                  h-[38px]
-                  items-center
-                  justify-center
-                  gap-2
-                  rounded-full
-                  border
-                  border-[#900a9c]/45
-                  bg-[#4c035d]/25
-                  px-4
-                  text-white/85
-                  shadow-[inset_0_1px_2px_rgba(255,255,255,0.16),0_0_12px_rgba(144,10,156,0.12)]
-                  transition-all
-                  duration-300
-                  hover:border-[#900a9c]
-                  hover:bg-[#900a9c]/25
-                  hover:text-white
-                  hover:shadow-[0_0_20px_rgba(144,10,156,0.35)]
-                "
-              >
-                <span
+              <div className="mt-auto flex justify-end pt-[22px]">
+                <button
+                  type="button"
+                  aria-label={`View ${service.title} packages`}
+                  onClick={() => setActiveService(service.modal)}
                   className="
-                    text-[13px]
-                    font-medium
-                    tracking-[0.01em]
-                    whitespace-nowrap
+                    cursor-pointer
+                    flex
+                    h-[48px]
+                    items-center
+                    justify-center
+                    gap-2
+                    rounded-full
+                    border
+                    border-[#900a9c]/45
+                    bg-[#4c035d]/25
+                    px-4
+                    text-white/85
+                    shadow-[inset_0_1px_2px_rgba(255,255,255,0.16),0_0_12px_rgba(144,10,156,0.12)]
+                    transition-all
+                    duration-300
+                    hover:border-[#900a9c]
+                    hover:bg-[#900a9c]/25
+                    hover:text-white
+                    hover:shadow-[0_0_20px_rgba(144,10,156,0.35)]
                   "
                 >
-                  View Packages
-                </span>
+                  <span
+                    className="
+                      text-[13px]
+                      font-medium
+                      tracking-[0.01em]
+                      whitespace-nowrap
+                    "
+                  >
+                    View Packages
+                  </span>
 
-                <ArrowUpRight
-                  size={19}
-                  strokeWidth={1.7}
-                  className="
-                    shrink-0
-                    transition-transform
-                    duration-300
-                    group-hover:translate-x-[1px]
-                    group-hover:-translate-y-[1px]
-                  "
-                />
-              </button>
+                  <ArrowUpRight
+                    size={19}
+                    strokeWidth={1.7}
+                    className="
+                      shrink-0
+                      transition-transform
+                      duration-300
+                      group-hover:translate-x-[1px]
+                      group-hover:-translate-y-[1px]
+                    "
+                  />
+                </button>
+              </div>
 
               {/* =================================================
                   BOTTOM GLASS REFLECTION
