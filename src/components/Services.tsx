@@ -7,6 +7,8 @@ import {
   Megaphone,
   Palette,
   CalendarDays,
+  Code,
+  Radio,
   ArrowUpRight,
 } from "lucide-react";
 
@@ -47,6 +49,7 @@ const services = [
       packages: [
         {
           name: "Photoshoot",
+          subtitle: "LKR 10,000 upwards",
           duration: "2 hour session",
           photos: "Unlimited Photos",
 
@@ -113,34 +116,49 @@ const services = [
 
       packages: [
         {
-          name: "Promo Video",
-          duration: "Half-day shoot",
-
-          includes: [
-            "Concept & storyboard",
-            "On-site filming",
-            "Colour grading",
-          ],
+          name: "Social Media Reel",
+          subtitle: "LKR 10,000 upwards",
+          includes: [],
         },
-
         {
-          name: "Event Highlight Reel",
-          duration: "Full-day coverage",
-
-          includes: [
-            "Multi-camera coverage",
-            "Edited highlight cut",
-            "Raw footage handover",
-          ],
+          name: "Personal / Lifestyle Video",
+          subtitle: "LKR 15,000 upwards",
+          includes: [],
         },
-
         {
-          name: "Brand Film",
-
+          name: "Birthday Pre-Shoot Video",
+          subtitle: "LKR 17,500 upwards",
+          includes: [],
+        },
+        {
+          name: "Birthday Event Video",
+          subtitle: "LKR 25,000 upwards",
+          includes: [],
+        },
+        {
+          name: "Graduation Video",
+          subtitle: "LKR 15,000 upwards",
+          includes: [],
+        },
+        {
+          name: "Event Aftermovie",
+          subtitle: "LKR 35,000 upwards",
+          includes: [],
+        },
+        {
+          name: "Product Promotional Video",
+          subtitle: "LKR 20,000 upwards",
+          includes: [],
+        },
+        {
+          name: "Business / Brand Promotional Video",
+          subtitle: "LKR 30,000 upwards",
+          includes: [],
+        },
+        {
+          name: "Please Note",
           includes: [
-            "Scripting support",
-            "Studio or on-location filming",
-            "Motion graphics",
+            "Final pricing depends on shoot duration, location and editing requirements.",
           ],
         },
       ],
@@ -178,33 +196,71 @@ const services = [
 
       packages: [
         {
-          name: "Social Growth",
-          duration: "Monthly retainer",
-
+          name: "Social Media Page Setup & Optimisation",
+          subtitle: "LKR 7,500 upwards (one-time)",
+          includes: [],
+        },
+        {
+          name: "Social Media Post Design",
+          subtitle: "LKR 2,500 upwards (per post)",
+          includes: [],
+        },
+        {
+          name: "Social Media Reel Editing",
+          subtitle: "LKR 5,000 upwards (per reel)",
+          includes: [],
+        },
+        {
+          name: "Starter",
+          subtitle: "LKR 25,000 upwards / month",
+          includes: ["8 posts", "Captions & scheduling"],
+        },
+        {
+          name: "Growth",
+          subtitle: "LKR 40,000 upwards / month",
           includes: [
-            "Content calendar",
-            "Community management",
-            "Monthly performance report",
+            "12 posts",
+            "2 edited reels",
+            "Captions & scheduling",
           ],
         },
-
         {
-          name: "Paid Campaigns",
-
+          name: "Premium",
+          subtitle: "LKR 60,000 upwards / month",
           includes: [
-            "Ad creative",
-            "Audience targeting",
-            "Ongoing optimisation",
+            "16 posts",
+            "4 edited reels",
+            "Captions & scheduling",
+            "Basic inbox management",
           ],
         },
-
         {
-          name: "Brand Strategy",
-
+          name: "Facebook & Instagram Ads Management",
+          subtitle: "LKR 15,000 upwards / month",
+          includes: [],
+        },
+        {
+          name: "Google Ads Management",
+          subtitle: "LKR 20,000 upwards / month",
+          includes: [],
+        },
+        {
+          name: "SEO Services",
+          subtitle: "LKR 25,000 upwards / month",
+          includes: [],
+        },
+        {
+          name: "Digital Marketing Strategy & Consultation",
+          subtitle: "LKR 10,000 upwards / session",
+          includes: [],
+        },
+        {
+          name: "Please Note",
           includes: [
-            "Positioning workshop",
-            "Competitor audit",
-            "Channel roadmap",
+            "Social media packages cover Facebook & Instagram using shared content.",
+            "Reel editing uses client-supplied footage.",
+            "Advertising budgets, photography, video shoots and website development are charged separately.",
+            "Final pricing depends on your requirements.",
           ],
         },
       ],
@@ -336,6 +392,194 @@ const services = [
             "Dedicated team",
             "Daily turnaround previews",
             "Full edited archive",
+          ],
+        },
+      ],
+    } satisfies ServiceModalData,
+  },
+
+  // =========================================================
+  // WEB & SOFTWARE DEVELOPMENT
+  // =========================================================
+
+  {
+    title: "Web & Software Development",
+
+    description: (
+      <>
+        Websites and tools
+        <br />
+        built to run
+        <br />
+        your business.
+      </>
+    ),
+
+    icon: Code,
+
+    modal: {
+      title: "Web & Software Development",
+      tagline: "From landing pages to full custom systems.",
+
+      // Forward
+      videoSrc: "/videos/web-development.mp4",
+
+      // Reverse
+      reverseVideoSrc: "/videos/web-development-reverse.mp4",
+
+      packages: [
+        {
+          name: "Landing Page / Single-Page Website",
+          subtitle: "LKR 25,000 upwards",
+          includes: [],
+        },
+        {
+          name: "Personal / Portfolio Website",
+          subtitle: "LKR 35,000 upwards",
+          includes: [],
+        },
+        {
+          name: "Business Website",
+          subtitle: "LKR 50,000 upwards",
+          includes: [],
+        },
+        {
+          name: "E-Commerce Website",
+          subtitle: "LKR 100,000 upwards",
+          includes: [],
+        },
+        {
+          name: "Custom Web Application",
+          subtitle: "LKR 150,000 upwards",
+          includes: [],
+        },
+        {
+          name: "Inventory Management System",
+          subtitle: "LKR 100,000 upwards",
+          includes: [],
+        },
+        {
+          name: "Booking & Appointment System",
+          subtitle: "LKR 100,000 upwards",
+          includes: [],
+        },
+        {
+          name: "POS & Billing System",
+          subtitle: "LKR 125,000 upwards",
+          includes: [],
+        },
+        {
+          name: "Custom Business Software",
+          subtitle: "LKR 150,000 upwards",
+          includes: [],
+        },
+        {
+          name: "Mobile App Development",
+          subtitle: "LKR 200,000 upwards",
+          includes: [],
+        },
+        {
+          name: "Website Maintenance",
+          subtitle: "LKR 5,000 upwards / month",
+          includes: [],
+        },
+        {
+          name: "Software Maintenance & Support",
+          subtitle: "LKR 10,000 upwards / month",
+          includes: [],
+        },
+        {
+          name: "Please Note",
+          includes: [
+            "These are indicative starting prices. Final quotations depend on features, integrations and project complexity.",
+            "Domain registration, hosting, paid licences and third-party service fees are charged separately.",
+          ],
+        },
+      ],
+    } satisfies ServiceModalData,
+  },
+
+  // =========================================================
+  // LIVE STREAMING
+  // =========================================================
+
+  {
+    title: "Live Streaming",
+
+    description: (
+      <>
+        Real-time coverage
+        <br />
+        for events that can't
+        <br />
+        wait to be shared.
+      </>
+    ),
+
+    icon: Radio,
+
+    modal: {
+      title: "Live Streaming",
+      tagline: "Multi-camera streams, switched and delivered live.",
+
+      // Forward
+      videoSrc: "/videos/live-streaming.mp4",
+
+      // Reverse
+      reverseVideoSrc: "/videos/live-streaming-reverse.mp4",
+
+      packages: [
+        {
+          name: "Basic",
+          subtitle: "LKR 25,000 upwards",
+          includes: [
+            "Up to 2 hours of coverage",
+            "Single-camera setup",
+            "Streaming to Facebook or YouTube",
+            "Basic title & logo overlay",
+            "Digital recording of the stream",
+          ],
+        },
+        {
+          name: "Standard",
+          subtitle: "LKR 45,000 upwards",
+          includes: [
+            "Up to 3 hours of coverage",
+            "Two-camera setup",
+            "Live camera switching",
+            "Streaming to Facebook or YouTube",
+            "Custom overlays & titles",
+            "Audio feed from the venue sound system",
+            "Digital recording of the stream",
+          ],
+        },
+        {
+          name: "Premium",
+          subtitle: "LKR 75,000 upwards",
+          includes: [
+            "Up to 4 hours of coverage",
+            "Three-camera setup",
+            "Live camera switching",
+            "Streaming to Facebook & YouTube simultaneously",
+            "Custom overlays, titles & presentation integration",
+            "Audio feed from the venue sound system",
+            "Dedicated stream operator",
+            "Digital recording of the stream",
+          ],
+        },
+        {
+          name: "Custom Live Streaming",
+          subtitle: "Price on request",
+          includes: [
+            "Corporate events, conferences, concerts, sports & hybrid events",
+          ],
+        },
+        {
+          name: "Please Note",
+          includes: [
+            "These are suggested starting rates, subject to venue and technical requirements.",
+            "Stable internet and power must be available at the venue.",
+            "Dedicated internet, backup power, sound systems, lighting, travel and additional coverage hours are quoted separately.",
           ],
         },
       ],
@@ -478,7 +722,7 @@ export default function Services() {
           gap-[18px]
           sm:grid-cols-2
           lg:grid-cols-3
-          xl:grid-cols-5
+          xl:grid-cols-4
         "
       >
         {services.map((service) => {
