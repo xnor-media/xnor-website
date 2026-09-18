@@ -267,7 +267,7 @@ export default function ServiceModal({
             hidden
             shrink-0
             overflow-hidden
-            bg-[#0a070a]
+            bg-[#150e16]
 
             md:block
             md:h-auto
@@ -291,7 +291,7 @@ export default function ServiceModal({
               inset-0
               h-full
               w-full
-              object-cover
+              object-contain
               transition-opacity
               duration-100
               ${
@@ -323,7 +323,7 @@ export default function ServiceModal({
               inset-0
               h-full
               w-full
-              object-cover
+              object-contain
               transition-opacity
               duration-100
               ${

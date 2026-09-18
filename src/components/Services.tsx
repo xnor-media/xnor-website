@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Camera,
   Video,
@@ -15,6 +15,24 @@ import {
 import ServiceModal, {
   type ServiceModalData,
 } from "./ServiceModal";
+
+// =========================================================
+// PRELOAD SERVICE VIDEOS
+// =========================================================
+
+function preloadVideo(src: string) {
+  const video = document.createElement("video");
+
+  video.preload = "auto";
+  video.muted = true;
+  video.playsInline = true;
+  video.src = src;
+
+  // Start loading immediately
+  video.load();
+
+  return video;
+}
 
 // =========================================================
 // SERVICES DATA
@@ -573,8 +591,34 @@ const services = [
 // =========================================================
 
 export default function Services() {
+  
   const [activeService, setActiveService] =
     useState<ServiceModalData | null>(null);
+
+  useEffect(() => {
+    const videos: HTMLVideoElement[] = [];
+
+    services.forEach((service) => {
+      const videoSrc = service.modal.videoSrc;
+      const reverseVideoSrc = service.modal.reverseVideoSrc;
+
+      if (videoSrc) {
+        videos.push(preloadVideo(videoSrc));
+      }
+
+      if (reverseVideoSrc) {
+        videos.push(preloadVideo(reverseVideoSrc));
+      }
+    });
+
+    return () => {
+      videos.forEach((video) => {
+        video.pause();
+        video.removeAttribute("src");
+        video.load();
+      });
+    };
+  }, []);
 
   return (
     <section
