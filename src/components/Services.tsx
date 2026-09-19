@@ -125,8 +125,8 @@ const services = [
       title: "Videography",
       tagline: "Cinematic stories, shot and cut for how you'll use them.",
 
-      videoSrc: "/videos/videography.mp4",
-      reverseVideoSrc: "/videos/videography-reverse.mp4",
+      videoSrc: "/videos/videography.webm",
+      reverseVideoSrc: "/videos/videography-reverse.webm",
 
       packages: [
         {
@@ -202,8 +202,8 @@ const services = [
       title: "Digital Marketing",
       tagline: "Growth strategy built around your audience.",
 
-      videoSrc: "/videos/digital-marketing.mp4",
-      reverseVideoSrc: "/videos/digital-marketing-reverse.mp4",
+      videoSrc: "/videos/digital-marketing.webm",
+      reverseVideoSrc: "/videos/digital-marketing-reverse.webm",
 
       packages: [
         {
@@ -301,8 +301,8 @@ const services = [
       title: "Graphic Designing",
       tagline: "Visual identity that holds up everywhere it's seen.",
 
-      videoSrc: "/videos/graphic-designing.mp4",
-      reverseVideoSrc: "/videos/graphic-designing-reverse.mp4",
+      videoSrc: "/videos/graphic-designing.webm",
+      reverseVideoSrc: "/videos/graphic-designing-reverse.webm",
 
       packages: [
         {
@@ -361,8 +361,8 @@ const services = [
       title: "Event Coverage",
       tagline: "Full coverage, so nothing about the day gets missed.",
 
-      videoSrc: "/videos/event-coverage.mp4",
-      reverseVideoSrc: "/videos/event-coverage-reverse.mp4",
+      videoSrc: "/videos/event-coverage.webm",
+      reverseVideoSrc: "/videos/event-coverage-reverse.webm",
 
       packages: [
         {
@@ -426,8 +426,8 @@ const services = [
       title: "Web & Software Development",
       tagline: "From landing pages to full custom systems.",
 
-      videoSrc: "/videos/web-development.mp4",
-      reverseVideoSrc: "/videos/web-development-reverse.mp4",
+      videoSrc: "/videos/web-dev.webm",
+      reverseVideoSrc: "/videos/web-dev-reverse.webm",
 
       packages: [
         {
