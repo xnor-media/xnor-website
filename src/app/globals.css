@@ -98,3 +98,39 @@ button,
 a {
   -webkit-tap-highlight-color: transparent;
 }
+
+/* Dark, purple-tinted scrollbar for the service modal */
+.modal-scroll {
+  scrollbar-gutter: stable;
+}
+
+/* Chrome, Edge, Safari */
+.modal-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-scroll::-webkit-scrollbar-track {
+  background: transparent;
+  margin-block: 20px; /* keeps the track clear of the rounded corners */
+}
+
+.modal-scroll::-webkit-scrollbar-thumb {
+  background: rgba(144, 10, 156, 0.45);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box; /* makes the thumb look slimmer */
+  transition: background 0.2s;
+}
+
+.modal-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(144, 10, 156, 0.8);
+  background-clip: padding-box;
+}
+
+/* Firefox (and any browser without ::-webkit-scrollbar support) */
+@supports not selector(::-webkit-scrollbar) {
+  .modal-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(144, 10, 156, 0.55) transparent;
+  }
+}

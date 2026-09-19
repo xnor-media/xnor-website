@@ -175,24 +175,12 @@ export default function ServiceModal({
 
       <div
         className="
-          relative
-          z-10
-          flex
-          w-full
-          max-w-[980px]
-          max-h-[92vh]
-          mt-20
-          flex-col
-          overflow-hidden
-          rounded-[24px]
-          border
-          border-white/15
-          bg-[#150e16]
+          relative z-10 flex w-full max-w-[980px]
+          max-h-[92vh] mt-20 flex-col overflow-hidden
+          rounded-[24px] border border-white/15 bg-[#150e16]
           shadow-[0_30px_100px_rgba(0,0,0,0.6),0_0_60px_rgba(144,10,156,0.15)]
 
-          md:max-h-[86vh]
-          md:flex-row
-          md:rounded-[28px]
+          md:h-[86vh] md:max-h-none md:flex-row md:rounded-[28px]
         "
       >
         {/* =====================================================
@@ -263,15 +251,10 @@ export default function ServiceModal({
 
         <div
           className="
-            relative
-            hidden
-            shrink-0
-            overflow-hidden
-            bg-[#150e16]
+            relative hidden shrink-0 overflow-hidden bg-[#150e16]
 
-            md:block
-            md:h-auto
-            md:w-[42%]
+            md:block md:h-full md:w-auto md:max-w-[48%]
+            md:aspect-411/890
           "
         >
           {/* =================================================
@@ -291,7 +274,7 @@ export default function ServiceModal({
               inset-0
               h-full
               w-full
-              object-contain
+              object-cover
               transition-opacity
               duration-100
               ${
@@ -323,7 +306,7 @@ export default function ServiceModal({
               inset-0
               h-full
               w-full
-              object-contain
+              object-cover
               transition-opacity
               duration-100
               ${
@@ -369,15 +352,10 @@ export default function ServiceModal({
 
         <div
           className="
-            min-h-0
-            flex-1
-            overflow-auto
-            px-5
-            py-7
-
-            sm:px-7
-            sm:py-8
-
+            modal-scroll
+            min-h-0 flex-1 overflow-auto
+            px-5 py-7
+            sm:px-7 sm:py-8
             md:px-9
           "
         >
