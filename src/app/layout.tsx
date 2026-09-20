@@ -14,6 +14,9 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "XNOR",
   description: "Creative Studio",
+  verification: {
+    google: "0naNDDhFBa9vXe0hE__GcDrqyrzrZFnvEiyZw2oZprs",
+  },
 };
 
 export default function RootLayout({
@@ -28,6 +31,7 @@ export default function RootLayout({
           {children}
           <ContactModal />
         </ContactModalProvider>
+
         <Analytics />
       </body>
     </html>
