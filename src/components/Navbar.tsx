@@ -93,7 +93,7 @@ export default function Navbar() {
       const element = document.getElementById(targetId!);
 
       if (element) {
-        element.scrollIntoView({ behavior: "instant", block: "start" });
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     }, 100);
 

@@ -524,8 +524,8 @@ const services = [
       title: "Live Streaming",
       tagline: "Multi-camera streams, switched and delivered live.",
 
-      videoSrc: "/videos/live-streaming.mp4",
-      reverseVideoSrc: "/videos/live-streaming-reverse.mp4",
+      videoSrc: "/videos/live-streaming.webm",
+      reverseVideoSrc: "/videos/live-streaming-reverse.webm",
 
       packages: [
         {
