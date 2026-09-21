@@ -86,7 +86,7 @@ export default function ContactModal() {
             <CheckCircle2 size={40} className="text-[#c34fd1]" />
             <h3 className="mt-4 text-lg font-semibold">Message sent!</h3>
             <p className="mt-2 text-sm text-white/60">
-              Thanks for reaching out — we'll get back to you soon.
+              Thanks for reaching out - our team will get back to you within 1 working hour.
             </p>
             <button
               onClick={close}
@@ -158,7 +158,7 @@ export default function ContactModal() {
                 type="submit"
                 disabled={status === "loading"}
                 className="
-                  mt-2 flex h-12 items-center justify-center gap-2
+                  mt-2 flex h-12 items-center cursor-pointer justify-center gap-2
                   rounded-full bg-[#900a9c] text-sm font-medium
                   text-white transition hover:bg-[#a20cae]
                   disabled:opacity-60

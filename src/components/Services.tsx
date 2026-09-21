@@ -50,7 +50,6 @@ const services = [
     description: (
       <>
         Capturing moments
-        <br />
         that tell your story
         <br />
         beautifully.
@@ -61,7 +60,7 @@ const services = [
 
     modal: {
       title: "Photography",
-      tagline: "Every shoot, tailored to the moment.",
+      tagline: "Every shoot, tailored to the moment. Want pricing for your project? Send us a request and our team will get back to you within 1 working hour.",
 
       videoSrc: "/videos/photography.webm",
       reverseVideoSrc: "/videos/photography-reverse.webm",
@@ -114,7 +113,6 @@ const services = [
     description: (
       <>
         Cinematic visuals
-        <br />
         that bring your ideas
         <br />
         to life.
@@ -125,7 +123,7 @@ const services = [
 
     modal: {
       title: "Videography",
-      tagline: "Cinematic stories, shot and cut for how you'll use them.",
+      tagline: "Cinematic stories, shot and cut for how you'll use them. Want pricing for your project? Send us a request and our team will get back to you within 1 working hour.",
 
       videoSrc: "/videos/videography.webm",
       reverseVideoSrc: "/videos/videography-reverse.webm",
@@ -183,7 +181,6 @@ const services = [
     description: (
       <>
         Strategies that
-        <br />
         grow your brand
         <br />
         and reach.
@@ -194,7 +191,7 @@ const services = [
 
     modal: {
       title: "Digital Marketing",
-      tagline: "Growth strategy built around your audience.",
+      tagline: "Growth strategy built around your audience. Want pricing for your project? Send us a request and our team will get back to you within 1 working hour.",
 
       videoSrc: "/videos/digital-marketing.webm",
       reverseVideoSrc: "/videos/digital-marketing-reverse.webm",
@@ -282,10 +279,9 @@ const services = [
     description: (
       <>
         Designs that
-        <br />
         communicate,
-        <br />
-        inspire and stand out.
+        inspire and 
+        <br/>stand out.
       </>
     ),
 
@@ -293,7 +289,7 @@ const services = [
 
     modal: {
       title: "Graphic Designing",
-      tagline: "Visual identity that holds up everywhere it's seen.",
+      tagline: "Visual identity that holds up everywhere it's seen. Want pricing for your project? Send us a request and our team will get back to you within 1 working hour.",
 
       videoSrc: "/videos/graphic-designing.webm",
       reverseVideoSrc: "/videos/graphic-designing-reverse.webm",
@@ -342,7 +338,6 @@ const services = [
     description: (
       <>
         Every event,
-        <br />
         captured with
         <br />
         precision and style.
@@ -353,7 +348,7 @@ const services = [
 
     modal: {
       title: "Event Coverage",
-      tagline: "Full coverage, so nothing about the day gets missed.",
+      tagline: "Full coverage, so nothing about the day gets missed. Want pricing for your project? Send us a request and our team will get back to you within 1 working hour.",
 
       videoSrc: "/videos/event-coverage.webm",
       reverseVideoSrc: "/videos/event-coverage-reverse.webm",
@@ -407,7 +402,6 @@ const services = [
     description: (
       <>
         Websites and tools
-        <br />
         built to run
         <br />
         your business.
@@ -418,7 +412,7 @@ const services = [
 
     modal: {
       title: "Web & Software Development",
-      tagline: "From landing pages to full custom systems.",
+      tagline: "From landing pages to full custom systems. Want pricing for your project? Send us a request and our team will get back to you within 1 working hour.",
 
       videoSrc: "/videos/web-dev.webm",
       reverseVideoSrc: "/videos/web-dev-reverse.webm",
@@ -495,7 +489,6 @@ const services = [
     description: (
       <>
         Real-time coverage
-        <br />
         for events that can't
         <br />
         wait to be shared.
@@ -506,7 +499,7 @@ const services = [
 
     modal: {
       title: "Live Streaming",
-      tagline: "Multi-camera streams, switched and delivered live.",
+      tagline: "Multi-camera streams, switched and delivered live. Want pricing for your project? Send us a request and our team will get back to you within 1 working hour.",
 
       videoSrc: "/videos/live-streaming.webm",
       reverseVideoSrc: "/videos/live-streaming-reverse.webm",

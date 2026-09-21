@@ -586,26 +586,26 @@ export default function ServiceModal({
               </p>
 
               <button
-  type="button"
-  onClick={handleRequestPricing}
-  className="
-    flex
-    h-[48px]
-    px-4
-    items-center
-    justify-center
-    gap-[9px]
-    rounded-[26px]
-    text-[15px]
-    font-medium
-    text-white
-  "
-  style={{
-    background:
-      "linear-gradient(135deg, rgba(144,10,156,0.55) 0%, rgba(76,3,93,0.42) 100%)",
-    border: "1px solid rgba(255,255,255,0.17)",
-  }}
->
+                type="button"
+                onClick={handleRequestPricing}
+                className="
+                  flex
+                  h-[48px]
+                  px-4
+                  items-center
+                  justify-center
+                  gap-[9px]
+                  rounded-[26px]
+                  text-[15px]
+                  font-medium
+                  text-white
+                "
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(144,10,156,0.55) 0%, rgba(76,3,93,0.42) 100%)",
+                  border: "1px solid rgba(255,255,255,0.17)",
+                }}
+              >
                 Request Pricing
                 <ArrowUpRight size={16} strokeWidth={1.8} />
               </button>

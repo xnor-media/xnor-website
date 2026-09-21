@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import AccordionGallery from "./AccordionGallery";
 
 const workItems = [
-  { image: "/work vbj-automobiles.jpg", label: "Grand Opening - VBJ Automobiles", link: "https://www.facebook.com/media/set/?set=a.921003990855139&type=3" },
   { image: "/work Mercedes -Benz W116.jpg", label: "Mercedes -Benz W116", link: "https://www.facebook.com/media/set/?set=a.919113161044222&type=3" },
   { image: "/work Mitsubishi Mirage.jpg", label: "Mitsubishi Mirage", link: "https://www.facebook.com/media/set/?set=a.926187333670138&type=3" },
   { image: "/work Jaguar X-Type.jpg", label: "Jaguar X-Type", link: "https://www.facebook.com/media/set/?set=a.926178003671071&type=3" },
   { image: "/work Honda-Civic EG8 Vtech.jpg", label: "Honda-Civic EG8 Vtech", link: "https://www.facebook.com/media/set/?set=a.919124061043132&type=3" },
+  { image: "/work vbj-automobiles.jpg", label: "Grand Opening - VBJ Automobiles", link: "https://www.facebook.com/media/set/?set=a.921003990855139&type=3" },
 ];
 
 export default function Work() {

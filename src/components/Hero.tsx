@@ -304,7 +304,7 @@ export default function Hero() {
                   PLAY SHOWREEL
               ---------------------------------------------- */}
 
-              <Link
+              {/* <Link
                 href="#showreel"
                 className="
                   group
@@ -352,7 +352,7 @@ export default function Hero() {
 
                 </span>
 
-              </Link>
+              </Link> */}
 
             </div>
 
