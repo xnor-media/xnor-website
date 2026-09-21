@@ -1,14 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { X, Send, CheckCircle2 } from "lucide-react";
 import { useContactModal } from "@/contexts/ContactModalContext";
 
 type Status = "idle" | "loading" | "success" | "error";
 
 export default function ContactModal() {
-  const { isOpen, close } = useContactModal();
+  const { isOpen, close, prefill } = useContactModal();
   const [status, setStatus] = useState<Status>("idle");
+
+  // Start fresh every time the modal is opened, so a previous
+  // "Message sent!" screen doesn't show up again.
+  useEffect(() => {
+    if (isOpen) setStatus("idle");
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -135,6 +141,7 @@ export default function ContactModal() {
                 name="message"
                 required
                 rows={4}
+                defaultValue={prefill}
                 placeholder="What are you looking to create?"
                 className="
                   resize-none rounded-[12px] border border-white/15

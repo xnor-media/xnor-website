@@ -36,6 +36,11 @@ function preloadVideo(src: string) {
 
 // =========================================================
 // SERVICES DATA
+//
+// NOTE: No prices live in this file. Prices are shared privately
+// on request via the contact form, so they never ship to the
+// visitor's browser. Subtitles below only describe the billing
+// type (e.g. "Monthly", "Per post") and never contain an amount.
 // =========================================================
 
 const services = [
@@ -64,7 +69,6 @@ const services = [
       packages: [
         {
           name: "Photoshoot",
-          subtitle: "LKR 10,000 upwards",
           duration: "2 hour session",
           photos: "Unlimited Photos",
 
@@ -79,7 +83,6 @@ const services = [
 
         {
           name: "Graduation Shoot",
-          subtitle: "LKR 10,000 upwards",
           duration: "2 hours session",
           photos: "Unlimited Photos",
           includes: [],
@@ -87,7 +90,6 @@ const services = [
 
         {
           name: "Event Photography",
-          subtitle: "LKR 24,500 upwards",
           photos: "Unlimited Photos",
 
           includes: [
@@ -131,48 +133,40 @@ const services = [
       packages: [
         {
           name: "Social Media Reel",
-          subtitle: "LKR 10,000 upwards",
           includes: [],
         },
         {
           name: "Personal / Lifestyle Video",
-          subtitle: "LKR 15,000 upwards",
           includes: [],
         },
         {
           name: "Birthday Pre-Shoot Video",
-          subtitle: "LKR 17,500 upwards",
           includes: [],
         },
         {
           name: "Birthday Event Video",
-          subtitle: "LKR 25,000 upwards",
           includes: [],
         },
         {
           name: "Graduation Video",
-          subtitle: "LKR 15,000 upwards",
           includes: [],
         },
         {
           name: "Event Aftermovie",
-          subtitle: "LKR 35,000 upwards",
           includes: [],
         },
         {
           name: "Product Promotional Video",
-          subtitle: "LKR 20,000 upwards",
           includes: [],
         },
         {
           name: "Business / Brand Promotional Video",
-          subtitle: "LKR 30,000 upwards",
           includes: [],
         },
         {
           name: "Please Note",
           includes: [
-            "Final pricing depends on shoot duration, location and editing requirements.",
+            "Pricing depends on shoot duration, location and editing requirements. Request pricing for a tailored quote.",
           ],
         },
       ],
@@ -208,27 +202,27 @@ const services = [
       packages: [
         {
           name: "Social Media Page Setup & Optimisation",
-          subtitle: "LKR 7,500 upwards (one-time)",
+          subtitle: "One-time",
           includes: [],
         },
         {
           name: "Social Media Post Design",
-          subtitle: "LKR 2,500 upwards (per post)",
+          subtitle: "Per post",
           includes: [],
         },
         {
           name: "Social Media Reel Editing",
-          subtitle: "LKR 5,000 upwards (per reel)",
+          subtitle: "Per reel",
           includes: [],
         },
         {
           name: "Starter",
-          subtitle: "LKR 25,000 upwards / month",
+          subtitle: "Monthly",
           includes: ["8 posts", "Captions & scheduling"],
         },
         {
           name: "Growth",
-          subtitle: "LKR 40,000 upwards / month",
+          subtitle: "Monthly",
           includes: [
             "12 posts",
             "2 edited reels",
@@ -237,7 +231,7 @@ const services = [
         },
         {
           name: "Premium",
-          subtitle: "LKR 60,000 upwards / month",
+          subtitle: "Monthly",
           includes: [
             "16 posts",
             "4 edited reels",
@@ -247,22 +241,22 @@ const services = [
         },
         {
           name: "Facebook & Instagram Ads Management",
-          subtitle: "LKR 15,000 upwards / month",
+          subtitle: "Monthly",
           includes: [],
         },
         {
           name: "Google Ads Management",
-          subtitle: "LKR 20,000 upwards / month",
+          subtitle: "Monthly",
           includes: [],
         },
         {
           name: "SEO Services",
-          subtitle: "LKR 25,000 upwards / month",
+          subtitle: "Monthly",
           includes: [],
         },
         {
           name: "Digital Marketing Strategy & Consultation",
-          subtitle: "LKR 10,000 upwards / session",
+          subtitle: "Per session",
           includes: [],
         },
         {
@@ -432,68 +426,58 @@ const services = [
       packages: [
         {
           name: "Landing Page / Single-Page Website",
-          subtitle: "LKR 25,000 upwards",
           includes: [],
         },
         {
           name: "Personal / Portfolio Website",
-          subtitle: "LKR 35,000 upwards",
           includes: [],
         },
         {
           name: "Business Website",
-          subtitle: "LKR 50,000 upwards",
           includes: [],
         },
         {
           name: "E-Commerce Website",
-          subtitle: "LKR 100,000 upwards",
           includes: [],
         },
         {
           name: "Custom Web Application",
-          subtitle: "LKR 150,000 upwards",
           includes: [],
         },
         {
           name: "Inventory Management System",
-          subtitle: "LKR 100,000 upwards",
           includes: [],
         },
         {
           name: "Booking & Appointment System",
-          subtitle: "LKR 100,000 upwards",
           includes: [],
         },
         {
           name: "POS & Billing System",
-          subtitle: "LKR 125,000 upwards",
           includes: [],
         },
         {
           name: "Custom Business Software",
-          subtitle: "LKR 150,000 upwards",
           includes: [],
         },
         {
           name: "Mobile App Development",
-          subtitle: "LKR 200,000 upwards",
           includes: [],
         },
         {
           name: "Website Maintenance",
-          subtitle: "LKR 5,000 upwards / month",
+          subtitle: "Monthly",
           includes: [],
         },
         {
           name: "Software Maintenance & Support",
-          subtitle: "LKR 10,000 upwards / month",
+          subtitle: "Monthly",
           includes: [],
         },
         {
           name: "Please Note",
           includes: [
-            "These are indicative starting prices. Final quotations depend on features, integrations and project complexity.",
+            "Quotations depend on features, integrations and project complexity.",
             "Domain registration, hosting, paid licences and third-party service fees are charged separately.",
           ],
         },
@@ -530,7 +514,6 @@ const services = [
       packages: [
         {
           name: "Basic",
-          subtitle: "LKR 25,000 upwards",
           includes: [
             "Up to 2 hours of coverage",
             "Single-camera setup",
@@ -541,7 +524,6 @@ const services = [
         },
         {
           name: "Standard",
-          subtitle: "LKR 45,000 upwards",
           includes: [
             "Up to 3 hours of coverage",
             "Two-camera setup",
@@ -554,7 +536,6 @@ const services = [
         },
         {
           name: "Premium",
-          subtitle: "LKR 75,000 upwards",
           includes: [
             "Up to 4 hours of coverage",
             "Three-camera setup",
@@ -568,7 +549,7 @@ const services = [
         },
         {
           name: "Custom Live Streaming",
-          subtitle: "Price on request",
+          subtitle: "Tailored to your event",
           includes: [
             "Corporate events, conferences, concerts, sports & hybrid events",
           ],
@@ -576,7 +557,7 @@ const services = [
         {
           name: "Please Note",
           includes: [
-            "These are suggested starting rates, subject to venue and technical requirements.",
+            "Pricing is subject to venue and technical requirements.",
             "Stable internet and power must be available at the venue.",
             "Dedicated internet, backup power, sound systems, lighting, travel and additional coverage hours are quoted separately.",
           ],
@@ -591,7 +572,6 @@ const services = [
 // =========================================================
 
 export default function Services() {
-  
   const [activeService, setActiveService] =
     useState<ServiceModalData | null>(null);
 

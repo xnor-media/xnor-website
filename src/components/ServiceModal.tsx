@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { X } from "lucide-react";
+import { X, ArrowUpRight } from "lucide-react";
+import { useContactModal } from "@/contexts/ContactModalContext";
 
 export interface ServicePackage {
   /** Package name, e.g. "Photoshoot" */
   name: string;
 
-  /** Short highlight shown next to the name */
+  /** Short highlight shown next to the name (never a price) */
   subtitle?: string;
 
   /** e.g. "2 hour session" */
@@ -46,6 +47,8 @@ export default function ServiceModal({
   const reverseVideoRef = useRef<HTMLVideoElement>(null);
 
   const [isReverse, setIsReverse] = useState(false);
+
+  const { open: openContact } = useContactModal();
 
   // =====================================================
   // CLOSE ON ESCAPE + LOCK PAGE SCROLL
@@ -130,6 +133,22 @@ export default function ServiceModal({
 
     forward.currentTime = 0;
     forward.play().catch(() => {});
+  };
+
+  // =====================================================
+  // REQUEST PRICING
+  // Closes this modal, then opens the contact form with the
+  // message pre-filled for the service being viewed.
+  // =====================================================
+
+  const handleRequestPricing = () => {
+    const title = service.title;
+
+    onClose();
+
+    openContact({
+      message: `Hi, I'd like to request pricing for ${title}.`,
+    });
   };
 
   return (
@@ -286,7 +305,7 @@ export default function ServiceModal({
           >
             <source
               src={service.videoSrc}
-              type="video/mp4"
+              type="video/webm"
             />
           </video>
 
@@ -318,7 +337,7 @@ export default function ServiceModal({
           >
             <source
               src={service.reverseVideoSrc}
-              type="video/mp4"
+              type="video/webm"
             />
           </video>
 
@@ -341,195 +360,256 @@ export default function ServiceModal({
         </div>
 
         {/* =====================================================
-            PACKAGE DETAILS
+            PACKAGE COLUMN
 
-            MOBILE:
-            Fills the whole modal since the video is hidden.
-
-            DESKTOP:
-            Right-side package column.
+            Split into a scrollable list and a pinned footer so
+            the "Request Pricing" button is always visible,
+            no matter how long the package list is.
         ====================================================== */}
 
-        <div
-          className="
-            modal-scroll
-            min-h-0 flex-1 overflow-auto
-            px-5 py-7
-            sm:px-7 sm:py-8
-            md:px-9
-          "
-        >
-          <p
-            className="
-              text-[11px]
-              font-medium
-              uppercase
-              tracking-[0.22em]
-              text-[#c98ed6]/70
-            "
-          >
-            {service.title}
-          </p>
-
-          <h3
-            className="
-              mt-2
-              font-serif
-              text-[28px]
-              leading-tight
-              text-white
-
-              sm:text-[32px]
-            "
-          >
-            Packages
-          </h3>
-
-          {service.tagline && (
-            <p
-              className="
-                mt-2
-                text-[14px]
-                leading-6
-                text-white/55
-              "
-            >
-              {service.tagline}
-            </p>
-          )}
-
+        <div className="flex min-h-0 flex-1 flex-col">
           {/* =================================================
-              PACKAGES
+              SCROLLABLE PACKAGE DETAILS
           ================================================== */}
 
           <div
             className="
-              mt-6
-              flex
-              flex-col
-              gap-4
-
-              sm:mt-7
-              sm:gap-5
+              modal-scroll
+              min-h-0 flex-1 overflow-auto
+              px-5 py-7
+              sm:px-7 sm:py-8
+              md:px-9
             "
           >
-            {service.packages.map((pkg) => (
-              <div
-                key={pkg.name}
-                className="
-                  rounded-[18px]
-                  border
-                  border-white/10
-                  bg-white/[0.03]
-                  p-4
-                  transition-colors
-                  hover:border-[#900a9c]/40
+            <p
+              className="
+                text-[11px]
+                font-medium
+                uppercase
+                tracking-[0.22em]
+                text-[#c98ed6]/70
+              "
+            >
+              {service.title}
+            </p>
 
-                  sm:p-5
+            <h3
+              className="
+                mt-2
+                font-serif
+                text-[28px]
+                leading-tight
+                text-white
+
+                sm:text-[32px]
+              "
+            >
+              Packages
+            </h3>
+
+            {service.tagline && (
+              <p
+                className="
+                  mt-2
+                  text-[14px]
+                  leading-6
+                  text-white/55
                 "
               >
-                {/* PACKAGE TITLE */}
+                {service.tagline}
+              </p>
+            )}
 
+            {/* ===============================================
+                PACKAGES
+            ================================================ */}
+
+            <div
+              className="
+                mt-6
+                flex
+                flex-col
+                gap-4
+
+                sm:mt-7
+                sm:gap-5
+              "
+            >
+              {service.packages.map((pkg) => (
                 <div
+                  key={pkg.name}
                   className="
-                    flex
-                    flex-wrap
-                    items-baseline
-                    gap-x-3
-                    gap-y-1
+                    rounded-[18px]
+                    border
+                    border-white/10
+                    bg-white/[0.03]
+                    p-4
+                    transition-colors
+                    hover:border-[#900a9c]/40
+
+                    sm:p-5
                   "
                 >
-                  <h4
-                    className="
-                      text-[17px]
-                      font-medium
-                      text-white
-                    "
-                  >
-                    {pkg.name}
-                  </h4>
+                  {/* PACKAGE TITLE */}
 
-                  {pkg.subtitle && (
-                    <span
-                      className="
-                        text-[13px]
-                        text-[#c98ed6]/80
-                      "
-                    >
-                      {pkg.subtitle}
-                    </span>
-                  )}
-                </div>
-
-                {/* DURATION / PHOTOS */}
-
-                {(pkg.duration || pkg.photos) && (
                   <div
                     className="
-                      mt-2
                       flex
                       flex-wrap
-                      gap-x-5
+                      items-baseline
+                      gap-x-3
                       gap-y-1
-                      text-[13px]
-                      text-white/50
                     "
                   >
-                    {pkg.duration && (
-                      <span>
-                        {pkg.duration}
-                      </span>
-                    )}
+                    <h4
+                      className="
+                        text-[17px]
+                        font-medium
+                        text-white
+                      "
+                    >
+                      {pkg.name}
+                    </h4>
 
-                    {pkg.photos && (
-                      <span>
-                        {pkg.photos}
+                    {pkg.subtitle && (
+                      <span
+                        className="
+                          text-[13px]
+                          text-[#c98ed6]/80
+                        "
+                      >
+                        {pkg.subtitle}
                       </span>
                     )}
                   </div>
-                )}
 
-                {/* INCLUDED SERVICES */}
+                  {/* DURATION / PHOTOS */}
 
-                {pkg.includes.length > 0 && (
-                  <ul
-                    className="
-                      mt-3
-                      flex
-                      flex-wrap
-                      gap-x-4
-                      gap-y-1.5
-                      text-[13px]
-                      leading-5
-                      text-white/65
-                    "
-                  >
-                    {pkg.includes.map((item) => (
-                      <li
-                        key={item}
-                        className="
-                          flex
-                          items-center
-                          gap-1.5
-                        "
-                      >
-                        <span
+                  {(pkg.duration || pkg.photos) && (
+                    <div
+                      className="
+                        mt-2
+                        flex
+                        flex-wrap
+                        gap-x-5
+                        gap-y-1
+                        text-[13px]
+                        text-white/50
+                      "
+                    >
+                      {pkg.duration && (
+                        <span>
+                          {pkg.duration}
+                        </span>
+                      )}
+
+                      {pkg.photos && (
+                        <span>
+                          {pkg.photos}
+                        </span>
+                      )}
+                    </div>
+                  )}
+
+                  {/* INCLUDED SERVICES */}
+
+                  {pkg.includes.length > 0 && (
+                    <ul
+                      className="
+                        mt-3
+                        flex
+                        flex-wrap
+                        gap-x-4
+                        gap-y-1.5
+                        text-[13px]
+                        leading-5
+                        text-white/65
+                      "
+                    >
+                      {pkg.includes.map((item) => (
+                        <li
+                          key={item}
                           className="
-                            h-1
-                            w-1
-                            shrink-0
-                            rounded-full
-                            bg-[#900a9c]
+                            flex
+                            items-center
+                            gap-1.5
                           "
-                        />
+                        >
+                          <span
+                            className="
+                              h-1
+                              w-1
+                              shrink-0
+                              rounded-full
+                              bg-[#900a9c]
+                            "
+                          />
 
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* =================================================
+              PINNED FOOTER: REQUEST PRICING
+          ================================================== */}
+
+          <div
+            className="
+              shrink-0
+              border-t
+              border-white/10
+              bg-[#150e16]
+              px-5
+              py-4
+              sm:px-7
+              md:px-9
+            "
+          >
+            <div
+              className="
+                flex
+                flex-col
+                gap-3
+                sm:flex-row
+                sm:items-center
+                sm:justify-between
+              "
+            >
+              <p className="text-[13px] leading-5 text-white/55">
+                Pricing is tailored to your requirements.
+              </p>
+
+              <button
+  type="button"
+  onClick={handleRequestPricing}
+  className="
+    flex
+    h-[48px]
+    px-4
+    items-center
+    justify-center
+    gap-[9px]
+    rounded-[26px]
+    text-[15px]
+    font-medium
+    text-white
+  "
+  style={{
+    background:
+      "linear-gradient(135deg, rgba(144,10,156,0.55) 0%, rgba(76,3,93,0.42) 100%)",
+    border: "1px solid rgba(255,255,255,0.17)",
+  }}
+>
+                Request Pricing
+                <ArrowUpRight size={16} strokeWidth={1.8} />
+              </button>
+            </div>
           </div>
         </div>
       </div>
