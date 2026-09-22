@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import AccordionGallery from "./AccordionGallery";
+// import ReelShowcase from "./ReelShowcase";
 
 const workItems = [
   { image: "/work Mercedes -Benz W116.jpg", label: "Mercedes -Benz W116", link: "https://www.facebook.com/media/set/?set=a.919113161044222&type=3" },
@@ -153,7 +154,7 @@ export default function Work() {
 
 
       {/* =====================================================
-          WORK ACCORDION GALLERY
+          PHOTOGRAPHY SHOWCASE
           NOTE: on mobile, switches to a shorter, vertically
           stacked, tap-to-expand layout instead of the desktop
           hover-driven horizontal strip.
@@ -161,6 +162,21 @@ export default function Work() {
 
       <div className="relative z-10 px-5 sm:px-8 lg:px-[50px] xl:px-[63px]">
         <div className="mx-auto w-full max-w-[1650px]">
+          <p
+            className="
+              mb-[16px]
+              text-center
+              text-[11px]
+              font-medium
+              uppercase
+              tracking-[0.2em]
+              text-white/45
+              sm:mb-[20px]
+            "
+          >
+            Photography
+          </p>
+
           <AccordionGallery
             items={workItems}
             defaultIndex={0}
@@ -181,6 +197,55 @@ export default function Work() {
             radius={isMobile ? 18 : 28}
             orientation={isMobile ? "vertical" : "horizontal"}
           />
+        </div>
+      </div>
+
+
+      {/* =====================================================
+          SECTION DIVIDER (between Photography and Reels)
+      ====================================================== */}
+
+      <div
+        className="
+          relative
+          z-10
+          mx-5
+          mt-[56px]
+          h-[1px]
+          sm:mx-8
+          sm:mt-[80px]
+          lg:mx-[50px]
+          xl:mx-[63px]
+        "
+        style={{
+          background:
+            "linear-gradient(90deg, transparent 0%, rgba(144,10,156,0.14) 15%, rgba(144,10,156,0.35) 50%, rgba(144,10,156,0.14) 85%, transparent 100%)",
+        }}
+      />
+
+
+      {/* =====================================================
+          REEL SHOWCASE
+      ====================================================== */}
+
+      <div className="relative z-10 px-5 sm:px-8 lg:px-[50px] xl:px-[63px]">
+        <div className="mx-auto w-full max-w-[1650px]">
+          <p
+            className="
+              mb-[16px]
+              text-center
+              text-[11px]
+              font-medium
+              uppercase
+              tracking-[0.2em]
+              text-white/45
+              sm:mb-[20px]
+            "
+          >
+            Reels
+          </p>
+
+          {/* <ReelShowcase /> */}
         </div>
       </div>
 
