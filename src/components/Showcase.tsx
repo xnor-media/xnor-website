@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import AccordionGallery from "./AccordionGallery";
-// import ReelShowcase from "./ReelShowcase";
+import ReelShowcase from "./ReelShowcase";
 
 const workItems = [
   { image: "/work Mercedes -Benz W116.jpg", label: "Mercedes -Benz W116", link: "https://www.facebook.com/media/set/?set=a.919113161044222&type=3" },
@@ -213,7 +213,7 @@ export default function Work() {
           mt-[56px]
           h-[1px]
           sm:mx-8
-          sm:mt-[80px]
+          sm:mt-[50px]
           lg:mx-[50px]
           xl:mx-[63px]
         "
@@ -233,6 +233,7 @@ export default function Work() {
           <p
             className="
               mb-[16px]
+              mt-[36px]
               text-center
               text-[11px]
               font-medium
@@ -245,7 +246,7 @@ export default function Work() {
             Reels
           </p>
 
-          {/* <ReelShowcase /> */}
+          <ReelShowcase />
         </div>
       </div>
 

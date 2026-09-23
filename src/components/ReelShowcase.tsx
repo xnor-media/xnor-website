@@ -1,153 +1,227 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { ArrowUpRight, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 
-interface ReelItem {
-  /** Numeric Vimeo video ID, e.g. "1229222739" */
-  vimeoId: string;
-  /** Full title, used as the iframe title and the caption under the player */
-  title: string;
-  /** Short name shown in the playlist strip */
-  label: string;
-}
+import { reels } from "@/lib/reelsData";
 
 // =========================================================
-// REELS DATA
+// REEL CAROUSEL
 //
-// Add more reels here as they come in — the playlist strip
-// appears automatically once there's more than one entry.
+// Shows every reel from reelsData.ts as a coverflow carousel:
+// the centered card sits flat and large, the neighbours tilt
+// away on either side. With only 3 reels there's nothing to
+// scroll past yet — the moment a 4th entry is added to
+// reelsData.ts, swiping/dragging or the arrow buttons reveal
+// it automatically. "View More Reels" still links to the
+// full /reels page for browsing the whole collection at once.
 // =========================================================
-
-const reels: ReelItem[] = [
-  {
-    vimeoId: "1229222739",
-    title: "80th Bradby Shield reel 1",
-    label: "Bradby Shield",
-  },
-];
 
 export default function ReelShowcase() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const active = reels[activeIndex];
+  // Looping only makes sense once there are more reels than
+  // are visible on screen at a time — otherwise a 3-item loop
+  // just awkwardly repeats itself.
+  const canLoop = reels.length > 3;
+
+  const css = `
+    .reel-carousel {
+      padding-bottom: 52px !important;
+    }
+
+    .reel-carousel .swiper-slide {
+      width: clamp(190px, 26vw, 300px);
+    }
+
+    .reel-carousel .swiper-pagination-bullet {
+      background-color: rgba(255, 255, 255, 0.35);
+      opacity: 1;
+    }
+
+    .reel-carousel .swiper-pagination-bullet-active {
+      background-color: #c34fd1;
+      box-shadow: 0 0 8px rgba(144, 10, 156, 0.6);
+    }
+  `;
 
   return (
-    <div className="mt-[64px] sm:mt-[90px]">
-      <div
-        className="
-          flex
-          flex-col
-          items-center
-          gap-8
+    <div className="mt-[64px] sm:mt-[30px]">
+      <style>{css}</style>
 
-          lg:flex-row
-          lg:items-start
-          lg:justify-center
-          lg:gap-14
-        "
+      <motion.div
+        initial={{ opacity: 0, translateY: 20 }}
+        whileInView={{ opacity: 1, translateY: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.5 }}
+        className="relative mx-auto w-full max-w-[1100px] px-2 sm:px-8"
       >
+        <Swiper
+          modules={[EffectCoverflow, Navigation, Pagination]}
+          effect="coverflow"
+          grabCursor
+          centeredSlides
+          slidesPerView="auto"
+          spaceBetween={18}
+          loop={canLoop}
+          coverflowEffect={{
+            rotate: 18,
+            stretch: 0,
+            depth: 140,
+            modifier: 1,
+            slideShadows: false,
+          }}
+          pagination={{ clickable: true }}
+          navigation={{
+            nextEl: ".reel-nav-next",
+            prevEl: ".reel-nav-prev",
+          }}
+          className="reel-carousel"
+        >
+          {reels.map((reel) => (
+            <SwiperSlide key={reel.youtubeId}>
+              <div
+                className="
+                  relative
+                  overflow-hidden
+                  rounded-[24px]
+                  border
+                  border-white/15
+                  bg-black
+                  shadow-[0_20px_60px_rgba(0,0,0,0.5),0_0_40px_rgba(144,10,156,0.15)]
+                "
+                style={{ aspectRatio: "9 / 16" }}
+              >
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${reel.youtubeId}?rel=0&modestbranding=1`}
+                  className="absolute inset-0 h-full w-full"
+                  frameBorder={0}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                  title={reel.title}
+                  loading="lazy"
+                />
+              </div>
+
+              
+            </SwiperSlide>
+          ))}
+        </Swiper>
+
         {/* =================================================
-            PLAYER
-
-            Vertical 9:16 format to match the reel's native
-            aspect ratio, capped to a phone-like width rather
-            than stretched across the section.
-        ================================================== */}
-
-        <div className="w-full max-w-[340px] shrink-0 sm:max-w-[380px]">
-          <div
-            className="
-              relative
-              overflow-hidden
-              rounded-[24px]
-              border
-              border-white/15
-              bg-black
-              shadow-[0_20px_60px_rgba(0,0,0,0.5),0_0_40px_rgba(144,10,156,0.15)]
-            "
-            style={{ aspectRatio: "9 / 16" }}
-          >
-            <iframe
-              key={active.vimeoId}
-              src={`https://player.vimeo.com/video/${active.vimeoId}?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479`}
-              className="absolute inset-0 h-full w-full"
-              frameBorder={0}
-              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              title={active.title}
-            />
-          </div>
-
-          <p className="mt-3 text-center text-[13px] text-white/50">
-            {active.title}
-          </p>
-        </div>
-
-        {/* =================================================
-            PLAYLIST
-
-            Only rendered once there's something to switch
-            between — a single-item list would just be a
-            button that does nothing.
+            NAV ARROWS
+            Only worth showing once there's more than one reel
+            to move between.
         ================================================== */}
 
         {reels.length > 1 && (
-          <div
-            className="
-              flex
-              w-full
-              max-w-[420px]
-              flex-col
-              gap-2
+          <>
+            <button
+              type="button"
+              aria-label="Previous reel"
+              className="
+                reel-nav-prev
+                absolute
+                left-[-4px]
+                top-[38%]
+                z-10
+                hidden
+                h-11
+                w-11
+                -translate-y-1/2
+                cursor-pointer
+                items-center
+                justify-center
+                rounded-full
+                border
+                border-white/15
+                bg-white/[0.05]
+                text-white
+                backdrop-blur-[18px]
+                transition-all
+                duration-300
+                hover:border-[#900a9c]/60
+                hover:bg-[#4c035d]/30
+                sm:flex
+              "
+            >
+              <ChevronLeftIcon size={20} strokeWidth={1.8} />
+            </button>
 
-              lg:max-w-[280px]
-              lg:pt-2
-            "
-          >
-            {reels.map((reel, index) => {
-              const isActive = index === activeIndex;
-
-              return (
-                <button
-                  key={reel.vimeoId}
-                  type="button"
-                  onClick={() => setActiveIndex(index)}
-                  aria-current={isActive}
-                  className={`
-                    flex
-                    cursor-pointer
-                    items-center
-                    gap-3
-                    rounded-[14px]
-                    border
-                    px-4
-                    py-3
-                    text-left
-                    text-[14px]
-                    transition-all
-                    duration-300
-                    ${
-                      isActive
-                        ? "border-[#900a9c] bg-[#4c035d]/30 text-white shadow-[0_0_20px_rgba(144,10,156,0.25)]"
-                        : "border-white/10 bg-white/[0.03] text-white/60 hover:border-[#900a9c]/40 hover:text-white"
-                    }
-                  `}
-                >
-                  <span
-                    className={`
-                      h-1.5
-                      w-1.5
-                      shrink-0
-                      rounded-full
-                      ${isActive ? "bg-[#c34fd1]" : "bg-white/25"}
-                    `}
-                  />
-
-                  {reel.label}
-                </button>
-              );
-            })}
-          </div>
+            <button
+              type="button"
+              aria-label="Next reel"
+              className="
+                reel-nav-next
+                absolute
+                right-[-4px]
+                top-[38%]
+                z-10
+                hidden
+                h-11
+                w-11
+                -translate-y-1/2
+                cursor-pointer
+                items-center
+                justify-center
+                rounded-full
+                border
+                border-white/15
+                bg-white/[0.05]
+                text-white
+                backdrop-blur-[18px]
+                transition-all
+                duration-300
+                hover:border-[#900a9c]/60
+                hover:bg-[#4c035d]/30
+                sm:flex
+              "
+            >
+              <ChevronRightIcon size={20} strokeWidth={1.8} />
+            </button>
+          </>
         )}
+      </motion.div>
+
+      {/* =====================================================
+          VIEW MORE REELS
+      ====================================================== */}
+
+      <div className="mt-8 flex justify-center sm:mt-10">
+        <Link
+          href="/reels"
+          className="
+            flex
+            h-12
+            items-center
+            justify-center
+            gap-2
+            rounded-full
+            border
+            border-[#900a9c]/45
+            bg-[#4c035d]/25
+            px-5
+            text-[13px]
+            font-medium
+            text-white/85
+            shadow-[inset_0_1px_2px_rgba(255,255,255,0.16),0_0_12px_rgba(144,10,156,0.12)]
+            transition-all
+            duration-300
+            hover:border-[#900a9c]
+            hover:bg-[#900a9c]/25
+            hover:text-white
+            hover:shadow-[0_0_20px_rgba(144,10,156,0.35)]
+          "
+        >
+          View All Reels
+          <ArrowUpRight size={16} strokeWidth={1.8} />
+        </Link>
       </div>
     </div>
   );
