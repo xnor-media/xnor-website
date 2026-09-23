@@ -125,7 +125,7 @@ export default function ReelsPage() {
             grid
             w-full
             max-w-[1650px]
-            grid-cols-1
+            grid-cols-2
             gap-x-[24px]
             gap-y-[48px]
             sm:grid-cols-2
