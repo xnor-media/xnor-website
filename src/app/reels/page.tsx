@@ -130,7 +130,7 @@ export default function ReelsPage() {
             gap-y-[48px]
             sm:grid-cols-2
             lg:grid-cols-3
-            xl:grid-cols-4
+            xl:grid-cols-5
           "
         >
           {reels.map((reel) => (
