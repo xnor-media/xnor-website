@@ -22,7 +22,7 @@ export interface ReelItem {
 
 export const reels: ReelItem[] = [
   { youtubeId: "kXaRtmI8U-s", title: "Reel 1" },
-  { youtubeId: "wFCuNKnFv_U", title: "Reel 2" },
+  // { youtubeId: "wFCuNKnFv_U", title: "Reel 2" },
   { youtubeId: "c12FY7deYIQ", title: "Reel 3" },
   { youtubeId: "Bmtd0uyuzU8", title: "Reel 4" },
   { youtubeId: "ZDcSbwnGsm0", title: "Reel 5" },

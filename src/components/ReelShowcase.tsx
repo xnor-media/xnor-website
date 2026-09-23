@@ -1,8 +1,14 @@
 "use client";
 
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowUpRight, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import {
+  ArrowUpRight,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  Play,
+} from "lucide-react";
 import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -30,6 +36,54 @@ export default function ReelShowcase() {
   // just awkwardly repeats itself.
   const canLoop = reels.length > 3;
 
+  // Starting centered on the SECOND reel (index 1) means the
+  // first reel has somewhere to sit — to the left of center —
+  // right from the initial render. Starting on index 0 would
+  // leave nothing before it, so only the center + right card
+  // would show at first.
+  const initialSlide = reels.length >= 3 ? 1 : 0;
+
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // =======================================================
+  // TAP-TO-ACTIVATE
+  //
+  // On mobile, a touch that starts on an iframe gets captured
+  // by that iframe's own page (YouTube's embed is a separate
+  // document), so the swipe gesture never reaches Swiper. To
+  // keep swiping reliable, every iframe stays non-interactive
+  // (pointer-events: none) until its card is explicitly tapped
+  // — only THAT one card's iframe becomes interactive, letting
+  // the visitor then tap YouTube's own play button normally.
+  // Swiping to a new slide resets this, so a card doesn't stay
+  // "activated" (and swipe-blocking) after you've moved past it.
+  // =======================================================
+
+  const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
+
+  // =======================================================
+  // PAUSE ON SLIDE CHANGE
+  //
+  // YouTube's embed responds to postMessage commands once
+  // "enablejsapi=1" is in its URL. Whenever the carousel moves
+  // to a different slide, this tells every visible iframe to
+  // pause — so a reel someone started playing doesn't keep
+  // running in the background after they swipe away from it.
+  // =======================================================
+
+  const handleSlideChange = () => {
+    const iframes = containerRef.current?.querySelectorAll("iframe");
+
+    iframes?.forEach((iframe) => {
+      iframe.contentWindow?.postMessage(
+        JSON.stringify({ event: "command", func: "pauseVideo", args: [] }),
+        "*"
+      );
+    });
+
+    setActiveVideoId(null);
+  };
+
   const css = `
     .reel-carousel {
       padding-bottom: 52px !important;
@@ -54,7 +108,18 @@ export default function ReelShowcase() {
     <div className="mt-[64px] sm:mt-[30px]">
       <style>{css}</style>
 
+      {/* =====================================================
+          HINT LINE
+          Sits right under the section heading.
+      ====================================================== */}
+
+      <p className="mb-6 text-center text-[13px] text-white/60 sm:mb-8 sm:text-[14px]">
+        <span className="sm:hidden">Tap</span>
+        <span className="hidden sm:inline">Click</span> twice to play the reel
+      </p>
+
       <motion.div
+        ref={containerRef}
         initial={{ opacity: 0, translateY: 20 }}
         whileInView={{ opacity: 1, translateY: 0 }}
         viewport={{ once: true, amount: 0.3 }}
@@ -69,6 +134,8 @@ export default function ReelShowcase() {
           slidesPerView="auto"
           spaceBetween={18}
           loop={canLoop}
+          initialSlide={initialSlide}
+          onSlideChange={handleSlideChange}
           coverflowEffect={{
             rotate: 18,
             stretch: 0,
@@ -83,35 +150,87 @@ export default function ReelShowcase() {
           }}
           className="reel-carousel"
         >
-          {reels.map((reel) => (
-            <SwiperSlide key={reel.youtubeId}>
-              <div
-                className="
-                  relative
-                  overflow-hidden
-                  rounded-[24px]
-                  border
-                  border-white/15
-                  bg-black
-                  shadow-[0_20px_60px_rgba(0,0,0,0.5),0_0_40px_rgba(144,10,156,0.15)]
-                "
-                style={{ aspectRatio: "9 / 16" }}
-              >
-                <iframe
-                  src={`https://www.youtube-nocookie.com/embed/${reel.youtubeId}?rel=0&modestbranding=1`}
-                  className="absolute inset-0 h-full w-full"
-                  frameBorder={0}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
-                  title={reel.title}
-                  loading="lazy"
-                />
-              </div>
+          {reels.map((reel) => {
+            const isActive = activeVideoId === reel.youtubeId;
 
-              
-            </SwiperSlide>
-          ))}
+            return (
+              <SwiperSlide key={reel.youtubeId}>
+                <div
+                  className="
+                    relative
+                    overflow-hidden
+                    rounded-[24px]
+                    border
+                    border-white/15
+                    bg-black
+                    shadow-[0_20px_60px_rgba(0,0,0,0.5),0_0_40px_rgba(144,10,156,0.15)]
+                  "
+                  style={{ aspectRatio: "9 / 16" }}
+                >
+                  <iframe
+                    src={`https://www.youtube-nocookie.com/embed/${reel.youtubeId}?rel=0&modestbranding=1&enablejsapi=1`}
+                    className={`
+                      absolute
+                      inset-0
+                      h-full
+                      w-full
+                      ${isActive ? "pointer-events-auto" : "pointer-events-none"}
+                    `}
+                    frameBorder={0}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                    title={reel.title}
+                    loading="lazy"
+                  />
+
+                  {/* =====================================
+                      TAP-TO-ACTIVATE OVERLAY
+                      A plain div (not an iframe), so it never
+                      swallows swipe gestures — only taps.
+                  ====================================== */}
+
+                  {!isActive && (
+                    <button
+                      type="button"
+                      aria-label={`Play ${reel.title}`}
+                      onClick={() => setActiveVideoId(reel.youtubeId)}
+                      className="
+                        absolute
+                        inset-0
+                        z-10
+                        flex
+                        cursor-pointer
+                        items-center
+                        justify-center
+                        bg-black/10
+                        transition-colors
+                        duration-300
+                        hover:bg-black/0
+                      "
+                    >
+                      <span
+                        className="
+                          flex
+                          h-14
+                          w-14
+                          items-center
+                          justify-center
+                          rounded-full
+                          bg-[#900a9c]/80
+                          text-white
+                          shadow-[0_0_20px_rgba(144,10,156,0.45)]
+                          backdrop-blur-[6px]
+                        "
+                      >
+                        <Play size={22} strokeWidth={1.8} fill="white" />
+                      </span>
+                    </button>
+                  )}
+                </div>
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
 
         {/* =================================================
