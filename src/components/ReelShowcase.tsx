@@ -21,57 +21,28 @@ import { reels } from "@/lib/reelsData";
 // =========================================================
 // REEL CAROUSEL
 //
-// Shows every reel from reelsData.ts as a coverflow carousel:
-// the centered card sits flat and large, the neighbours tilt
-// away on either side. With only 3 reels there's nothing to
-// scroll past yet — the moment a 4th entry is added to
-// reelsData.ts, swiping/dragging or the arrow buttons reveal
-// it automatically. "View More Reels" still links to the
-// full /reels page for browsing the whole collection at once.
+// Desktop (sm and up): iframes are embedded directly, exactly
+//   as before. Drag/touch works and there is no extra click.
+//
+// Mobile (below sm): each iframe is non-interactive until its
+//   card is tapped once, so swipes reach Swiper. The second
+//   tap then hits YouTube's own play button. Changing slide
+//   pauses the video and resets the card.
 // =========================================================
 
 export default function ReelShowcase() {
-  // Looping only makes sense once there are more reels than
-  // are visible on screen at a time — otherwise a 3-item loop
-  // just awkwardly repeats itself.
   const canLoop = reels.length > 3;
-
-  // Starting centered on the SECOND reel (index 1) means the
-  // first reel has somewhere to sit — to the left of center —
-  // right from the initial render. Starting on index 0 would
-  // leave nothing before it, so only the center + right card
-  // would show at first.
-  const initialSlide = reels.length >= 3 ? 1 : 0;
 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // =======================================================
-  // TAP-TO-ACTIVATE
-  //
-  // On mobile, a touch that starts on an iframe gets captured
-  // by that iframe's own page (YouTube's embed is a separate
-  // document), so the swipe gesture never reaches Swiper. To
-  // keep swiping reliable, every iframe stays non-interactive
-  // (pointer-events: none) until its card is explicitly tapped
-  // — only THAT one card's iframe becomes interactive, letting
-  // the visitor then tap YouTube's own play button normally.
-  // Swiping to a new slide resets this, so a card doesn't stay
-  // "activated" (and swipe-blocking) after you've moved past it.
-  // =======================================================
-
+  // Which card has been "activated" by a tap (mobile only)
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
 
-  // =======================================================
-  // PAUSE ON SLIDE CHANGE
-  //
-  // YouTube's embed responds to postMessage commands once
-  // "enablejsapi=1" is in its URL. Whenever the carousel moves
-  // to a different slide, this tells every visible iframe to
-  // pause — so a reel someone started playing doesn't keep
-  // running in the background after they swipe away from it.
-  // =======================================================
-
+  // Pause any playing video and reset the tap state when the
+  // slide changes. Skipped on desktop so it behaves as before.
   const handleSlideChange = () => {
+    if (window.matchMedia("(min-width: 640px)").matches) return;
+
     const iframes = containerRef.current?.querySelectorAll("iframe");
 
     iframes?.forEach((iframe) => {
@@ -108,14 +79,9 @@ export default function ReelShowcase() {
     <div className="mt-[64px] sm:mt-[30px]">
       <style>{css}</style>
 
-      {/* =====================================================
-          HINT LINE
-          Sits right under the section heading.
-      ====================================================== */}
-
-      <p className="mb-6 text-center text-[13px] text-white/60 sm:mb-8 sm:text-[14px]">
-        <span className="sm:hidden">Tap</span>
-        <span className="hidden sm:inline">Click</span> twice to play the reel
+      {/* Hint line: mobile only */}
+      <p className="mb-6 text-center text-[13px] text-white/60 sm:hidden">
+        Tap twice to play the reel
       </p>
 
       <motion.div
@@ -134,7 +100,6 @@ export default function ReelShowcase() {
           slidesPerView="auto"
           spaceBetween={18}
           loop={canLoop}
-          initialSlide={initialSlide}
           onSlideChange={handleSlideChange}
           coverflowEffect={{
             rotate: 18,
@@ -174,7 +139,11 @@ export default function ReelShowcase() {
                       inset-0
                       h-full
                       w-full
-                      ${isActive ? "pointer-events-auto" : "pointer-events-none"}
+                      ${
+                        isActive
+                          ? "pointer-events-auto"
+                          : "pointer-events-none sm:pointer-events-auto"
+                      }
                     `}
                     frameBorder={0}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -184,12 +153,7 @@ export default function ReelShowcase() {
                     loading="lazy"
                   />
 
-                  {/* =====================================
-                      TAP-TO-ACTIVATE OVERLAY
-                      A plain div (not an iframe), so it never
-                      swallows swipe gestures — only taps.
-                  ====================================== */}
-
+                  {/* Tap-to-activate overlay: mobile only */}
                   {!isActive && (
                     <button
                       type="button"
@@ -204,9 +168,7 @@ export default function ReelShowcase() {
                         items-center
                         justify-center
                         bg-black/10
-                        transition-colors
-                        duration-300
-                        hover:bg-black/0
+                        sm:hidden
                       "
                     >
                       <span
@@ -233,12 +195,7 @@ export default function ReelShowcase() {
           })}
         </Swiper>
 
-        {/* =================================================
-            NAV ARROWS
-            Only worth showing once there's more than one reel
-            to move between.
-        ================================================== */}
-
+        {/* NAV ARROWS (desktop only) */}
         {reels.length > 1 && (
           <>
             <button
@@ -308,10 +265,7 @@ export default function ReelShowcase() {
         )}
       </motion.div>
 
-      {/* =====================================================
-          VIEW MORE REELS
-      ====================================================== */}
-
+      {/* VIEW MORE REELS */}
       <div className="mt-8 flex justify-center sm:mt-10">
         <Link
           href="/reels"
