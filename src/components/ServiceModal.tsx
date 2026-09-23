@@ -161,9 +161,10 @@ export default function ServiceModal({
         items-center
         justify-center
         px-3
-        py-4
+        pb-4
+        pt-[96px]
         sm:px-4
-        sm:py-8
+        md:py-8
       "
       role="dialog"
       aria-modal="true"
@@ -195,11 +196,11 @@ export default function ServiceModal({
       <div
         className="
           relative z-10 flex w-full max-w-[980px]
-          max-h-[92vh] mt-20 flex-col overflow-hidden
+          max-h-[calc(100dvh-112px)] flex-col overflow-hidden
           rounded-[24px] border border-white/15 bg-[#150e16]
           shadow-[0_30px_100px_rgba(0,0,0,0.6),0_0_60px_rgba(144,10,156,0.15)]
 
-          md:h-[86vh] md:max-h-none md:flex-row md:rounded-[28px]
+          md:mt-20 md:h-[86vh] md:max-h-none md:flex-row md:rounded-[28px]
         "
       >
         {/* =====================================================

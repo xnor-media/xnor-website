@@ -20,7 +20,7 @@ export default function ReelsPage() {
           bg-[#110c11]
           px-6
           pb-[100px]
-          pt-[150px]
+          pt-[120px]
           text-white
           sm:px-10
           lg:px-[50px]
@@ -126,8 +126,8 @@ export default function ReelsPage() {
             w-full
             max-w-[1650px]
             grid-cols-2
-            gap-x-[24px]
-            gap-y-[48px]
+            gap-x-[14px]
+            gap-y-[14px]
             sm:grid-cols-2
             lg:grid-cols-3
             xl:grid-cols-5
