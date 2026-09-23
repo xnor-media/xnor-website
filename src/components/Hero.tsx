@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { ArrowUpRight, Play } from "lucide-react";
+import { scrollToSection } from "@/lib/scrollToSection";
 
 export default function Hero() {
   return (
@@ -28,8 +29,8 @@ export default function Hero() {
           right-[3%]
           top-[8%]
           z-0
-          h-700px
-          w-700px
+          h-[700px]
+          w-[700px]
           rounded-full
           opacity-40
           blur-[150px]
@@ -70,7 +71,6 @@ export default function Hero() {
           lg:px-[56px]
         "
       >
-
         {/* ===================================================
             LEFT CONTENT
         ==================================================== */}
@@ -88,13 +88,11 @@ export default function Hero() {
             lg:py-[18px]
           "
         >
-
           {/* =================================================
               MAIN HERO CONTENT
           ================================================== */}
 
           <div className="pt-[10px] lg:pt-[60px]">
-
             {/* -----------------------------------------------
                 MAIN HEADING
             ------------------------------------------------ */}
@@ -115,18 +113,11 @@ export default function Hero() {
                   '"Arial Narrow", "Roboto Condensed", "Space Grotesk", sans-serif',
               }}
             >
+              <span className="block text-white">VISUALS</span>
 
-              <span className="block text-white">
-                VISUALS
-              </span>
+              <span className="block text-white">THAT MAKE</span>
 
-              <span className="block text-white">
-                THAT MAKE
-              </span>
-
-              <span className="block text-white">
-                PEOPLE
-              </span>
+              <span className="block text-white">PEOPLE</span>
 
               <span
                 className="
@@ -134,15 +125,12 @@ export default function Hero() {
                   text-[#900a9c]
                 "
                 style={{
-                  textShadow:
-                    "0 0 30px rgba(144,10,156,0.18)",
+                  textShadow: "0 0 30px rgba(144,10,156,0.18)",
                 }}
               >
                 LOOK TWICE.
               </span>
-
             </h1>
-
 
             {/* =================================================
                 SERVICES
@@ -168,44 +156,26 @@ export default function Hero() {
                 sm:tracking-[0.055em]
               "
             >
+              <span className="text-white/90">Photography</span>
+
+              <span className="text-[#900a9c]">/</span>
+
+              <span className="text-white/90">Videography</span>
+
+              <span className="text-[#900a9c]">/</span>
+
+              <span className="text-white/90">Digital marketting</span>
+
+              <span className="text-[#900a9c]">/</span>
 
               <span className="text-white/90">
-                Photography
+                Graphic design & creative
               </span>
 
-              <span className="text-[#900a9c]">
-                /
-              </span>              
+              <span className="text-[#900a9c]">/</span>
 
-              <span className="text-white/90">
-                Videography
-              </span>
-
-              <span className="text-[#900a9c]">
-                /
-              </span>
-
-              <span className="text-white/90">
-                Digital marketting
-              </span>
-
-              <span className="text-[#900a9c]">
-                /
-              </span>
-
-              <span className="text-white/90">
-                Graphic design & creative 
-              </span>
-
-              <span className="text-[#900a9c]">
-                /
-              </span>
-
-              <span className="text-white/90">
-                Event Coverage
-              </span>
+              <span className="text-white/90">Event Coverage</span>
             </div>
-
 
             {/* =================================================
                 DESCRIPTION
@@ -229,7 +199,6 @@ export default function Hero() {
               businesses and people.
             </p>
 
-
             {/* =================================================
                 BUTTONS
                 NOTE: stacks vertically on very small screens so
@@ -249,13 +218,21 @@ export default function Hero() {
                 sm:gap-[34px]
               "
             >
-
               {/* ---------------------------------------------
                   VIEW OUR WORK
+
+                  preventDefault stops the plain hash navigation
+                  (which does nothing when the URL is already
+                  /#work) and scrolls programmatically instead,
+                  so it works on every click.
               ---------------------------------------------- */}
 
               <Link
                 href="#work"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection("work");
+                }}
                 className="
                   group
                   relative
@@ -282,10 +259,7 @@ export default function Hero() {
                   sm:text-[12px]
                 "
               >
-
-                <span>
-                  View Our Work
-                </span>
+                <span>View Our Work</span>
 
                 <ArrowUpRight
                   size={15}
@@ -298,7 +272,6 @@ export default function Hero() {
                   "
                 />
               </Link>
-
 
               {/* ---------------------------------------------
                   PLAY SHOWREEL
@@ -321,10 +294,7 @@ export default function Hero() {
                   sm:text-[12px]
                 "
               >
-
-                <span>
-                  Play Showreel
-                </span>
+                <span>Play Showreel</span>
 
                 <span
                   className="
@@ -342,22 +312,16 @@ export default function Hero() {
                     group-hover:bg-[#900a9c]/15
                   "
                 >
-
                   <Play
                     size={11}
                     fill="currentColor"
                     strokeWidth={0}
                     className="ml-[1px]"
                   />
-
                 </span>
-
               </Link> */}
-
             </div>
-
           </div>
-
 
           {/* =================================================
               SCROLL INDICATOR (desktop only)
@@ -374,7 +338,6 @@ export default function Hero() {
               lg:flex
             "
           >
-
             <span
               className="
                 mb-[10px]
@@ -400,7 +363,6 @@ export default function Hero() {
                 bg-white/25
               "
             >
-
               <span
                 className="
                   absolute
@@ -414,19 +376,14 @@ export default function Hero() {
                   shadow-[0_0_8px_rgba(144,10,156,0.8)]
                 "
               />
-
             </div>
-
           </div>
-
         </div>
-
 
         {/* ===================================================
             RIGHT HERO IMAGE (desktop only)
-            NOTE: now explicitly hidden below lg — previously it
-            had no responsive hide, so on mobile it rendered on
-            top of the separate mobile image below, overlapping.
+            NOTE: explicitly hidden below lg so it doesn't
+            render on top of the separate mobile image below.
         ==================================================== */}
 
         <div
@@ -442,7 +399,6 @@ export default function Hero() {
             lg:block
           "
         >
-
           {/* =================================================
               MAIN IMAGE
           ================================================== */}
@@ -460,10 +416,9 @@ export default function Hero() {
             "
           />
 
-
           {/* =================================================
               LEFT EDGE FEATHER
-              
+
               Strongest feather because the image transitions
               directly into the typography area.
           ================================================== */}
@@ -483,10 +438,9 @@ export default function Hero() {
             }}
           />
 
-
           {/* =================================================
               TOP EDGE FEATHER
-              
+
               Prevents a hard horizontal line where the image
               begins underneath the navbar.
           ================================================== */}
@@ -507,10 +461,9 @@ export default function Hero() {
             }}
           />
 
-
           {/* =================================================
               RIGHT EDGE FEATHER
-              
+
               More subtle than the left because the image
               should remain visually dominant.
           ================================================== */}
@@ -530,7 +483,6 @@ export default function Hero() {
                 "linear-gradient(to right, transparent 0%, rgba(17,12,17,0.10) 25%, rgba(17,12,17,0.48) 60%, #110c11 100%)",
             }}
           />
-
 
           {/* =================================================
               BOTTOM EDGE FEATHER
@@ -552,10 +504,9 @@ export default function Hero() {
             }}
           />
 
-
           {/* =================================================
               PURPLE ATMOSPHERIC BLEND
-              
+
               Very subtle. This helps integrate the image into
               the #900a9c / #4c035d visual language.
           ================================================== */}
@@ -572,33 +523,43 @@ export default function Hero() {
                 "radial-gradient(circle at 68% 45%, rgba(144,10,156,0.08), transparent 52%)",
             }}
           />
-
         </div>
-
 
         {/* ===================================================
             MOBILE HERO IMAGE
-            NOTE: now flows in normal document flow (relative,
-            not absolute) right after the text content, instead
-            of being pinned to the bottom of a min-h-screen
-            section — so it can never overlap the text above it,
-            regardless of how tall the heading gets on a given
-            phone.
+            NOTE: flows in normal document flow (relative, not
+            absolute) right after the text content, so it can
+            never overlap the text above it, regardless of how
+            tall the heading gets on a given phone.
+        ==================================================== */}
+
+        {/* ===================================================
+        MOBILE HERO IMAGE
+        Faded on all four edges with a CSS mask so it blends
+        into the #110c11 background instead of sitting in a box.
         ==================================================== */}
 
         <div
           className="
             relative
             z-0
+            -mx-6
             mt-[6px]
-            h-[44vh]
-            w-full
-            overflow-hidden
-            rounded-[18px]
+            h-[48vh]
+            w-[calc(100%+48px)]
+            sm:-mx-8
+            sm:w-[calc(100%+64px)]
             lg:hidden
           "
+          style={{
+            WebkitMaskImage:
+              "linear-gradient(to bottom, transparent 0%, #000 18%, #000 78%, transparent 100%), linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%)",
+            maskImage:
+              "linear-gradient(to bottom, transparent 0%, #000 18%, #000 78%, transparent 100%), linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%)",
+            WebkitMaskComposite: "source-in",
+            maskComposite: "intersect",
+          }}
         >
-
           <img
             src="/hero-main.avif"
             alt="XNOR creative studio visual"
@@ -611,40 +572,15 @@ export default function Hero() {
               object-center
             "
           />
-
-
-          {/* Mobile top fade */}
-
-          <div
-            className="
-              pointer-events-none
-              absolute
-              inset-0
-            "
-            style={{
-              background: `
-                linear-gradient(
-                  to bottom,
-                  #110c11 0%,
-                  rgba(17,12,17,0.55) 12%,
-                  rgba(17,12,17,0.10) 35%,
-                  transparent 60%
-                )
-              `,
-            }}
-          />
-
         </div>
-
       </div>
-
 
       {/* =====================================================
           GLOBAL BOTTOM FADE (desktop only)
-          
-          The mobile image now sits in normal flow with its own
-          rounded corners, so this global fade — tuned for the
-          absolute-positioned desktop image — is scoped to lg.
+
+          The mobile image sits in normal flow with its own
+          rounded corners, so this global fade, tuned for the
+          absolute-positioned desktop image, is scoped to lg.
       ====================================================== */}
 
       <div
@@ -664,7 +600,6 @@ export default function Hero() {
             "linear-gradient(to bottom, transparent, rgba(17,12,17,0.75))",
         }}
       />
-
     </section>
   );
 }
