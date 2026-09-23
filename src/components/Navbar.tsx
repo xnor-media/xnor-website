@@ -18,6 +18,7 @@ const navItems = [
 export default function Navbar() {
   const { open } = useContactModal();
   const pathname = usePathname();
+  const isHome = pathname.replace(/\/+$/, "") === "" || pathname === "/";
 
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -61,7 +62,7 @@ export default function Navbar() {
       setActive("Home");
     } else if (normalizedPath === "/services" || normalizedPath === "/service") {
       setActive("Services");
-    } else if (normalizedPath === "/work") {
+    } else if (normalizedPath === "/work" || normalizedPath === "/reels") {
       setActive("Work");
     } else if (normalizedPath === "/about" || normalizedPath === "/about-us") {
       setActive("About Us");
@@ -101,6 +102,38 @@ export default function Navbar() {
       window.clearTimeout(timer);
     };
   }, [pathname]);
+
+  // =========================================================
+  // SCROLL TO HASH AFTER LANDING ON THE HOMEPAGE
+  //
+  // When a nav/footer link is clicked from a different page
+  // (e.g. /reels), it navigates to "/#work" instead of trying
+  // to scroll on a page that doesn't have that section. Once
+  // we actually arrive on "/", this picks up the hash from the
+  // URL and finishes the scroll.
+  // =========================================================
+
+  useEffect(() => {
+    if (!isHome) return;
+
+    const hash = typeof window !== "undefined" ? window.location.hash : "";
+    if (!hash) return;
+
+    const id = hash.replace("#", "");
+
+    const timer = window.setTimeout(() => {
+      const element = document.getElementById(id);
+
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 150);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isHome]);
 
   useEffect(() => {
     const sections = navItems
@@ -145,18 +178,33 @@ export default function Navbar() {
     };
   }, []);
 
+  // =========================================================
+  // NAV LINK CLICK
+  //
+  // On the homepage: prevent default, smooth-scroll in place.
+  // On any other page (e.g. /reels): let the Link navigate
+  // normally to "/#section" — the effect above finishes the
+  // scroll once we land on "/".
+  // =========================================================
+
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     item: { name: string; href: string }
   ) => {
+    setActive(item.name);
+    setMobileOpen(false);
+
+    if (!isHome) {
+      return;
+    }
+
     e.preventDefault();
 
     const id = item.href.replace("#", "");
     scrollToSection(id);
-
-    setActive(item.name);
-    setMobileOpen(false);
   };
+
+  const linkHref = (href: string) => (isHome ? href : `/${href}`);
 
   return (
     <header
@@ -192,9 +240,15 @@ export default function Navbar() {
           href="/"
           aria-label="XNOR Home"
           onClick={(e) => {
-            e.preventDefault();
             setActive("Home");
             setMobileOpen(false);
+
+            if (!isHome) {
+              // Not on the homepage — let this navigate to "/" normally.
+              return;
+            }
+
+            e.preventDefault();
             scrollToSection("home");
           }}
           className={`
@@ -292,7 +346,7 @@ export default function Navbar() {
               return (
                 <Link
                   key={item.name}
-                  href={item.href}
+                  href={linkHref(item.href)}
                   onClick={(e) => handleNavClick(e, item)}
                   onMouseEnter={() => setHovered(item.name)}
                   onMouseLeave={() => setHovered(null)}
@@ -511,11 +565,8 @@ export default function Navbar() {
             return (
               <Link
                 key={item.name}
-                href={item.href}
-                onClick={(e) => {
-                  handleNavClick(e, item);
-                  setMobileOpen(false);
-                }}
+                href={linkHref(item.href)}
+                onClick={(e) => handleNavClick(e, item)}
                 className="
                   flex
                   h-[46px]

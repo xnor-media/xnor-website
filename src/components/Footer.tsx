@@ -1,16 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { scrollToSection } from "@/lib/scrollToSection";
-
-function handleFooterLinkClick(
-  e: React.MouseEvent<HTMLAnchorElement>,
-  href: string
-) {
-  e.preventDefault();
-  scrollToSection(href.replace("#", ""));
-}
 
 // Brand/logo icons (Instagram, LinkedIn, YouTube, Behance) are inlined as
 // plain SVGs — lucide-react's v1 release removed all trademarked brand
@@ -93,6 +86,32 @@ const socials = [
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
+  const isHome = pathname.replace(/\/+$/, "") === "" || pathname === "/";
+
+  // =========================================================
+  // FOOTER LINK CLICK
+  //
+  // On the homepage: prevent default, smooth-scroll in place.
+  // On any other page (e.g. /reels): let the Link navigate
+  // normally to "/#section" — Navbar's mount effect finishes
+  // the scroll once we land back on "/".
+  // =========================================================
+
+  function handleFooterLinkClick(
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) {
+    if (!isHome) {
+      return;
+    }
+
+    e.preventDefault();
+    scrollToSection(href.replace("#", ""));
+  }
+
+  const linkHref = (href: string) => (isHome ? href : `/${href}`);
+
   return (
     <footer
       className="
@@ -181,6 +200,10 @@ export default function Footer() {
             href="/"
             aria-label="XNOR Home"
             onClick={(e) => {
+              if (!isHome) {
+                return;
+              }
+
               e.preventDefault();
               scrollToSection("home");
             }}
@@ -237,7 +260,7 @@ export default function Footer() {
             {quickLinks.map((item) => (
               <li key={item.name}>
                 <Link
-                  href={item.href}
+                  href={linkHref(item.href)}
                   onClick={(e) => handleFooterLinkClick(e, item.href)}
                   className="
                     text-[16px]
@@ -277,7 +300,7 @@ export default function Footer() {
             {serviceLinks.map((item) => (
               <li key={item.name}>
                 <Link
-                  href={item.href}
+                  href={linkHref(item.href)}
                   onClick={(e) => handleFooterLinkClick(e, item.href)}
                   className="
                     text-[16px]
