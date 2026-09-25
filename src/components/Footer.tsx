@@ -5,15 +5,25 @@ import { usePathname } from "next/navigation";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { scrollToSection } from "@/lib/scrollToSection";
 
-// Brand/logo icons (Instagram, LinkedIn, YouTube, Behance) are inlined as
-// plain SVGs — lucide-react's v1 release removed all trademarked brand
-// icons, so these no longer exist as importable components.
+// Brand/logo icons
 function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      {...props}
+    >
       <rect x="3" y="3" width="18" height="18" rx="5" />
       <circle cx="12" cy="12" r="4" />
-      <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
+      <circle
+        cx="17.2"
+        cy="6.8"
+        r="1"
+        fill="currentColor"
+        stroke="none"
+      />
     </svg>
   );
 }
@@ -79,10 +89,26 @@ const serviceLinks = [
 ];
 
 const socials = [
-  { name: "Instagram", href: "https://www.instagram.com/xnor_lk?stkn=MWlxaHA0cDNjdjJ3bA==", icon: InstagramIcon },
-  { name: "Facebook", href: "https://www.facebook.com/share/1AYMPd6YGq/", icon: FacebookIcon },
-  { name: "TikTok", href: "https://www.tiktok.com/@xnormedia?_r=1&_t=ZS-99eLoTDM5xs", icon: TikTokIcon },
-  { name: "LinkedIn", href: "https://www.linkedin.com/company/xnor-media/", icon: LinkedinIcon },
+  {
+    name: "Instagram",
+    href: "https://www.instagram.com/xnor_lk?stkn=MWlxaHA0cDNjdjJ3bA==",
+    icon: InstagramIcon,
+  },
+  {
+    name: "Facebook",
+    href: "https://www.facebook.com/share/1AYMPd6YGq/",
+    icon: FacebookIcon,
+  },
+  {
+    name: "TikTok",
+    href: "https://www.tiktok.com/@xnormedia?_r=1&_t=ZS-99eLoTDM5xs",
+    icon: TikTokIcon,
+  },
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/company/xnor-media/",
+    icon: LinkedinIcon,
+  },
 ];
 
 export default function Footer() {
@@ -93,9 +119,7 @@ export default function Footer() {
   // FOOTER LINK CLICK
   //
   // On the homepage: prevent default, smooth-scroll in place.
-  // On any other page (e.g. /reels): let the Link navigate
-  // normally to "/#section" — Navbar's mount effect finishes
-  // the scroll once we land back on "/".
+  // On any other page: navigate normally to "/#section".
   // =========================================================
 
   function handleFooterLinkClick(
@@ -118,15 +142,37 @@ export default function Footer() {
         relative
         w-full
         overflow-hidden
-        bg-[#110c11]
+        border-t
+        border-[#900a9c]/20
+        bg-[#0b080d]
         px-6
-        pt-[80px]
+        pt-[75px]
         text-white
+        shadow-[0_-20px_80px_rgba(144,10,156,0.08)]
         sm:px-10
+        sm:pt-[90px]
         lg:px-[50px]
+        lg:pt-[100px]
         xl:px-[63px]
       "
     >
+      {/* =====================================================
+          FOOTER TOP GLOW
+      ====================================================== */}
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-1/2
+          top-[-180px]
+          h-[360px]
+          w-[700px]
+          -translate-x-1/2
+          rounded-full
+          bg-[#900a9c]/[0.07]
+          blur-[120px]
+        "
+      />
 
       {/* =====================================================
           BACKGROUND PURPLE ATMOSPHERE
@@ -168,6 +214,39 @@ export default function Footer() {
         }}
       />
 
+      {/* =====================================================
+      LARGE BACKGROUND XNOR WORDMARK
+      ====================================================== */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          bottom-[75px]
+          lg:pr-[25px]
+          left-1/2
+          z-0
+          -translate-x-1/2
+          select-none
+          whitespace-nowrap
+          text-[30vw]
+          font-bold
+          leading-[0.72]
+          tracking-[-0.09em]
+          sm:text-[25vw]
+          lg:text-[21vw]
+        "
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(195,79,209,0.10) 0%, rgba(144,10,156,0.055) 45%, rgba(255,255,255,0.018) 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          filter:
+            "drop-shadow(0 -10px 35px rgba(144,10,156,0.08))",
+        }}
+      >
+        XNOR
+      </div>
 
       {/* =====================================================
           TOP GRID
@@ -190,7 +269,6 @@ export default function Footer() {
           lg:gap-x-[40px]
         "
       >
-
         {/* ===========================================
             BRAND / ABOUT
         ============================================ */}
@@ -237,7 +315,6 @@ export default function Footer() {
           </p>
         </div>
 
-
         {/* ===========================================
             QUICK LINKS
         ============================================ */}
@@ -276,7 +353,6 @@ export default function Footer() {
             ))}
           </ul>
         </nav>
-
 
         {/* ===========================================
             SERVICES
@@ -317,12 +393,24 @@ export default function Footer() {
           </ul>
         </nav>
 
-
         {/* ===========================================
             FOLLOW US + GET IN TOUCH
         ============================================ */}
 
-        <div className="col-span-2 flex flex-col gap-[40px] sm:col-span-1 sm:flex-row lg:col-span-1 lg:flex-col lg:gap-[45px]">
+        <div
+          className="
+            col-span-2
+            flex
+            flex-col
+            gap-[40px]
+            sm:col-span-1
+            sm:flex-row
+            lg:col-span-1
+            lg:flex-col
+            lg:gap-[45px]
+          "
+        >
+          {/* FOLLOW US */}
 
           <div>
             <h4
@@ -341,6 +429,7 @@ export default function Footer() {
             <div className="flex flex-wrap items-center gap-[13px]">
               {socials.map((social) => {
                 const Icon = social.icon;
+
                 return (
                   <a
                     key={social.name}
@@ -374,6 +463,8 @@ export default function Footer() {
             </div>
           </div>
 
+          {/* GET IN TOUCH */}
+
           <div>
             <h4
               className="
@@ -403,10 +494,16 @@ export default function Footer() {
                     hover:text-white
                   "
                 >
-                  <Mail size={19} strokeWidth={1.8} className="text-[#c34fd1]" />
-                  xnormedialk@gmail.com
+                  <Mail
+                    size={19}
+                    strokeWidth={1.8}
+                    className="shrink-0 text-[#c34fd1]"
+                  />
+
+                  <span>xnormedialk@gmail.com</span>
                 </a>
               </li>
+
               <li>
                 <a
                   href="tel:+94726553268"
@@ -421,10 +518,16 @@ export default function Footer() {
                     hover:text-white
                   "
                 >
-                  <Phone size={19} strokeWidth={1.8} className="text-[#c34fd1]" />
-                  +94 72 655 3268
+                  <Phone
+                    size={19}
+                    strokeWidth={1.8}
+                    className="shrink-0 text-[#c34fd1]"
+                  />
+
+                  <span>+94 72 655 3268</span>
                 </a>
               </li>
+
               <li
                 className="
                   flex
@@ -434,16 +537,18 @@ export default function Footer() {
                   text-white/65
                 "
               >
-                <MapPin size={19} strokeWidth={1.8} className="text-[#c34fd1]" />
-                Colombo 07, Sri Lanka
+                <MapPin
+                  size={19}
+                  strokeWidth={1.8}
+                  className="shrink-0 text-[#c34fd1]"
+                />
+
+                <span>Colombo 07, Sri Lanka</span>
               </li>
             </ul>
           </div>
-
         </div>
-
       </div>
-
 
       {/* =====================================================
           DIVIDER
@@ -460,11 +565,11 @@ export default function Footer() {
         "
         style={{
           background:
-            "linear-gradient(90deg, transparent 0%, rgba(144,10,156,0.18) 15%, rgba(144,10,156,0.5) 50%, rgba(144,10,156,0.18) 85%, transparent 100%)",
-          boxShadow: "0 0 20px rgba(144,10,156,0.15)",
+            "linear-gradient(90deg, transparent 0%, rgba(144,10,156,0.15) 10%, rgba(144,10,156,0.7) 50%, rgba(144,10,156,0.15) 90%, transparent 100%)",
+          boxShadow:
+            "0 0 25px rgba(144,10,156,0.35), 0 0 60px rgba(144,10,156,0.12)",
         }}
       />
-
 
       {/* =====================================================
           BOTTOM COPYRIGHT
@@ -475,8 +580,11 @@ export default function Footer() {
           relative
           z-10
           mx-auto
+          flex
           w-full
           max-w-[1650px]
+          items-center
+          justify-center
           py-[28px]
           text-center
           text-[15px]
@@ -485,7 +593,6 @@ export default function Footer() {
       >
         © {new Date().getFullYear()} XNOR. All rights reserved.
       </div>
-
     </footer>
   );
 }
