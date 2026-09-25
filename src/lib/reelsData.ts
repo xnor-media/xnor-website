@@ -24,6 +24,7 @@ export const reels: ReelItem[] = [
   { youtubeId: "kXaRtmI8U-s", title: "Reel 1" },
   // { youtubeId: "wFCuNKnFv_U", title: "Reel 2" },
   { youtubeId: "c12FY7deYIQ", title: "Reel 3" },
+  { youtubeId: "g1pNCTHSPfI", title: "Reel 19" },
   { youtubeId: "Bmtd0uyuzU8", title: "Reel 4" },
   { youtubeId: "ZDcSbwnGsm0", title: "Reel 5" },
   { youtubeId: "3bDWrOeNyfE", title: "Reel 6" },
@@ -39,4 +40,5 @@ export const reels: ReelItem[] = [
   { youtubeId: "yV9TAmrI-2k", title: "Reel 16" },
   { youtubeId: "L5KWE4dyWHc", title: "Reel 17" },
   { youtubeId: "-XHOMkdcSQU", title: "Reel 18" },
+ 
 ];
