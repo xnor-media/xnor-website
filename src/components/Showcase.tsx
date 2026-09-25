@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import AccordionGallery from "./AccordionGallery";
 import ReelShowcase from "./ReelShowcase";
+import AfterMovieShowcase from "./AfterMovieShowcase";
 
 const workItems = [
   { image: "/work Mercedes -Benz W116.webp", label: "Mercedes -Benz W116", link: "https://www.facebook.com/media/set/?set=a.919113161044222&type=3" },
@@ -262,7 +263,7 @@ export default function Work() {
           mt-[48px]
           h-[1px]
           w-full
-          sm:mt-[70px]
+          sm:mt-[40px]
         "
         style={{
           background:
@@ -270,6 +271,28 @@ export default function Work() {
           boxShadow: "0 0 20px rgba(144,10,156,0.15)",
         }}
       />
+
+      <div className="relative z-10 sm:px-8 lg:px-[50px] xl:px-[63px]">
+        <div className="mx-auto w-full max-w-[1650px]">
+          <p
+            className="
+              mb-[16px]
+              mt-[36px]
+              text-center
+              text-[11px]
+              font-medium
+              uppercase
+              tracking-[0.2em]
+              text-white/45
+              sm:mb-[20px]
+            "
+          >
+            After Movies
+          </p>
+
+          <AfterMovieShowcase />
+        </div>
+      </div>
     </section>
   );
 }
