@@ -11,8 +11,8 @@ export interface AfterMovieItem {
 
 export const afterMovies: AfterMovieItem[] = [
   {
-    vimeoId: "1230320191",
-    title: "DSSC",
+    vimeoId: "1230348585",
+    title: "SAGA - ICT from ABC",
     description: "After Movie",
   },
 
@@ -25,6 +25,12 @@ export const afterMovies: AfterMovieItem[] = [
   {
     vimeoId: "1230320840",
     title: "Annual Social Gathering of St. Paul's Girls' School",
+    description: "After Movie",
+  },
+
+  {
+    vimeoId: "1230320191",
+    title: "DSSC",
     description: "After Movie",
   },
 

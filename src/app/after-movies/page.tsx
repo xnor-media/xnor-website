@@ -303,41 +303,7 @@ export default function AfterMoviesPage() {
                 "
               />
 
-              {/* PLAY ICON */}
-              <div
-                className="
-                  pointer-events-none
-                  absolute
-                  left-1/2
-                  top-1/2
-                  z-[3]
-                  flex
-                  h-[54px]
-                  w-[54px]
-                  -translate-x-1/2
-                  -translate-y-1/2
-                  items-center
-                  justify-center
-                  rounded-full
-                  border
-                  border-white/20
-                  bg-black/20
-                  text-white
-                  opacity-0
-                  backdrop-blur-md
-                  transition-all
-                  duration-500
-                  group-hover:scale-100
-                  group-hover:opacity-100
-                "
-              >
-                <Play
-                  size={19}
-                  strokeWidth={1.7}
-                  fill="white"
-                  className="ml-[2px]"
-                />
-              </div>
+              
             </div>
 
             {/* MOVIE INFO */}
