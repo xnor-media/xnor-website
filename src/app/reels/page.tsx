@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { reels } from "@/lib/reelsData";
+import GradientWaves from "@/effects/GradientWaves";
 
 export const metadata = {
   title: "All Reels | XNOR",
@@ -27,45 +28,47 @@ export default function ReelsPage() {
           xl:px-[63px]
         "
       >
+
         {/* =====================================================
-            BACKGROUND PURPLE ATMOSPHERE
+            BACKGROUND GRADIENT
         ====================================================== */}
 
         <div
           className="
-            pointer-events-none
-            absolute
-            left-[-180px]
-            top-[80px]
-            h-[330px]
-            w-[330px]
-            rounded-full
-            opacity-30
-            blur-[110px]
+              pointer-events-none
+              fixed
+              left-0
+              right-0
+              top-0
+              z-0
+              h-screen
+              overflow-hidden
           "
-          style={{
-            background:
-              "radial-gradient(circle, rgba(144,10,156,0.42) 0%, rgba(76,3,93,0.18) 38%, transparent 72%)",
-          }}
-        />
-
-        <div
-          className="
-            pointer-events-none
-            absolute
-            right-[-180px]
-            top-[220px]
-            h-[400px]
-            w-[400px]
-            rounded-full
-            opacity-20
-            blur-[130px]
-          "
-          style={{
-            background:
-              "radial-gradient(circle, rgba(144,10,156,0.45) 0%, transparent 68%)",
-          }}
-        />
+          >
+          <GradientWaves
+              horizonColor="#110c11"
+              waveColor="#7a0085"
+              crestColor="#f08aff"
+              speed={0.35}
+              amplitude={3.5}
+              waveScale={0.6}
+              waveRatio={0.9}
+              swell={35}
+              turbulence={20}
+              tilt={1.11}
+              zoom={1}
+              height={5.5}
+              fogDepth={15}
+              detail="high"
+              brightness={1.4}
+              opacity={1}
+              mouseInteraction
+              parallaxStrength={0.5}
+              grain
+              grainIntensity={0.04}
+              className="h-full w-full"
+          />
+          </div>
 
         {/* =====================================================
             TOP SUBTITLE

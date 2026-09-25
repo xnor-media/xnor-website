@@ -58,67 +58,9 @@ export default function AfterMovieShowcase() {
           SECTION HEADER
       ====================================================== */}
 
-      <div className="relative z-10 mb-[38px] text-center">
-        <p
-          className="
-            mb-[7px]
-            text-[11px]
-            font-medium
-            uppercase
-            tracking-[0.22em]
-            text-white/40
-          "
-        >
-          Cinematic Stories
-        </p>
+        
 
-        <h2
-          className="
-            font-serif
-            text-[40px]
-            italic
-            leading-none
-            tracking-[-0.035em]
-            text-white
-            sm:text-[46px]
-            lg:text-[50px]
-          "
-          style={{
-            textShadow: "0 0 28px rgba(144,10,156,0.22)",
-          }}
-        >
-          After Movies
-        </h2>
-
-        <div
-          className="
-            mx-auto
-            mt-[17px]
-            h-[1px]
-            w-[45px]
-            bg-gradient-to-r
-            from-transparent
-            via-[#900a9c]
-            to-transparent
-          "
-        />
-
-        <p
-          className="
-            mx-auto
-            mt-[16px]
-            max-w-[560px]
-            px-5
-            text-[13px]
-            leading-[1.8]
-            text-white/45
-            sm:text-[14px]
-          "
-        >
-          A collection of moments, energy and stories captured beyond the
-          frame.
-        </p>
-      </div>
+        
 
       {/* =====================================================
           AFTER MOVIE GRID
@@ -137,6 +79,7 @@ export default function AfterMovieShowcase() {
           z-10
           mx-auto
           grid
+          pt-5
           w-full
           max-w-[1350px]
           grid-cols-1
