@@ -4,34 +4,45 @@ import { useEffect, useState } from "react";
 import AccordionGallery from "./AccordionGallery";
 import ReelShowcase from "./ReelShowcase";
 import AfterMovieShowcase from "./AfterMovieShowcase";
-
-const workItems = [
-  { image: "/work Mercedes -Benz W116.webp", label: "Mercedes -Benz W116", link: "https://www.facebook.com/media/set/?set=a.919113161044222&type=3" },
-  { image: "/work Mitsubishi Mirage.webp", label: "Mitsubishi Mirage", link: "https://www.facebook.com/media/set/?set=a.926187333670138&type=3" },
-  { image: "/work Jaguar X-Type.webp", label: "Jaguar X-Type", link: "https://www.facebook.com/media/set/?set=a.926178003671071&type=3" },
-  { image: "/work Honda-Civic EG8 Vtech.webp", label: "Honda-Civic EG8 Vtech", link: "https://www.facebook.com/media/set/?set=a.919124061043132&type=3" },
-  { image: "/work vbj-automobiles.webp ", label: "Grand Opening - VBJ Automobiles", link: "https://www.facebook.com/media/set/?set=a.921003990855139&type=3" },
-];
+import { workItems } from "@/lib/portfolioData";
 
 export default function Work() {
   // -------------------------------------------------------
   // MOBILE DETECTION
-  // AccordionGallery's default configuration (hover-trigger,
-  // horizontal orientation, 525px height) doesn't translate to
-  // touch devices — there's no hover, and five side-by-side
-  // expanding panels don't fit a narrow screen. Below the lg
-  // breakpoint we swap it to a tap-to-expand, vertically
-  // stacked layout with a shorter overall height instead.
   // -------------------------------------------------------
+
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const query = window.matchMedia("(max-width: 1023px)");
+
     const update = () => setIsMobile(query.matches);
+
     update();
+
     query.addEventListener("change", update);
+
     return () => query.removeEventListener("change", update);
   }, []);
+
+  // -------------------------------------------------------
+  // PREPARE ACCORDION GALLERY ITEMS
+  //
+  // Facebook projects:
+  //     use their existing Facebook URL
+  //
+  // Cloudinary projects:
+  //     use the internal /portfolio/[slug] page
+  // -------------------------------------------------------
+
+  const galleryItems = workItems.map((item) => ({
+    image: item.image,
+    label: item.label,
+    link:
+      item.type === "cloudinary" && item.slug
+        ? `/portfolio/${item.slug}`
+        : item.link ?? "#",
+  }));
 
   return (
     <section
@@ -47,11 +58,8 @@ export default function Work() {
         lg:pt-[90px]
       "
     >
-
       {/* =====================================================
           BACKGROUND PURPLE ATMOSPHERE
-          NOTE: sized down on mobile so the glows don't blow out
-          past the edges of a narrow viewport as strongly.
       ====================================================== */}
 
       <div
@@ -99,7 +107,6 @@ export default function Work() {
         }}
       />
 
-
       {/* =====================================================
           TOP SUBTITLE
       ====================================================== */}
@@ -122,7 +129,6 @@ export default function Work() {
       >
         Our Work
       </div>
-
 
       {/* =====================================================
           MAIN TITLE
@@ -153,12 +159,8 @@ export default function Work() {
         Showcase
       </h2>
 
-
       {/* =====================================================
           PHOTOGRAPHY SHOWCASE
-          NOTE: on mobile, switches to a shorter, vertically
-          stacked, tap-to-expand layout instead of the desktop
-          hover-driven horizontal strip.
       ====================================================== */}
 
       <div className="relative z-10 px-5 sm:px-8 lg:px-[50px] xl:px-[63px]">
@@ -179,7 +181,7 @@ export default function Work() {
           </p>
 
           <AccordionGallery
-            items={workItems}
+            items={galleryItems}
             defaultIndex={0}
             expandRatio={isMobile ? 0.65 : 0.5}
             trigger={isMobile ? "click" : "hover"}
@@ -201,9 +203,8 @@ export default function Work() {
         </div>
       </div>
 
-
       {/* =====================================================
-          SECTION DIVIDER (between Photography and Reels)
+          SECTION DIVIDER
       ====================================================== */}
 
       <div
@@ -223,7 +224,6 @@ export default function Work() {
             "linear-gradient(90deg, transparent 0%, rgba(144,10,156,0.14) 15%, rgba(144,10,156,0.35) 50%, rgba(144,10,156,0.14) 85%, transparent 100%)",
         }}
       />
-
 
       {/* =====================================================
           REEL SHOWCASE
@@ -251,7 +251,6 @@ export default function Work() {
         </div>
       </div>
 
-
       {/* =====================================================
           DIVIDER
       ====================================================== */}
@@ -271,6 +270,10 @@ export default function Work() {
           boxShadow: "0 0 20px rgba(144,10,156,0.15)",
         }}
       />
+
+      {/* =====================================================
+          AFTER MOVIES
+      ====================================================== */}
 
       <div className="relative z-10 sm:px-8 lg:px-[50px] xl:px-[63px]">
         <div className="mx-auto w-full max-w-[1650px]">
