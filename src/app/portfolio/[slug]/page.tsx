@@ -78,12 +78,13 @@ export default async function PortfolioPage({ params }: PageProps) {
             TITLE
         ====================================================== */}
 
-        <section className="mx-auto w-full max-w-[1650px] text-center px-5 pb-10 pt-14 sm:px-8 sm:pt-40 lg:px-[50px] xl:px-[50px]">
+        <section className="mx-auto w-full max-w-[1650px] text-center px-5 pb-10 pt-30 sm:px-8 sm:pt-40 lg:px-[50px] xl:px-[50px]">
 
           <p
             className="
               mb-2
-              text-[14px]
+              sm:text-[14px]
+              text-[11px]
               font-medium
               uppercase
               tracking-[0.22em]
