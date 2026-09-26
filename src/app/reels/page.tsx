@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { reels } from "@/lib/reelsData";
 import GradientWaves from "@/effects/GradientWaves";
+import LiteYouTube from "@/components/LiteYouTube";
 
 export const metadata = {
   title: "All Reels | XNOR",
@@ -84,7 +85,7 @@ export default function ReelsPage() {
             font-medium
             uppercase
             tracking-[0.18em]
-            text-white/55
+            text-[#c34fd1]
           "
         >
           Our Work
@@ -105,7 +106,7 @@ export default function ReelsPage() {
             italic
             leading-none
             tracking-[-0.035em]
-            text-[#900a9c]
+            text-white
             sm:text-[48px]
             lg:text-[50px]
           "
@@ -150,16 +151,12 @@ export default function ReelsPage() {
                 "
                 style={{ aspectRatio: "9 / 16" }}
               >
-                <iframe
-                  src={`https://www.youtube-nocookie.com/embed/${reel.youtubeId}?rel=0&modestbranding=1`}
-                  className="absolute inset-0 h-full w-full"
-                  frameBorder={0}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
-                  title={reel.title}
-                  loading="lazy"
-                />
+                <div
+                  className="relative overflow-hidden rounded-[24px] border border-white/15 bg-black shadow-[0_20px_60px_rgba(0,0,0,0.5),0_0_40px_rgba(144,10,156,0.15)]"
+                  style={{ aspectRatio: "9 / 16" }}
+                >
+                  <LiteYouTube youtubeId={reel.youtubeId} title={reel.title} />
+                </div>
               </div>
             </div>
           ))}
