@@ -678,7 +678,7 @@ export default function Services() {
         className="
           relative
           z-10
-          mb-[30px]
+          mb-[40px]
           text-center
           font-serif
           text-[42px]

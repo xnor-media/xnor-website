@@ -135,7 +135,7 @@ export default function AfterMoviesPage() {
     {/* =======================================================
         HERO
         ======================================================== */}
-    <section className="relative px-5 pb-[90px] pt-[130px] text-center sm:pt-[150px]">
+    <section className="relative px-5 pb-[45px] pt-[130px] text-center sm:pt-[150px]">
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -155,7 +155,7 @@ export default function AfterMoviesPage() {
             font-medium
             uppercase
             tracking-[0.18em]
-            text-white/55
+            text-[#c34fd1]
           "
         >
           Our Work
@@ -164,14 +164,14 @@ export default function AfterMoviesPage() {
         {/* TITLE */}
         <h1
           className="
-            mb-[25px]
+            mb-[15px]
             text-center
             font-serif
             text-[42px]
             italic
             leading-none
             tracking-[-0.035em]
-            text-[#900a9c]
+            text-white
             sm:text-[48px]
             lg:text-[50px]
           "

@@ -55,7 +55,7 @@ export default function Work() {
         bg-[#110c11]
         pt-[64px]
         text-white
-        lg:pt-[90px]
+        lg:pt-[120px]
       "
     >
       {/* =====================================================
