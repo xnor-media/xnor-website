@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { workItems } from "@/lib/portfolioData";
+import GradientWaves from "@/effects/GradientWaves";
 
 interface PageProps {
   params: Promise<{
@@ -25,6 +26,47 @@ export default async function PortfolioPage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen bg-[#110c11] text-white">
+
+        {/* =====================================================
+            BACKGROUND GRADIENT
+        ====================================================== */}
+
+        <div
+          className="
+              pointer-events-none
+              fixed
+              left-0
+              right-0
+              top-0
+              z-0
+              h-screen
+              overflow-hidden
+          "
+          >
+          <GradientWaves
+              horizonColor="#110c11"
+              waveColor="#7a0085"
+              crestColor="#f08aff"
+              speed={0.35}
+              amplitude={3.5}
+              waveScale={0.6}
+              waveRatio={0.9}
+              swell={35}
+              turbulence={20}
+              tilt={1.11}
+              zoom={1}
+              height={5.5}
+              fogDepth={15}
+              detail="high"
+              brightness={1.4}
+              opacity={1}
+              mouseInteraction
+              parallaxStrength={0.5}
+              grain
+              grainIntensity={0.04}
+              className="h-full w-full"
+          />
+          </div>
 
       {/* =====================================================
           HEADER
@@ -120,7 +162,7 @@ export default async function PortfolioPage({ params }: PageProps) {
 
       <section className="mx-auto w-full max-w-[1650px] px-5 pb-20 sm:px-8 lg:px-[50px] xl:px-[63px]">
 
-        <div className="columns-1 gap-5 sm:columns-2 lg:columns-3">
+        <div className="columns-2 gap-3 sm:columns-2 lg:columns-3">
 
           {project.gallery.map((image, index) => (
             <div
@@ -128,10 +170,10 @@ export default async function PortfolioPage({ params }: PageProps) {
               className="
                 group
                 relative
-                mb-5
+                mb-3
                 break-inside-avoid
                 overflow-hidden
-                rounded-[18px]
+                rounded-[5px]
                 bg-[#0a0713]
               "
             >

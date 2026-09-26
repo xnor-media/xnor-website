@@ -25,19 +25,28 @@ export const workItems: PortfolioItem[] = [
   },
 
   {
-    image: "/work Jaguar X-Type.webp",
-    label: "Jaguar X-Type",
-    type: "facebook",
-    link:
-      "https://www.facebook.com/media/set/?set=a.926178003671071&type=3",
-  },
-
-  {
     image: "/work Honda-Civic EG8 Vtech.webp",
     label: "Honda-Civic EG8 Vtech",
     type: "facebook",
     link:
       "https://www.facebook.com/media/set/?set=a.919124061043132&type=3",
+  },
+
+  {
+    image:
+      "https://res.cloudinary.com/kq5ertj9/image/upload/v1790420879/WhatsApp_Image_2026-09-26_at_01.14.08.jpg",
+
+    label: "Model Photography",
+
+    type: "cloudinary",
+
+    slug: "model-photography",
+
+    gallery: [
+      "https://res.cloudinary.com/kq5ertj9/image/upload/v1790420879/WhatsApp_Image_2026-09-26_at_01.14.08.jpg",
+      "https://res.cloudinary.com/kq5ertj9/image/upload/v1790420879/WhatsApp_Image_2026-09-26_at_01.13.26.jpg",
+      "https://res.cloudinary.com/kq5ertj9/image/upload/v1790420879/WhatsApp_Image_2026-09-26_at_01.13.48.jpg",
+    ],
   },
 
   {
@@ -48,16 +57,15 @@ export const workItems: PortfolioItem[] = [
       "https://www.facebook.com/media/set/?set=a.921003990855139&type=3",
   },
 
-  // Cloudinary photography project
   {
     image:
       "https://res.cloudinary.com/kq5ertj9/image/upload/v1790418373/746909818_17941960848260353_5156841240649981215_n.jpg",
 
-    label: "New Photography Project",
+    label: "Wedding Photography",
 
     type: "cloudinary",
 
-    slug: "new-photography-project",
+    slug: "wedding-photography",
 
     gallery: [
       "https://res.cloudinary.com/kq5ertj9/image/upload/v1790418373/746909818_17941960848260353_5156841240649981215_n.jpg",
