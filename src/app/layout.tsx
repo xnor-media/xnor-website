@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
-import "./globals.css";
 import Script from "next/script";
+import "./globals.css";
+
 import { ContactModalProvider } from "@/contexts/ContactModalContext";
 import ContactModal from "@/components/ContactModal";
 import { Analytics } from "@vercel/analytics/next";
@@ -26,15 +27,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" className={spaceGrotesk.variable}>
-      <body>
-        <ContactModalProvider>
-          {children}
-          <ContactModal />
-        </ContactModalProvider>
-
-        <Analytics />
-
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={spaceGrotesk.variable}
+    >
+      <head>
         {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-SL1Z12GTMNX"
@@ -50,6 +48,15 @@ export default function RootLayout({
             gtag('config', 'G-SL1Z12GTMNX');
           `}
         </Script>
+      </head>
+
+      <body>
+        <ContactModalProvider>
+          {children}
+          <ContactModal />
+        </ContactModalProvider>
+
+        <Analytics />
       </body>
     </html>
   );
