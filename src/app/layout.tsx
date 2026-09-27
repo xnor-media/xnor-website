@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 import { ContactModalProvider } from "@/contexts/ContactModalContext";
 import ContactModal from "@/components/ContactModal";
 import { Analytics } from "@vercel/analytics/next";
@@ -33,6 +34,22 @@ export default function RootLayout({
         </ContactModalProvider>
 
         <Analytics />
+
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-SL1Z12GTMNX"
+          strategy="afterInteractive"
+        />
+
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){window.dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-SL1Z12GTMNX');
+          `}
+        </Script>
       </body>
     </html>
   );
